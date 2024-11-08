@@ -53,6 +53,7 @@ export default function Page() {
   const [gambar, setGambar] = useState("");
   const [title, setTitle] = useState(``);
 
+
   const hashtag = ["#planetdenpasar", "#planetkitabali", "#bali", "#infonetizenbali", "#infosemetonbali"];
 
   const router = useRouter();
@@ -76,6 +77,7 @@ export default function Page() {
     },
     [toast]
   );
+
 
   const getInstagramShortcode = () => {
     const regex = /(?:https?:\/\/)?(?:www\.)?instagram\.com\/(?:p|reel)\/([A-Za-z0-9-_]+)/;
@@ -128,16 +130,14 @@ export default function Page() {
       const data = res.data;
 
       const links: IMedia[] = [];
-      let titleButton = 'Image'
+
       if (data.carousel_media === undefined) {
 
         if (data.is_video) {
           links.push({
-            url: `${data.video_url}&dl=1`,
+            url: `${data.video_versions[1].url}&dl=1`,
             title: "Download Video",
           });
-
-          titleButton = 'Thumbnail'
         }
 
       } else {
@@ -145,7 +145,7 @@ export default function Page() {
         for (const dt of data.carousel_media) {
           if (dt.is_video) {
             links.push({
-              url: `${dt.video_url}&dl=1`,
+              url: `${dt.video_versions[1].url}&dl=1`,
               title: `Download Slide #${i}`,
             });
           } else {
@@ -156,13 +156,24 @@ export default function Page() {
           }
           i++;
         }
-
       }
 
       links.push({
         url: `${data.thumbnail_url}&dl=1`,
-        title: `Download ${titleButton}`,
+        title: `Download Thumbnail`,
       });
+
+      const fd = new FormData();
+      fd.append('mediaId', data.fbid);
+
+      // const res2 = await fetch(`/api/instagram`, { method: 'POST', body: fd });
+      // const data2 = await res2.json();
+
+      // if (data2.success) {
+      //   console.log(data2.result)
+      // } else {
+      //   console.log(data2.error)
+      // }
 
       setEmbed(`https://www.instagram.com/p/${shortcode}/embed`);
       setOriginalCaption(data.caption.text);
@@ -320,7 +331,7 @@ export default function Page() {
                 value={caption}
                 style={{ whiteSpace: "pre-wrap" }}
                 size="sm"
-                rows={caption ? 20 : 3}
+                rows={caption ? 10 : 3}
                 onChange={(e) => {
                   setCaption(e.target.value);
                 }}
