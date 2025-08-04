@@ -1,605 +1,577 @@
 {
   "polres_badung": [
     {
-      "tanggal": "1 Juli 2025",
-      "hari": "Selasa",
-      "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "2 Juli 2025",
-      "hari": "Rabu",
-      "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "3 Juli 2025",
-      "hari": "Kamis",
-      "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "4 Juli 2025",
+      "tanggal": "1 Agustus 2025",
       "hari": "Jumat",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "5 Juli 2025",
+      "tanggal": "2 Agustus 2025",
       "hari": "Sabtu",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "7 Juli 2025",
+      "tanggal": "4 Agustus 2025",
       "hari": "Senin",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "8 Juli 2025",
+      "tanggal": "5 Agustus 2025",
       "hari": "Selasa",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "9 Juli 2025",
+      "tanggal": "6 Agustus 2025",
       "hari": "Rabu",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "10 Juli 2025",
+      "tanggal": "7 Agustus 2025",
       "hari": "Kamis",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "11 Juli 2025",
+      "tanggal": "8 Agustus 2025",
       "hari": "Jumat",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "12 Juli 2025",
+      "tanggal": "9 Agustus 2025",
       "hari": "Sabtu",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "14 Juli 2025",
+      "tanggal": "11 Agustus 2025",
       "hari": "Senin",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "15 Juli 2025",
+      "tanggal": "12 Agustus 2025",
       "hari": "Selasa",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "16 Juli 2025",
+      "tanggal": "13 Agustus 2025",
       "hari": "Rabu",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "17 Juli 2025",
+      "tanggal": "14 Agustus 2025",
       "hari": "Kamis",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "18 Juli 2025",
+      "tanggal": "15 Agustus 2025",
       "hari": "Jumat",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "19 Juli 2025",
+      "tanggal": "16 Agustus 2025",
       "hari": "Sabtu",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "21 Juli 2025",
+      "tanggal": "18 Agustus 2025",
       "hari": "Senin",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "22 Juli 2025",
+      "tanggal": "19 Agustus 2025",
       "hari": "Selasa",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "23 Juli 2025",
+      "tanggal": "20 Agustus 2025",
       "hari": "Rabu",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "24 Juli 2025",
+      "tanggal": "21 Agustus 2025",
       "hari": "Kamis",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "25 Juli 2025",
+      "tanggal": "22 Agustus 2025",
       "hari": "Jumat",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "26 Juli 2025",
+      "tanggal": "23 Agustus 2025",
       "hari": "Sabtu",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "28 Juli 2025",
+      "tanggal": "25 Agustus 2025",
       "hari": "Senin",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "29 Juli 2025",
+      "tanggal": "26 Agustus 2025",
       "hari": "Selasa",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "30 Juli 2025",
+      "tanggal": "27 Agustus 2025",
       "hari": "Rabu",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "31 Juli 2025",
+      "tanggal": "28 Agustus 2025",
       "hari": "Kamis",
+      "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
+      "waktu": "08.30 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "29 Agustus 2025",
+      "hari": "Jumat",
+      "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
+      "waktu": "08.30 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "30 Agustus 2025",
+      "hari": "Sabtu",
       "lokasi": ["DAMKAR DALUNG", "MALL PELAYANAN PUBLIK PUSPEM"],
       "waktu": "08.30 WITA s/d SELESAI"
     }
   ],
   "polres_buleleng": [
     {
-      "tanggal": "9 Juli 2025",
-      "hari": "RABU",
-      "lokasi": "DESA PATAS, KEC. GEROKGAK",
+      "tanggal": "7 AGUSTUS 2025",
+      "hari": "KAMIS",
+      "lokasi": ["DESA KEKERAN, KEC. BUSBUNGBU"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "16 Juli 2025",
-      "hari": "RABU",
-      "lokasi": "PASAR PANCASARI, KEC. SUKASADA",
+      "tanggal": "11 AGUSTUS 2025",
+      "hari": "SENIN",
+      "lokasi": ["DESA KEKERAN, KEC. BUSBUNGBU"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "23 Juli 2025",
-      "hari": "RABU",
-      "lokasi": "LAPANGAN SERIRIT, KEC. SERIRIT",
+      "tanggal": "14 AGUSTUS 2025",
+      "hari": "KAMIS",
+      "lokasi": ["DESA KEKERAN, KEC. BUSBUNGBU"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "22 AGUSTUS 2025",
+      "hari": "KAMIS",
+      "lokasi": ["PARKIRAN KRISNA TEMUKUS"],
       "waktu": "08.00 WITA s/d SELESAI"
     }
   ],
   "polres_tabanan": [
     {
-      "tanggal": "8 Juli 2025",
+      "tanggal": "5 AGUSTUS 2025",
       "hari": "SELASA",
-      "lokasi": "ASTRA MOTOR GRONGGAK, TABANAN",
+      "lokasi": ["ASTRA MOTOR GRONGGAK"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "15 Juli 2025",
+      "tanggal": "12 AGUSTUS 2025",
       "hari": "SELASA",
-      "lokasi": "ASTRA MOTOR GRONGGAK, TABANAN",
+      "lokasi": ["ASTRA MOTOR GRONGGAK"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "22 Juli 2025",
+      "tanggal": "19 AGUSTUS 2025",
       "hari": "SELASA",
-      "lokasi": "ASTRA MOTOR GRONGGAK, TABANAN",
+      "lokasi": ["ASTRA MOTOR GRONGGAK"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "29 Juli 2025",
+      "tanggal": "26 AGUSTUS 2025",
       "hari": "SELASA",
-      "lokasi": "ASTRA MOTOR GRONGGAK, TABANAN",
+      "lokasi": ["ASTRA MOTOR GRONGGAK"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "3 Juli 2025",
+      "tanggal": "7 AGUSTUS 2025",
       "hari": "KAMIS",
-      "lokasi": "KURNIA SEAFOOD KEDIRI, TABANAN",
+      "lokasi": ["KURNIA SEAFOOD KEDIRI"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "10 Juli 2025",
+      "tanggal": "14 AGUSTUS 2025",
       "hari": "KAMIS",
-      "lokasi": "KURNIA SEAFOOD KEDIRI, TABANAN",
+      "lokasi": ["KURNIA SEAFOOD KEDIRI"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "17 Juli 2025",
+      "tanggal": "21 AGUSTUS 2025",
       "hari": "KAMIS",
-      "lokasi": "COCO MART KEDIRI, TABANAN",
+      "lokasi": ["COCO MART KEDIRI"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "24 Juli 2025",
+      "tanggal": "28 AGUSTUS 2025",
       "hari": "KAMIS",
-      "lokasi": "COCO MART KEDIRI, TABANAN",
+      "lokasi": ["COCO MART KEDIRI"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "5 Juli 2025",
+      "tanggal": "2 AGUSTUS 2025",
       "hari": "SABTU",
-      "lokasi": "PASAR SENGGOL, TABANAN",
+      "lokasi": ["PASAR SENGGOL"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "12 Juli 2025",
+      "tanggal": "9 AGUSTUS 2025",
       "hari": "SABTU",
-      "lokasi": "PASAR SENGGOL, TABANAN",
-      "waktu": "08.00 WITA s/d SELESAI"
+      "lokasi": ["PASAR SENGGOL"],
+      "waktu": "18.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "19 Juli 2025",
+      "tanggal": "16 AGUSTUS 2025",
       "hari": "SABTU",
-      "lokasi": "PASAR SENGGOL, TABANAN",
-      "waktu": "08.00 WITA s/d SELESAI"
+      "lokasi": ["PASAR SENGGOL"],
+      "waktu": "18.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "26 Juli 2025",
+      "tanggal": "23 AGUSTUS 2025",
       "hari": "SABTU",
-      "lokasi": "PASAR SENGGOL, TABANAN",
-      "waktu": "08.00 WITA s/d SELESAI"
+      "lokasi": ["PASAR SENGGOL"],
+      "waktu": "18.00 WITA s/d SELESAI"
     }
   ],
   "polres_gianyar": [
     {
-      "tanggal": "8 Juli 2025",
+      "tanggal": "5 AGUSTUS 2025",
       "hari": "SELASA",
-      "lokasi": "OBYEK WISATA GOA GAJAH",
+      "lokasi": ["OBYEK WISATA GOA GAJAH"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "15 Juli 2025",
+      "tanggal": "12 AGUSTUS 2025",
       "hari": "SELASA",
-      "lokasi": "OBYEK WISATA GOA GAJAH",
+      "lokasi": ["OBYEK WISATA GOA GAJAH"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "24 Juli 2025",
+      "tanggal": "21 AGUSTUS 2025",
       "hari": "KAMIS",
-      "lokasi": "CENTRAL PARKIR MONKEY FOREST",
+      "lokasi": ["CENTRAL PARKIR MONKEY FOREST"],
       "waktu": "08.30 WITA s/d SELESAI"
     },
     {
-      "tanggal": "6 Juli 2025",
+      "tanggal": "28 AGUSTUS 2025",
+      "hari": "KAMIS",
+      "lokasi": ["CENTRAL PARKIR MONKEY FOREST"],
+      "waktu": "08.30 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "3 AGUSTUS 2025",
       "hari": "MINGGU",
-      "lokasi": "ALUN - ALUN GIANYAR",
+      "lokasi": ["ALUN - ALUN GIANYAR"],
       "waktu": "07.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "13 Juli 2025",
+      "tanggal": "10 AGUSTUS 2025",
       "hari": "MINGGU",
-      "lokasi": "ALUN - ALUN GIANYAR",
+      "lokasi": ["ALUN - ALUN GIANYAR"],
       "waktu": "07.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "20 Juli 2025",
+      "tanggal": "17 AGUSTUS 2025",
       "hari": "MINGGU",
-      "lokasi": "ALUN - ALUN GIANYAR",
-      "waktu": "07.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "27 Juli 2025",
-      "hari": "MINGGU",
-      "lokasi": "ALUN - ALUN GIANYAR",
+      "lokasi": ["ALUN - ALUN GIANYAR"],
       "waktu": "07.00 WITA s/d SELESAI"
     }
   ],
   "polres_klungkung": [
     {
-      "tanggal": "7 Juli 2025",
-      "hari": "SENIN",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "14 Juli 2025",
-      "hari": "SENIN",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "21 Juli 2025",
-      "hari": "SENIN",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "28 Juli 2025",
-      "hari": "SENIN",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "1 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "8 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "15 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "22 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "29 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "2 Juli 2025",
-      "hari": "RABU",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "9 Juli 2025",
-      "hari": "RABU",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "16 Juli 2025",
-      "hari": "RABU",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "23 Juli 2025",
-      "hari": "RABU",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "30 Juli 2025",
-      "hari": "RABU",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "3 Juli 2025",
-      "hari": "KAMIS",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "10 Juli 2025",
-      "hari": "KAMIS",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "17 Juli 2025",
-      "hari": "KAMIS",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "24 Juli 2025",
-      "hari": "KAMIS",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "31 Juli 2025",
-      "hari": "KAMIS",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "4 Juli 2025",
+      "tanggal": "1 AGUSTUS 2025",
       "hari": "JUMAT",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "11 Juli 2025",
+      "tanggal": "4 AGUSTUS 2025",
+      "hari": "SENIN",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "5 AGUSTUS 2025",
+      "hari": "SELASA",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "6 AGUSTUS 2025",
+      "hari": "RABU",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "7 AGUSTUS 2025",
+      "hari": "KAMIS",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "8 AGUSTUS 2025",
       "hari": "JUMAT",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "18 Juli 2025",
+      "tanggal": "11 AGUSTUS 2025",
+      "hari": "SENIN",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "12 AGUSTUS 2025",
+      "hari": "SELASA",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "13 AGUSTUS 2025",
+      "hari": "RABU",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "14 AGUSTUS 2025",
+      "hari": "KAMIS",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "15 AGUSTUS 2025",
       "hari": "JUMAT",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "25 Juli 2025",
+      "tanggal": "18 AGUSTUS 2025",
+      "hari": "SENIN",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "19 AGUSTUS 2025",
+      "hari": "SELASA",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "20 AGUSTUS 2025",
+      "hari": "RABU",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "21 AGUSTUS 2025",
+      "hari": "KAMIS",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "22 AGUSTUS 2025",
       "hari": "JUMAT",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "5 Juli 2025",
-      "hari": "SABTU",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
+      "tanggal": "25 AGUSTUS 2025",
+      "hari": "SENIN",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "12 Juli 2025",
-      "hari": "SABTU",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
+      "tanggal": "26 AGUSTUS 2025",
+      "hari": "SELASA",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "19 Juli 2025",
-      "hari": "SABTU",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
+      "tanggal": "27 AGUSTUS 2025",
+      "hari": "RABU",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "26 Juli 2025",
-      "hari": "SABTU",
-      "lokasi": "KANTOR CAMAT NUSA PENIDA",
+      "tanggal": "28 AGUSTUS 2025",
+      "hari": "KAMIS",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "29 AGUSTUS 2025",
+      "hari": "JUMAT",
+      "lokasi": ["KANTOR BUPATI KLUNGKUNG"],
       "waktu": "08.00 WITA s/d SELESAI"
     }
   ],
   "polres_bangli": [
-    {
-      "tanggal": "8 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "PASAR KAYAMBUA",
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "22 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "PASAR KAYAMBUA",
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "2 Juli 2025",
-      "hari": "RABU",
-      "lokasi": "PASAR KINTAMANI",
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "16 Juli 2025",
-      "hari": "RABU",
-      "lokasi": "PASAR KINTAMANI",
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "10 Juli 2025",
-      "hari": "KAMIS",
-      "lokasi": "PASAR METRO",
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "24 Juli 2025",
-      "hari": "KAMIS",
-      "lokasi": "PASAR METRO",
-      "waktu": "08.30 WITA s/d SELESAI"
-    }
+    [
+      {
+        "tanggal": "5 Agustus 2025",
+        "hari": "Selasa",
+        "lokasi": ["PASAR KAYUAMBUA"],
+        "waktu": "08.30 WITA s/d SELESAI"
+      },
+      {
+        "tanggal": "19 Agustus 2025",
+        "hari": "Selasa",
+        "lokasi": ["PASAR KAYUAMBUA"],
+        "waktu": "08.30 WITA s/d SELESAI"
+      },
+      {
+        "tanggal": "13 Agustus 2025",
+        "hari": "Rabu",
+        "lokasi": ["PASAR KINTAMANI"],
+        "waktu": "08.30 WITA s/d SELESAI"
+      },
+      {
+        "tanggal": "27 Agustus 2025",
+        "hari": "Rabu",
+        "lokasi": ["PASAR KINTAMANI"],
+        "waktu": "08.30 WITA s/d SELESAI"
+      },
+      {
+        "tanggal": "7 Agustus 2025",
+        "hari": "Kamis",
+        "lokasi": ["PASAR METRO"],
+        "waktu": "08.30 WITA s/d SELESAI"
+      },
+      {
+        "tanggal": "21 Agustus 2025",
+        "hari": "Kamis",
+        "lokasi": ["PASAR METRO"],
+        "waktu": "08.30 WITA s/d SELESAI"
+      }
+    ]
   ],
   "polres_karangasem": [
     {
-      "tanggal": "4 Juli 2025",
-      "hari": "JUMAT",
-      "lokasi": "TAMAN CINTA CANDIDASA",
+      "tanggal": "5 Agustus 2025",
+      "hari": "Selasa",
+      "lokasi": ["TERMINAL BEBANDEM"],
       "waktu": "11.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "8 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "POLSEK KUBU",
+      "tanggal": "08 Agustus 2025",
+      "hari": "Jumat",
+      "lokasi": ["POLSEK ABANG"],
       "waktu": "11.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "11 Juli 2025",
-      "hari": "JUMAT",
-      "lokasi": "POLSEK ABANG",
+      "tanggal": "12 Agustus 2025",
+      "hari": "Selasa",
+      "lokasi": ["TAMAN CINTA CANDI DASA"],
       "waktu": "11.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "15 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "POLSEK RENDANG",
+      "tanggal": "15 Agustus 2025",
+      "hari": "Jumat",
+      "lokasi": ["POLSEK PESANGKAN SELAT"],
       "waktu": "11.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "18 Juli 2025",
-      "hari": "JUMAT",
-      "lokasi": "KANTOR CAMAT MANGGIS",
+      "tanggal": "19 Agustus 2025",
+      "hari": "Selasa",
+      "lokasi": ["KANTOR CAMAT MANGGIS"],
       "waktu": "11.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "22 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "PASAR PESANGGRAN SELAT",
+      "tanggal": "22 Agustus 2025",
+      "hari": "Jumat",
+      "lokasi": ["POLSEK RENDANG"],
       "waktu": "11.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "25 Juli 2025",
-      "hari": "JUMAT",
-      "lokasi": "TERMINAL BEBANDEM",
+      "tanggal": "26 Agustus 2025",
+      "hari": "Selasa",
+      "lokasi": ["POLSEK KUBU"],
       "waktu": "11.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "29 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "PASAR SINDOWATI",
+      "tanggal": "29 Agustus 2025",
+      "hari": "Selasa",
+      "lokasi": ["POLSEK SINDUWATI SIDEMEN"],
       "waktu": "11.00 WITA s/d SELESAI"
     }
   ],
   "polres_jembrana": [
     {
-      "tanggal": "4 Juli 2025",
-      "hari": "JUMAT",
-      "lokasi": "WATERBEE GILIMANUK",
+      "tanggal": "1 Agustus 2025",
+      "hari": "Jumat",
+      "lokasi": ["PASAR MELAYA"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "8 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "TPI PENGAMBENGAN",
+      "tanggal": "5 Agustus 2025",
+      "hari": "Selasa",
+      "lokasi": ["TPI PENGAMBENGAN"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "11 Juli 2025",
-      "hari": "JUMAT",
-      "lokasi": "LAPANGAN PERGUNG",
+      "tanggal": "8 Agustus 2025",
+      "hari": "Jumat",
+      "lokasi": ["LAPANGAN DESA YEHEMBANG"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "15 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "PASAR SENGGOL PEKUTATAN",
+      "tanggal": "12 Agustus 2025",
+      "hari": "Selasa",
+      "lokasi": ["PASAR SENGGOL PERKUTATAN"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "18 Juli 2025",
-      "hari": "JUMAT",
-      "lokasi": "PASAR MELAYA",
+      "tanggal": "15 Agustus 2025",
+      "hari": "Jumat",
+      "lokasi": ["WATERBEE GILIMANUK"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "22 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "TPI PENGAMBENGAN",
+      "tanggal": "19 Agustus 2025",
+      "hari": "Selasa",
+      "lokasi": ["TPI PENGAMBENGAN"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "25 Juli 2025",
-      "hari": "JUMAT",
-      "lokasi": "LAPANGAN DESA YEHEMBANG",
+      "tanggal": "22 Agustus 2025",
+      "hari": "Jumat",
+      "lokasi": ["KANTOR DESA PENYARINGAN"],
       "waktu": "08.00 WITA s/d SELESAI"
     },
     {
-      "tanggal": "29 Juli 2025",
-      "hari": "SELASA",
-      "lokasi": "PASAR SENGGOL PEKUTATAN",
+      "tanggal": "26 Agustus 2025",
+      "hari": "Selasa",
+      "lokasi": ["PASAR SENGGOL PERKUTATAN"],
+      "waktu": "08.00 WITA s/d SELESAI"
+    },
+    {
+      "tanggal": "29 Agustus 2025",
+      "hari": "Jumat",
+      "lokasi": ["PASAR MELAYA"],
       "waktu": "08.00 WITA s/d SELESAI"
     }
   ]
