@@ -31,8 +31,7 @@ import { FaPaste, FaDownload, FaArrowLeft, FaPlay, FaPause, FaCamera } from "rea
 import { useRouter } from "next/navigation";
 import * as htmlToImage from "html-to-image";
 import { Roboto } from "next/font/google";
-import { hashtag, getInstagramShortcode } from "../config";
-import puppeteer from "puppeteer";
+import { hashtag } from "../config";
 
 const roboto = Roboto({
   weight: "700",
