@@ -108,10 +108,15 @@ export default function Page() {
     e.preventDefault();
 
     showToast("Loading", 4, "Please wait...");
-    const shortcode = getInstagramShortcode(url);
-    const apiRapid = `https://instagram-scraper-api2.p.rapidapi.com/v1/post_info?code_or_id_or_url=${shortcode}&include_insights=true`;
+
 
     try {
+      const resIG = await fetch(`/api/instagram?url=${url}`, { method: "GET", })
+      const js = await resIG.json()
+
+      const shortcode = js.code;
+      const apiRapid = `https://instagram-scraper-api2.p.rapidapi.com/v1/post_info?code_or_id_or_url=${shortcode}&include_insights=true`;
+
       const response = await fetch(apiRapid, {
         method: "GET",
         headers: {
@@ -122,22 +127,22 @@ export default function Page() {
       const res = await response.json();
       const data = res.data;
 
-      let url = "";
+      let urlVideo = "";
       if (data.carousel_media === undefined) {
         if (data.is_video) {
           if (data.video_duration <= 60) {
-            url = `${data.video_versions[0].url}&dl=1`;
+            urlVideo = `${data.video_versions[0].url}&dl=1`;
           } else {
-            url = `${data.video_versions[1].url}&dl=1`;
+            urlVideo = `${data.video_versions[1].url}&dl=1`;
           }
         }
       } else {
         for (const dt of data.carousel_media) {
           if (dt.is_video) {
             if (dt.video_duration <= 60) {
-              url = `${dt.video_versions[0].url}&dl=1`;
+              urlVideo = `${dt.video_versions[0].url}&dl=1`;
             } else {
-              url = `${dt.video_versions[1].url}&dl=1`;
+              urlVideo = `${dt.video_versions[1].url}&dl=1`;
             }
           }
         }

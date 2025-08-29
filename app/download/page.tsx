@@ -32,6 +32,7 @@ import { useRouter } from "next/navigation";
 import * as htmlToImage from "html-to-image";
 import { Roboto } from "next/font/google";
 import { hashtag, getInstagramShortcode } from "../config";
+import puppeteer from "puppeteer";
 
 const roboto = Roboto({
   weight: "700",
@@ -148,6 +149,7 @@ export default function Page() {
     videoElement.pause();
   };
 
+
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -158,10 +160,14 @@ export default function Page() {
       duration: null,
     });
 
-    const shortcode = getInstagramShortcode(url);
-    const apiRapid = `https://instagram-scraper-api2.p.rapidapi.com/v1/post_info?code_or_id_or_url=${shortcode}&include_insights=true`;
 
     try {
+      const resIG = await fetch(`/api/instagram?url=${url}`, { method: "GET", })
+      const js = await resIG.json()
+
+      const shortcode = js.code;
+      const apiRapid = `https://instagram-scraper-api2.p.rapidapi.com/v1/post_info?code_or_id_or_url=${shortcode}&include_insights=true`;
+
       const response = await fetch(apiRapid, {
         method: "GET",
         headers: {
