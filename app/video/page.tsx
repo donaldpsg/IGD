@@ -30,7 +30,7 @@ import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
 import { useRouter } from "next/navigation";
 import { Icon, useToast } from "@chakra-ui/react";
-import { getInstagramShortcode, hashtag } from "../config";
+import { hashtag } from "../config";
 import { Roboto } from "next/font/google";
 import * as htmlToImage from "html-to-image";
 
@@ -149,7 +149,7 @@ export default function Page() {
       }
 
       const video = document.createElement("video");
-      video.src = url;
+      video.src = urlVideo;
 
       video.onloadedmetadata = function () {
         setVideoWidth(video.videoWidth);
@@ -158,7 +158,7 @@ export default function Page() {
         URL.revokeObjectURL(video.src);
       };
 
-      setVideoURL(url);
+      setVideoURL(urlVideo);
       setOriginalCaption(data.caption.text);
       setOwner(data.user.username);
       setFbid(data.fbid);
