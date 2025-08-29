@@ -1,6 +1,9 @@
-// app/api/resolve/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import puppeteer from "puppeteer";
+import { launchBrowser } from "@/app/lib/puppeteer";
+
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
@@ -10,22 +13,22 @@ export async function GET(req: NextRequest) {
         return NextResponse.json({ error: "Missing url" }, { status: 400 });
     }
 
+    let browser = null;
     try {
-        const browser = await puppeteer.launch({
-            headless: true,
-            args: ["--no-sandbox", "--disable-setuid-sandbox"],
-        });
-
+        browser = await launchBrowser();
         const page = await browser.newPage();
-        await page.goto(shortUrl, { waitUntil: "networkidle2" });
 
-        // Setelah redirect, url() sudah berubah ke URL final
+        await page.setUserAgent(
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+            "AppleWebKit/537.36 (KHTML, like Gecko) " +
+            "Chrome/123.0.0.0 Safari/537.36"
+        );
+
+        await page.goto(shortUrl, { waitUntil: "domcontentloaded", timeout: 30000 });
+
         const finalUrl = page.url();
-        await browser.close();
-
-        let code: string | null = null;
         const match = finalUrl.match(/\/reel\/([^/?]+)/);
-        if (match) code = match[1];
+        const code = match ? match[1] : null;
 
         return NextResponse.json({ code, fullUrl: finalUrl });
     } catch (err) {
@@ -33,5 +36,7 @@ export async function GET(req: NextRequest) {
             { error: "Failed to resolve", detail: String(err) },
             { status: 500 }
         );
+    } finally {
+        if (browser) await browser.close().catch(() => { });
     }
 }
