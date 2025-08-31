@@ -55,8 +55,6 @@ export default function Page() {
 
   const router = useRouter();
   const toast = useToast();
-  const xRapidApiHost = "instagram-scraper-api2.p.rapidapi.com";
-  const xRapidApiKey = "93b488f6f7msh4e6c6df286868e0p1bf4c6jsn7e78bf5fa74b";
 
   const showToast = useCallback(
     async (title: string, iStatus: number, message: string) => {
@@ -109,47 +107,27 @@ export default function Page() {
 
     showToast("Loading", 4, "Please wait...");
 
-
     try {
-      const resIG = await fetch(`/api/instagram?url=${url}`, { method: "GET", })
-      const js = await resIG.json()
-
-      const shortcode = js.code;
-      const apiRapid = `https://instagram-scraper-api2.p.rapidapi.com/v1/post_info?code_or_id_or_url=${shortcode}&include_insights=true`;
+      const apiRapid = "https://instagram120.p.rapidapi.com/api/instagram/links";
+      const xRapidApiKey = "93b488f6f7msh4e6c6df286868e0p1bf4c6jsn7e78bf5fa74b";
+      const xRapidApiHost = "instagram120.p.rapidapi.com";
 
       const response = await fetch(apiRapid, {
-        method: "GET",
+        method: "POST",
         headers: {
-          "x-rapidapi-host": xRapidApiHost,
+          "Content-Type": "application/json",
           "x-rapidapi-key": xRapidApiKey,
+          "x-rapidapi-host": xRapidApiHost,
         },
+        body: JSON.stringify({
+          url,
+        }),
       });
-      const res = await response.json();
-      const data = res.data;
 
-      let urlVideo = "";
-      if (data.carousel_media === undefined) {
-        if (data.is_video) {
-          if (data.video_duration <= 60) {
-            urlVideo = `${data.video_versions[0].url}&dl=1`;
-          } else {
-            urlVideo = `${data.video_versions[1].url}&dl=1`;
-          }
-        }
-      } else {
-        for (const dt of data.carousel_media) {
-          if (dt.is_video) {
-            if (dt.video_duration <= 60) {
-              urlVideo = `${dt.video_versions[0].url}&dl=1`;
-            } else {
-              urlVideo = `${dt.video_versions[1].url}&dl=1`;
-            }
-          }
-        }
-      }
+      const data = await response.json();
 
       const video = document.createElement("video");
-      video.src = urlVideo;
+      video.src = data[0].urls[0].url;
 
       video.onloadedmetadata = function () {
         setVideoWidth(video.videoWidth);
@@ -158,15 +136,15 @@ export default function Page() {
         URL.revokeObjectURL(video.src);
       };
 
-      setVideoURL(urlVideo);
-      setOriginalCaption(data.caption.text);
-      setOwner(data.user.username);
-      setFbid(data.fbid);
+      setVideoURL(data[0].urls[0].url);
+      setOriginalCaption(data[0].meta.title);
+      setOwner(data[0].meta.username);
+      setFbid(data[0].urls[0].url);
 
       if (repost) {
-        setCaption(`${data.caption.text}\n\nRepost : @${data.user.username}\n\n${hashtag.join(" ")}`);
+        setCaption(`${data[0].meta.title}\n\nRepost : @${data[0].meta.username}\n\n${hashtag.join(" ")}`);
       } else {
-        setCaption(`${data.caption.text}\n\n${hashtag.join(" ")}`);
+        setCaption(`${data[0].meta.title}\n\n${hashtag.join(" ")}`);
       }
 
       toast.closeAll();
@@ -215,14 +193,12 @@ export default function Page() {
 
       const element = document.getElementById("canvas");
       if (element) {
-
         if (videoWidth === 720) {
           element.style.transform = `scale(0.6)`;
         } else {
           const scale = videoWidth / 1200;
           element.style.transform = `scale(${scale})`;
         }
-
 
         const dataUrl = await htmlToImage.toPng(element, {});
 
