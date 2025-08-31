@@ -43,6 +43,27 @@ interface IMedia {
   title: string;
 }
 
+interface IUrl {
+  url: string;
+  name: string;
+  extension: string;
+}
+
+interface IApiResponseItem {
+  urls: IUrl[];
+  meta: {
+    title: string;
+    sourceUrl: string;
+    shortcode: string;
+    commentCount: number;
+    likeCount: number;
+    takenAt: number;
+    username: string;
+  };
+  pictureUrl: string;
+  service: string;
+}
+
 export default function Page() {
   const [url, setUrl] = useState("");
   const [caption, setCaption] = useState("");
@@ -57,8 +78,6 @@ export default function Page() {
 
   const router = useRouter();
   const toast = useToast();
-  const xRapidApiHost = "instagram-scraper-api2.p.rapidapi.com";
-  const xRapidApiKey = "93b488f6f7msh4e6c6df286868e0p1bf4c6jsn7e78bf5fa74b";
 
   // const accessToken = "IGQWRQOTZAPUlpXdGgxMDgwV283Nk5fVDJ2NTZAwX081UVNCLXFneDYyUEJmMWZAyODFtQTRTTWRHbVlyS041YW55MThIQUlLWU9ZANGZAsMnI4eXJUckdGV3pyMnZAQUGMzOEhyWnhhbjUzY2dIZA1FGMUMxN3RTc3BHX2sZD"
 
@@ -148,7 +167,6 @@ export default function Page() {
     videoElement.pause();
   };
 
-
   const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -159,70 +177,43 @@ export default function Page() {
       duration: null,
     });
 
-
     try {
-      const resIG = await fetch(`/api/instagram?url=${url}`, { method: "GET", })
-      const js = await resIG.json()
-
-      const shortcode = js.code;
-      const apiRapid = `https://instagram-scraper-api2.p.rapidapi.com/v1/post_info?code_or_id_or_url=${shortcode}&include_insights=true`;
+      const apiRapid = "https://instagram120.p.rapidapi.com/api/instagram/links";
+      const xRapidApiKey = "93b488f6f7msh4e6c6df286868e0p1bf4c6jsn7e78bf5fa74b";
+      const xRapidApiHost = "instagram120.p.rapidapi.com";
 
       const response = await fetch(apiRapid, {
-        method: "GET",
+        method: "POST",
         headers: {
-          "x-rapidapi-host": xRapidApiHost,
+          "Content-Type": "application/json",
           "x-rapidapi-key": xRapidApiKey,
+          "x-rapidapi-host": xRapidApiHost,
         },
+        body: JSON.stringify({
+          url,
+        }),
       });
-      const res = await response.json();
+      const data = await response.json();
 
-      const data = res.data;
+      const links: IMedia[] = (data as IApiResponseItem[]).map((item, index) => ({
+        url: item.urls[0]?.url ?? "",
+        title: `Download Slide #${index + 1}`,
+      }));
 
-      const links: IMedia[] = [];
-
-      if (data.carousel_media === undefined) {
-        if (data.is_video) {
-          links.push({
-            url: `${data.video_versions[0].url}&dl=1`,
-            title: "Download Video",
-          });
-        }
-      } else {
-        let i = 1;
-        for (const dt of data.carousel_media) {
-          if (dt.is_video) {
-            links.push({
-              url: `${dt.video_versions[0].url}&dl=1`,
-              title: `Download Slide #${i}`,
-            });
-          } else {
-            links.push({
-              url: `${dt.thumbnail_url}&dl=1`,
-              title: `Download Slide #${i}`,
-            });
-          }
-          i++;
-        }
-      }
-
-      links.push({
-        url: `${data.thumbnail_url}&dl=1`,
-        title: `Download Thumbnail`,
-      });
-
-      setOriginalCaption(data.caption.text);
-      setOwner(data.user.username);
+      setOriginalCaption(data[0].meta.title);
+      setOwner(data[0].meta.username);
       setMedia(links);
 
       if (repost) {
-        setCaption(`${data.caption.text}\n\nRepost : @${data.user.username}\n\n${hashtag.join(" ")}`);
+        setCaption(`${data[0].meta.title}\n\nRepost : @${data[0].meta.username}\n\n${hashtag.join(" ")}`);
       } else {
-        setCaption(`${data.caption.text}\n\n${hashtag.join(" ")}`);
+        setCaption(`${data[0].meta.title}\n\n${hashtag.join(" ")}`);
       }
 
       toast.closeAll();
     } catch (e) {
       toast.closeAll();
+      console.log(e);
       showToast("Error", 1, (e as Error).message);
     }
   };
