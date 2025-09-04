@@ -60,7 +60,6 @@ interface IApiResponseItem {
     takenAt: number;
     username: string;
   };
-  pictureUrl: string;
   service: string;
 }
 
@@ -195,6 +194,8 @@ export default function Page() {
       });
       const data = await response.json();
 
+
+
       const links: IMedia[] = (data as IApiResponseItem[]).map((item, index) => ({
         url: item.urls[0]?.url ?? "",
         title: `Download Slide #${index + 1}`,
@@ -203,6 +204,7 @@ export default function Page() {
       setOriginalCaption(data[0].meta.title);
       setOwner(data[0].meta.username);
       setMedia(links);
+      setGambar(data[0].pictureUrl)
 
       if (repost) {
         setCaption(`${data[0].meta.title}\n\nRepost : @${data[0].meta.username}\n\n${hashtag.join(" ")}`);
@@ -422,7 +424,7 @@ export default function Page() {
 
           <Center id="canvas" style={{ position: "relative", width: 380, height: 475 }}>
             <Image src="/images/logo-pd.png" w={100} style={{ position: "absolute", top: 15 }} alt="logo white" />
-            <Image src={gambar ? gambar : "/images/no-image.jpg"} w={380} h={475} fit="cover" alt="media" />
+            <Image src={gambar ? `/api/proxy?url=${encodeURIComponent(gambar)}` : "/images/no-image.jpg"} w={380} h={475} fit="cover" alt="media" />
             {title !== "" && (
               <Container
                 style={{ position: "absolute", bottom: 40, boxShadow: "7px 7px #148b9d" }}
@@ -439,6 +441,7 @@ export default function Page() {
           <Button onClick={() => downloadFrame("canvas", createFileName())} colorScheme="teal" size="sm">
             Download Thumbnail
           </Button>
+
         </SimpleGrid>
       </Box>
     </VStack>
