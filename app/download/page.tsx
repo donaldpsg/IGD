@@ -72,6 +72,7 @@ export default function Page() {
   const [media, setMedia] = useState<IMedia[]>([]);
   const [repost, setRepost] = useState(true);
   const [gambar, setGambar] = useState("");
+  const [imageFile, setImageFile] = useState("");
   const [title, setTitle] = useState(``);
   const [isVideo, setIsVideo] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -125,14 +126,14 @@ export default function Page() {
       if (imageTypes.includes(fileType)) {
         const blob = new Blob([selectedFiles[0]]);
         const imgsrc = URL.createObjectURL(blob);
-        setGambar(imgsrc);
+        setImageFile(imgsrc);
         setIsVideo(false);
       } else {
         if (videoRef.current) {
           const videoSrc = URL.createObjectURL(new Blob([selectedFiles[0]], { type: "video/mp4" }));
           videoRef.current.src = videoSrc;
           setIsVideo(true);
-          setGambar("");
+          setImageFile("");
         }
       }
 
@@ -154,7 +155,7 @@ export default function Page() {
       context.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
     }
 
-    setGambar(canvasElement.toDataURL("image/png"));
+    setImageFile(canvasElement.toDataURL("image/png"));
   };
 
   const play = async () => {
@@ -195,8 +196,6 @@ export default function Page() {
       });
       const data = await response.json();
 
-
-
       const links: IMedia[] = (data as IApiResponseItem[]).map((item, index) => ({
         url: item.urls[0]?.url ?? "",
         title: `Download Slide #${index + 1}`,
@@ -205,7 +204,8 @@ export default function Page() {
       setOriginalCaption(data[0].meta.title);
       setOwner(data[0].meta.username);
       setMedia(links);
-      setGambar(data[0].pictureUrl)
+      setGambar(data[0].pictureUrl);
+      setImageFile("");
 
       if (repost) {
         setCaption(`${data[0].meta.title}\n\nRepost : @${data[0].meta.username}\n\n${hashtag.join(" ")}`);
@@ -334,12 +334,7 @@ export default function Page() {
                     ))}
 
                     <a href="/images/slide-pd.jpg" download="slide.jpg">
-                      <Button
-                        size="sm"
-                        colorScheme="teal"
-                        width="100%"
-                        leftIcon={<DownloadIcon />}
-                      >
+                      <Button size="sm" colorScheme="teal" width="100%" leftIcon={<DownloadIcon />}>
                         Slde Planet Denpasar
                       </Button>
                     </a>
@@ -436,7 +431,15 @@ export default function Page() {
 
           <Center id="canvas" style={{ position: "relative", width: 380, height: 475 }}>
             <Image src="/images/logo-pd.png" w={100} style={{ position: "absolute", top: 15 }} alt="logo white" />
-            <Image src={gambar ? `/api/proxy?url=${encodeURIComponent(gambar)}` : "/images/no-image.jpg"} w={380} h={475} fit="cover" alt="media" />
+            <Image
+              src={
+                imageFile ? imageFile : gambar ? `/api/proxy?url=${encodeURIComponent(gambar)}` : "/images/no-image.jpg"
+              }
+              w={380}
+              h={475}
+              fit="cover"
+              alt="media"
+            />
             {title !== "" && (
               <Container
                 style={{ position: "absolute", bottom: 40, boxShadow: "7px 7px #148b9d" }}
@@ -453,7 +456,6 @@ export default function Page() {
           <Button onClick={() => downloadFrame("canvas", createFileName())} colorScheme="teal" size="sm">
             Download Thumbnail
           </Button>
-
         </SimpleGrid>
       </Box>
     </VStack>
