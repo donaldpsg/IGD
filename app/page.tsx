@@ -1,6 +1,7 @@
 "use client";
 import { Center, VStack, Button, Image, Box, SimpleGrid } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
+import { DownloadIcon } from "@chakra-ui/icons";
 
 export default function Page() {
   const router = useRouter();
@@ -10,7 +11,7 @@ export default function Page() {
       <VStack>
         <Image src="/images/logo-pd.png" alt="logo" h={128} />
         <Box mt={10} borderWidth={2} borderRadius={10} p={4}>
-          <SimpleGrid columns={2} spacing={2}>
+          <SimpleGrid columns={3} spacing={2}>
             <Button
               colorScheme="teal"
               onClick={() => {
@@ -19,16 +20,6 @@ export default function Page() {
             >
               IG POST
             </Button>
-            <Button
-              colorScheme="teal"
-              onClick={() => {
-                router.push(`/twitter`);
-              }}
-            >
-              X VIDEO
-            </Button>
-          </SimpleGrid>
-          <SimpleGrid columns={2} spacing={2} mt={2}>
             <Button
               colorScheme="teal"
               onClick={() => {
@@ -46,24 +37,18 @@ export default function Page() {
               SIM KELILING
             </Button>
           </SimpleGrid>
-          <SimpleGrid columns={2} spacing={2} mt={2}>
-            <Button
-              colorScheme="teal"
-              onClick={() => {
-                router.push(`/watermark`);
-              }}
-            >
-              WATERMARK VIDEO
-            </Button>
-            <Button
-              colorScheme="teal"
-              onClick={() => {
-                router.push(`/cloudinary`);
-              }}
-            >
-              CLOUDINARY
-            </Button>
+          <SimpleGrid columns={1} spacing={2} mt={2}>
+            <a href="/images/slide-pd.jpg" download="slide.jpg">
+              <Button
+                colorScheme="teal"
+                width="100%"
+                leftIcon={<DownloadIcon />}
+              >
+                SLIDE PLANET DENPASAR
+              </Button>
+            </a>
           </SimpleGrid>
+
         </Box>
       </VStack>
     </Center>

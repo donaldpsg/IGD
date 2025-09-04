@@ -33,6 +33,7 @@ import { Icon, useToast } from "@chakra-ui/react";
 import { hashtag } from "../config";
 import { Roboto } from "next/font/google";
 import * as htmlToImage from "html-to-image";
+import { DownloadIcon } from "@chakra-ui/icons";
 
 const roboto = Roboto({
   weight: "700",
@@ -290,6 +291,17 @@ export default function Page() {
                 <Button type="submit" leftIcon={<FaDownload />} colorScheme="teal" size="sm" mt={4} width="100%">
                   DOWNLOAD
                 </Button>
+                <a href="/images/slide-pd.jpg" download="slide.jpg">
+                  <Button
+                    size="sm"
+                    colorScheme="teal"
+                    width="100%"
+                    leftIcon={<DownloadIcon />}
+                    mt={2}
+                  >
+                    Slide Planet Denpasar
+                  </Button>
+                </a>
               </FormControl>
             </form>
           </CardBody>

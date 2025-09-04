@@ -32,6 +32,7 @@ import { useRouter } from "next/navigation";
 import * as htmlToImage from "html-to-image";
 import { Roboto } from "next/font/google";
 import { hashtag } from "../config";
+import { DownloadIcon } from "@chakra-ui/icons";
 
 const roboto = Roboto({
   weight: "700",
@@ -331,6 +332,17 @@ export default function Page() {
                         {item.title}
                       </Button>
                     ))}
+
+                    <a href="/images/slide-pd.jpg" download="slide.jpg">
+                      <Button
+                        size="sm"
+                        colorScheme="teal"
+                        width="100%"
+                        leftIcon={<DownloadIcon />}
+                      >
+                        Slde Planet Denpasar
+                      </Button>
+                    </a>
                   </VStack>
                 </Box>
               )}
