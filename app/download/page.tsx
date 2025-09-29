@@ -33,6 +33,9 @@ import * as htmlToImage from "html-to-image";
 import { Roboto } from "next/font/google";
 import { hashtag } from "../config";
 import { DownloadIcon } from "@chakra-ui/icons";
+import { GoogleGenAI } from "@google/genai";
+
+// const ai = new GoogleGenAI({});
 
 const roboto = Roboto({
   weight: "700",
@@ -79,6 +82,7 @@ export default function Page() {
 
   const router = useRouter();
   const toast = useToast();
+  const ai = new GoogleGenAI({ apiKey: "AIzaSyB0UfAHQyhCUay316B2nm_CTKrTra0aQSY" });
 
   // const accessToken = "IGQWRQOTZAPUlpXdGgxMDgwV283Nk5fVDJ2NTZAwX081UVNCLXFneDYyUEJmMWZAyODFtQTRTTWRHbVlyS041YW55MThIQUlLWU9ZANGZAsMnI4eXJUckdGV3pyMnZAQUGMzOEhyWnhhbjUzY2dIZA1FGMUMxN3RTc3BHX2sZD"
 
@@ -201,6 +205,14 @@ export default function Page() {
         title: `Download Slide #${index + 1}`,
       }));
 
+      if (data[0].meta.title.length > 50) {
+        const resGemini = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`,
+        });
+        setTitle(resGemini.text || "");
+      }
+
       setOriginalCaption(data[0].meta.title);
       setOwner(data[0].meta.username);
       setMedia(links);
@@ -220,6 +232,7 @@ export default function Page() {
       showToast("Error", 1, (e as Error).message);
     }
   };
+
   const copy = () => {
     navigator.clipboard.writeText(caption);
     showToast("Success", 0, "Copied to cliboard");
@@ -335,7 +348,7 @@ export default function Page() {
 
                     <a href="/images/slide-pd.jpg" download="slide.jpg">
                       <Button size="sm" colorScheme="teal" width="100%" leftIcon={<DownloadIcon />}>
-                        Slde Planet Denpasar
+                        Slide Planet Denpasar
                       </Button>
                     </a>
                   </VStack>
@@ -423,6 +436,9 @@ export default function Page() {
                   </FormControl>
                   <Button onClick={() => capitalizeWords()} colorScheme="teal" size="sm" mt={4} ml={1}>
                     Capitalize
+                  </Button>
+                  <Button onClick={() => setTitle("")} colorScheme="teal" size="sm" mt={4} ml={1}>
+                    Clear
                   </Button>
                 </CardBody>
               </Card>
