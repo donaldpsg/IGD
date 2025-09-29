@@ -34,6 +34,7 @@ import { hashtag } from "../config";
 import { Roboto } from "next/font/google";
 import * as htmlToImage from "html-to-image";
 import { DownloadIcon } from "@chakra-ui/icons";
+import { GoogleGenAI } from "@google/genai";
 
 const roboto = Roboto({
   weight: "700",
@@ -54,6 +55,7 @@ export default function Page() {
   const [ffmpeg, setFfmpeg] = useState<FFmpeg | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
+  const ai = new GoogleGenAI({ apiKey: "AIzaSyB0UfAHQyhCUay316B2nm_CTKrTra0aQSY" });
   const router = useRouter();
   const toast = useToast();
 
@@ -136,6 +138,14 @@ export default function Page() {
         // Bebaskan URL setelah selesai digunakan
         URL.revokeObjectURL(video.src);
       };
+
+      if (data[0].meta.title.length > 50) {
+        const resGemini = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`,
+        });
+        setTitle(resGemini.text || "");
+      }
 
       setVideoURL(data[0].urls[0].url);
       setOriginalCaption(data[0].meta.title);
@@ -292,13 +302,7 @@ export default function Page() {
                   DOWNLOAD
                 </Button>
                 <a href="/images/slide-pd.jpg" download="slide.jpg">
-                  <Button
-                    size="sm"
-                    colorScheme="teal"
-                    width="100%"
-                    leftIcon={<DownloadIcon />}
-                    mt={2}
-                  >
+                  <Button size="sm" colorScheme="teal" width="100%" leftIcon={<DownloadIcon />} mt={2}>
                     Slide Planet Denpasar
                   </Button>
                 </a>
@@ -342,6 +346,9 @@ export default function Page() {
             </FormControl>
             <Button onClick={() => capitalizeWords()} colorScheme="teal" size="sm" mt={4} ml={1}>
               Capitalize
+            </Button>
+            <Button onClick={() => setTitle("")} colorScheme="teal" size="sm" mt={4} ml={1}>
+              Clear
             </Button>
             <Button onClick={() => render()} colorScheme="teal" size="sm" mt={4} ml={1}>
               Render Video
