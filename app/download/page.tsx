@@ -35,8 +35,6 @@ import { hashtag } from "../config";
 import { DownloadIcon } from "@chakra-ui/icons";
 import { GoogleGenAI } from "@google/genai";
 
-// const ai = new GoogleGenAI({});
-
 const roboto = Roboto({
   weight: "700",
   subsets: ["latin"],
