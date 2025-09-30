@@ -27,7 +27,7 @@ import {
   Container,
 } from "@chakra-ui/react";
 import { Icon, useToast } from "@chakra-ui/react";
-import { FaPaste, FaDownload, FaArrowLeft, FaPlay, FaPause, FaCamera } from "react-icons/fa";
+import { FaPaste, FaDownload, FaArrowLeft, FaPlay, FaPause, FaCamera, FaCopy } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import * as htmlToImage from "html-to-image";
 import { Roboto } from "next/font/google";
@@ -70,6 +70,7 @@ interface IApiResponseItem {
 export default function Page() {
   const [url, setUrl] = useState("");
   const [caption, setCaption] = useState("");
+  const [AICaption, setAICaption] = useState("");
   const [originalCaption, setOriginalCaption] = useState("");
   const [owner, setOwner] = useState("");
   const [media, setMedia] = useState<IMedia[]>([]);
@@ -206,11 +207,21 @@ export default function Page() {
       }));
 
       if (data[0].meta.title.length > 50) {
-        const resGemini = await ai.models.generateContent({
+        const resTitle = await ai.models.generateContent({
           model: "gemini-2.5-flash",
           contents: `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`,
         });
-        setTitle(resGemini.text || "");
+
+        const resCaption = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. Jika diperlukan, akhiri dengan satu pertanyaan untuk memicu komentar. Namun jangan dipaksakan harus ada pertanyaan di akhir. Lengkapi juga dengan hashtag populer yang terkait dengan berita. Output hanya berisi caption, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`,
+        });
+
+        if (resCaption.text) {
+          const textCaption = `${resCaption.text} ${hashtag.join(" ")}`
+          setAICaption(textCaption);
+        }
+        setTitle(resTitle.text || "");
       }
 
       setOriginalCaption(data[0].meta.title);
@@ -235,6 +246,11 @@ export default function Page() {
 
   const copy = () => {
     navigator.clipboard.writeText(caption);
+    showToast("Success", 0, "Copied to cliboard");
+  };
+
+  const copyAI = () => {
+    navigator.clipboard.writeText(AICaption);
     showToast("Success", 0, "Copied to cliboard");
   };
 
@@ -357,27 +373,37 @@ export default function Page() {
             </CardBody>
           </Card>
           <Card>
-            <CardHeader>
+            <CardBody>
               <Flex>
-                <Button onClick={copy} colorScheme="teal" size="sm" disabled={caption ? false : true}>
-                  Copy Caption
-                </Button>
+                <Text fontWeight="semibold">Original Caption</Text>
                 <Spacer />
                 <Checkbox defaultChecked onChange={(e) => onRepostChange(e)}>
                   Include Repost
                 </Checkbox>
               </Flex>
-            </CardHeader>
-            <CardBody>
+
               <Textarea
                 value={caption}
                 style={{ whiteSpace: "pre-wrap" }}
                 size="sm"
-                rows={caption ? 10 : 3}
+                my={2}
+                rows={caption ? 15 : 3}
                 onChange={(e) => {
                   setCaption(e.target.value);
                 }}
               />
+              <Text mt={3} fontWeight="semibold">AI Caption</Text>
+              <Text fontStyle="italic" fontSize={15}>{AICaption}</Text>
+
+              <Flex mt={3}>
+                <Button leftIcon={<FaCopy />} onClick={copy} colorScheme="teal" size="sm" disabled={caption ? false : true}>
+                  Original Caption
+                </Button>
+                <Button leftIcon={<FaCopy />} onClick={copyAI} ml={2} colorScheme="teal" size="sm" disabled={AICaption ? false : true}>
+                  AI Caption
+                </Button>
+                <Spacer />
+              </Flex>
             </CardBody>
           </Card>
           <Card>
@@ -385,63 +411,59 @@ export default function Page() {
               <Heading size="xs">Create Thumbnail</Heading>
             </CardHeader>
             <CardBody>
-              <Card>
-                <CardBody>
-                  <FormControl>
-                    <FormLabel>Image</FormLabel>
-                    <Input type="file" accept="image/*|video/*" size="sm" onChange={(e) => onChangeFile(e)} />
-                  </FormControl>
-                  <video id="video" ref={videoRef} controls style={{ display: isVideo ? "" : "none", marginTop: 10 }} />
-                  <canvas
-                    style={{
-                      display: "none",
-                    }}
-                    id="canvasElement"
-                  ></canvas>
+              <FormControl>
+                <FormLabel>Image</FormLabel>
+                <Input type="file" accept="image/*|video/*" size="sm" onChange={(e) => onChangeFile(e)} />
+              </FormControl>
+              <video id="video" ref={videoRef} controls style={{ display: isVideo ? "" : "none", marginTop: 10 }} />
+              <canvas
+                style={{
+                  display: "none",
+                }}
+                id="canvasElement"
+              ></canvas>
 
-                  <SimpleGrid columns={6} spacing={3} mt={2}>
-                    <IconButton
-                      colorScheme="teal"
-                      aria-label="Play"
-                      icon={<FaPlay />}
-                      style={{ display: isVideo ? "" : "none" }}
-                      onClick={play}
-                    />
-                    <IconButton
-                      colorScheme="teal"
-                      aria-label="Pause"
-                      icon={<FaPause />}
-                      style={{ display: isVideo ? "" : "none" }}
-                      onClick={pause}
-                    />
-                    <IconButton
-                      colorScheme="teal"
-                      aria-label="Screenshot"
-                      icon={<FaCamera />}
-                      style={{ display: isVideo ? "" : "none" }}
-                      onClick={screenShotVideo}
-                    />
-                  </SimpleGrid>
-                  <FormControl mt={4}>
-                    <FormLabel>
-                      Title <span style={{ color: "red", fontSize: 14 }}>({`${title.trim().length}/100`})</span>
-                    </FormLabel>
-                    <Textarea
-                      value={title}
-                      style={{ whiteSpace: "pre-wrap" }}
-                      size="sm"
-                      rows={3}
-                      onChange={(e) => setTitle(e.target.value)}
-                    />
-                  </FormControl>
-                  <Button onClick={() => capitalizeWords()} colorScheme="teal" size="sm" mt={4} ml={1}>
-                    Capitalize
-                  </Button>
-                  <Button onClick={() => setTitle("")} colorScheme="teal" size="sm" mt={4} ml={1}>
-                    Clear
-                  </Button>
-                </CardBody>
-              </Card>
+              <SimpleGrid columns={6} spacing={3} mt={2}>
+                <IconButton
+                  colorScheme="teal"
+                  aria-label="Play"
+                  icon={<FaPlay />}
+                  style={{ display: isVideo ? "" : "none" }}
+                  onClick={play}
+                />
+                <IconButton
+                  colorScheme="teal"
+                  aria-label="Pause"
+                  icon={<FaPause />}
+                  style={{ display: isVideo ? "" : "none" }}
+                  onClick={pause}
+                />
+                <IconButton
+                  colorScheme="teal"
+                  aria-label="Screenshot"
+                  icon={<FaCamera />}
+                  style={{ display: isVideo ? "" : "none" }}
+                  onClick={screenShotVideo}
+                />
+              </SimpleGrid>
+              <FormControl mt={4}>
+                <FormLabel>
+                  Title <span style={{ color: "red", fontSize: 14 }}>({`${title.trim().length}/100`})</span>
+                </FormLabel>
+                <Textarea
+                  value={title}
+                  style={{ whiteSpace: "pre-wrap" }}
+                  size="sm"
+                  rows={3}
+                  onChange={(e) => setTitle(e.target.value)}
+                />
+              </FormControl>
+              <Button onClick={() => capitalizeWords()} colorScheme="teal" size="sm" mt={4} ml={1}>
+                Capitalize
+              </Button>
+              <Button onClick={() => setTitle("")} colorScheme="teal" size="sm" mt={4} ml={1}>
+                Clear
+              </Button>
             </CardBody>
           </Card>
 

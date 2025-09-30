@@ -23,9 +23,10 @@ import {
   Container,
   Text,
   FormLabel,
+  Heading
 } from "@chakra-ui/react";
 import { useState, ChangeEvent, FormEvent, useRef, useCallback, useEffect } from "react";
-import { FaPaste, FaDownload, FaArrowLeft } from "react-icons/fa";
+import { FaPaste, FaDownload, FaArrowLeft, FaCopy } from "react-icons/fa";
 import { FFmpeg } from "@ffmpeg/ffmpeg";
 import { fetchFile } from "@ffmpeg/util";
 import { useRouter } from "next/navigation";
@@ -47,6 +48,7 @@ export default function Page() {
   const [videoSrc, setVideoSrc] = useState("");
   const [originalCaption, setOriginalCaption] = useState("");
   const [caption, setCaption] = useState("");
+  const [AICaption, setAICaption] = useState("");
   const [repost, setRepost] = useState(true);
   const [owner, setOwner] = useState("");
   const [title, setTitle] = useState(``);
@@ -87,6 +89,11 @@ export default function Page() {
 
   const copy = () => {
     navigator.clipboard.writeText(caption);
+    showToast("Success", 0, "Copied to cliboard");
+  };
+
+  const copyAI = () => {
+    navigator.clipboard.writeText(AICaption);
     showToast("Success", 0, "Copied to cliboard");
   };
 
@@ -140,12 +147,23 @@ export default function Page() {
       };
 
       if (data[0].meta.title.length > 50) {
-        const resGemini = await ai.models.generateContent({
+        const resTitle = await ai.models.generateContent({
           model: "gemini-2.5-flash",
           contents: `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`,
         });
-        setTitle(resGemini.text || "");
+
+        const resCaption = await ai.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. Jika diperlukan, akhiri dengan satu pertanyaan untuk memicu komentar. Namun jangan dipaksakan harus ada pertanyaan di akhir. Lengkapi juga dengan hashtag populer yang terkait dengan berita. Output hanya berisi caption, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`,
+        });
+
+        if (resCaption.text) {
+          const textCaption = `${resCaption.text} ${hashtag.join(" ")}`
+          setAICaption(textCaption);
+        }
+        setTitle(resTitle.text || "");
       }
+
 
       setVideoURL(data[0].urls[0].url);
       setOriginalCaption(data[0].meta.title);
@@ -311,27 +329,45 @@ export default function Page() {
           </CardBody>
         </Card>
         <Card>
-          <CardHeader>
+          <CardBody>
             <Flex>
-              <Button onClick={copy} colorScheme="teal" size="sm" disabled={caption ? false : true}>
-                Copy Caption
-              </Button>
+              <Text fontWeight="semibold">Original Caption</Text>
               <Spacer />
               <Checkbox defaultChecked onChange={(e) => onRepostChange(e)}>
                 Include Repost
               </Checkbox>
             </Flex>
-          </CardHeader>
-          <CardBody>
+
             <Textarea
               value={caption}
               style={{ whiteSpace: "pre-wrap" }}
               size="sm"
-              rows={caption ? 10 : 3}
+              my={2}
+              rows={caption ? 15 : 3}
               onChange={(e) => {
                 setCaption(e.target.value);
               }}
             />
+            <Text mt={3} fontWeight="semibold">AI Caption</Text>
+            <Text fontStyle="italic" fontSize={15}>{AICaption}</Text>
+
+            <Flex mt={3}>
+              <Button leftIcon={<FaCopy />} onClick={copy} colorScheme="teal" size="sm" disabled={caption ? false : true}>
+                Original Caption
+              </Button>
+              <Button leftIcon={<FaCopy />} onClick={copyAI} ml={2} colorScheme="teal" size="sm" disabled={AICaption ? false : true}>
+                AI Caption
+              </Button>
+              <Spacer />
+            </Flex>
+
+          </CardBody>
+        </Card>
+        <Card>
+          <CardHeader>
+            <Heading size="xs">Create Thumbnail</Heading>
+          </CardHeader>
+          <CardBody>
             <FormControl mt={4}>
               <FormLabel>
                 Title <span style={{ color: "red", fontSize: 14 }}>({`${title.trim().length}/100`})</span>
