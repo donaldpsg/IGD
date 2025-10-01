@@ -11,7 +11,7 @@ export default function Page() {
       <VStack>
         <Image src="/images/logo-pd.png" alt="logo" h={128} />
         <Box mt={10} borderWidth={2} borderRadius={10} p={4}>
-          <SimpleGrid columns={3} spacing={2}>
+          <SimpleGrid columns={2} spacing={2}>
             <Button
               colorScheme="teal"
               onClick={() => {
@@ -28,6 +28,9 @@ export default function Page() {
             >
               IG VIDEO
             </Button>
+
+          </SimpleGrid>
+          <SimpleGrid columns={2} spacing={2} mt={2}>
             <Button
               colorScheme="teal"
               onClick={() => {
@@ -35,6 +38,14 @@ export default function Page() {
               }}
             >
               SIM KELILING
+            </Button>
+            <Button
+              colorScheme="teal"
+              onClick={() => {
+                router.push(`/sim2`);
+              }}
+            >
+              SIM KELILING (AI)
             </Button>
           </SimpleGrid>
           <SimpleGrid columns={1} spacing={2} mt={2}>

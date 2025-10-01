@@ -7,6 +7,7 @@ import {
     SimpleGrid,
     Box,
     Card,
+    CardHeader,
     CardBody,
     Spacer,
     VStack,
@@ -15,12 +16,22 @@ import {
     IconButton,
     HStack,
     FormLabel,
+    Textarea,
+    Text,
+    Flex
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
 import { dateMySql } from "../config";
 import { GoogleGenAI } from "@google/genai";
+import { Poppins } from "next/font/google";
+import * as htmlToImage from "html-to-image";
+
+const poppins = Poppins({
+    subsets: ["latin"], // sesuaikan subset yang diperlukan
+    weight: ["400", "500", "600", "700"], // pilih weight yang kamu mau
+});
 
 type DataItem = {
     polres: string;
@@ -28,7 +39,8 @@ type DataItem = {
     waktu: string;
 };
 
-type ResultItem = {
+type DataJadwal = {
+    polres: string;
     lokasi: string[];
     waktu: string;
 };
@@ -38,11 +50,10 @@ export default function Page() {
     const toast = useToast();
 
     const [tanggal, setTanggal] = useState(dateMySql(new Date()));
-
+    const [caption, setCaption] = useState("");
+    const [jadwal, setJadwal] = useState<DataJadwal[][]>([]);
 
     const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-
-
 
     const showToast = useCallback(
         async (title: string, iStatus: number, message: string) => {
@@ -60,10 +71,29 @@ export default function Page() {
         [toast]
     );
 
+    const copy = () => {
+        navigator.clipboard.writeText(caption);
 
+        toast({
+            title: "Success",
+            description: `Copied to cliboard`,
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+            position: "bottom-left",
+        });
+    };
 
     const onChangeTanggal = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTanggal(e.target.value);
+    }
+
+    function chunkArray<T>(array: T[], size: number): T[][] {
+        const result: T[][] = [];
+        for (let i = 0; i < array.length; i += size) {
+            result.push(array.slice(i, i + size));
+        }
+        return result;
     }
 
     const submit = async () => {
@@ -119,9 +149,10 @@ export default function Page() {
 
             const data: DataItem[] = JSON.parse(text);
             const grouped = Object.values(
-                data.reduce<Record<string, ResultItem>>((acc, item) => {
+                data.reduce<Record<string, DataJadwal>>((acc, item) => {
                     if (!acc[item.polres]) {
                         acc[item.polres] = {
+                            polres: item.polres,
                             lokasi: [item.lokasi],
                             waktu: item.waktu,
                         };
@@ -132,7 +163,28 @@ export default function Page() {
                 }, {})
             );
 
-            console.log(grouped);
+            const sorted = [...grouped].sort((a, b) => a.polres.localeCompare(b.polres));
+            const chunks = chunkArray(sorted, 4);
+            setJadwal(chunks)
+
+            const tglCaption = new Intl.DateTimeFormat("id-ID", {
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            }).format(
+                new Date(tanggal)
+            )
+            const textCaption = `SIM Keliling Polda Bali ${tglCaption} menyediakan layanan perpanjangan SIM bagi warga Bali dengan persyaratan sebagai berikut :
+
+    - Membawa E-KTP asli beserta fotocopy sebanyak 2 lembar.
+    - Membawa SIM asli yang masih aktif masa berlakunya, dilengkapi dengan fotocopy 2 lembar.
+    - Menyertakan surat keterangan sehat jasmani dan rohani (psikologi).
+
+Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk kelancaran proses perpanjangan SIM Anda.
+
+#planetdenpasar #planetkitabali  #infonetizenbali #infosemetonbali #simkelilingbali #simA #simC #bali`;
+
+            setCaption(textCaption)
             toast.closeAll();
         } catch (e) {
             toast.closeAll();
@@ -142,7 +194,47 @@ export default function Page() {
 
     }
 
+    const tgl = new Intl.DateTimeFormat("id-ID", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+    }).format(new Date(tanggal))
 
+    const download = (elementId: string, filename: string) => {
+        const element = document.getElementById(elementId);
+
+        if (!element) {
+            toast({
+                title: "Error",
+                description: `Element with id "${elementId}" not found.`,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+                position: "bottom-left",
+            });
+            return;
+        }
+
+        htmlToImage.toJpeg(element, { quality: 0.95 }).then(function (dataUrl) {
+            const link = document.createElement("a");
+            link.download = `${filename}.jpeg`;
+            link.href = dataUrl;
+            link.click();
+        });
+    };
+
+    const createFileName = () => {
+        // Generate a random string
+        const randomString = Math.random().toString(36).substring(2, 10);
+
+        // Get the current timestamp
+        const timestamp = Date.now();
+
+        // Construct the file name using the random string, timestamp, and extension
+        const fileName = `pd_${randomString}_${timestamp}`;
+
+        return fileName;
+    };
 
     return (
         <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
@@ -173,9 +265,87 @@ export default function Page() {
                             </Button>
                         </CardBody>
                     </Card>
+                    <Card>
+                        <CardHeader>
+                            <Button onClick={copy} colorScheme="teal" size="sm" disabled={caption ? false : true}>
+                                Copy Caption
+                            </Button>
+                        </CardHeader>
+                        <CardBody>
+                            <Textarea
+                                value={caption}
+                                style={{ whiteSpace: "pre-wrap" }}
+                                size="sm"
+                                mb={4}
+                                rows={caption ? 10 : 3}
+                                onChange={(e) => {
+                                    setCaption(e.target.value);
+                                }}
+                            />
+                            {jadwal.map((chunk, idx) => (
+                                <div key={idx} style={{ marginTop: 40 }}>
+                                    <div id={`canvas${idx}`} style={{ position: "relative", width: 340 }} >
+                                        <Image src={"/images/SIM-BACKGROUND.jpg"} w={340} fit="cover" alt="media" />
+                                        <Text style={{ position: "absolute", top: 92, right: 110 }} className={poppins.className} fontSize={12} fontWeight={600} color={"#d9812c"}>{tgl.toUpperCase()}</Text>
 
+                                        {chunk.map?.((dt, index) => {
+                                            const lokasi = Array.isArray(dt.lokasi) ? dt.lokasi.join("\n") : dt.lokasi;
+                                            const posTop = (index * 55) + 130;
+                                            return (
+                                                <Flex key={index}>
+                                                    <Box
+                                                        style={{
+                                                            position: "absolute",
+                                                            left: 10,
+                                                            top: posTop,
+                                                            borderWidth: 0.5,
+                                                            borderRadius: 5,
+                                                            borderColor: "#0d2644"
+                                                        }}
+                                                        p={1}
+                                                        w={85}
+                                                        h={50}
+                                                        bg={"#0d2644"}
+                                                        alignContent={"center"}
+                                                    >
+                                                        <Text fontSize={10.5} color={"white"} fontWeight={600} textAlign={"center"} lineHeight={1.3} className={poppins.className}>{dt.polres}</Text>
+                                                    </Box>
+                                                    <Box
+                                                        style={{
+                                                            position: "absolute",
+                                                            left: 100,
+                                                            top: posTop,
+                                                            borderWidth: 0.5,
+                                                            borderRadius: 5,
+                                                            borderColor: "#0d2644",
+                                                        }}
+                                                        p={1}
+                                                        w={230}
+                                                        h={50}
+                                                        alignContent={"center"}
+                                                        className={poppins.className}
+                                                        fontSize={10}
+                                                        fontWeight={500}
+                                                        lineHeight={dt.lokasi.length > 1 ? 1.3 : 1.5}
+                                                        whiteSpace="pre-line" // 👈 supaya \n terbaca
+                                                    >
+                                                        {lokasi}
+                                                        <Text fontWeight={700}>{dt.waktu}</Text> {/* 👈 tambahkan marginTop */}
+                                                    </Box>
+                                                </Flex>
+
+                                            )
+                                        })}
+                                    </div>
+                                    <Button colorScheme="teal" onClick={() => download(`canvas${idx}`, createFileName())} size="sm" mt={4}>
+                                        Download
+                                    </Button>
+                                </div>
+                            ))}
+                        </CardBody>
+                    </Card>
                 </SimpleGrid>
             </Box>
-        </VStack>
+        </VStack >
     )
 }

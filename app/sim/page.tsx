@@ -16,8 +16,8 @@ import {
   HStack,
   FormLabel,
   Text,
-  Center,
-  Container,
+  Flex,
+
   Textarea,
   CardHeader,
 } from "@chakra-ui/react";
@@ -25,13 +25,13 @@ import { useToast } from "@chakra-ui/react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import * as htmlToImage from "html-to-image";
-import { Roboto } from "next/font/google";
 import { dateMySql } from "../config";
-
-const roboto = Roboto({
-  weight: "500",
-  subsets: ["latin"],
+import { Poppins } from "next/font/google";
+const poppins = Poppins({
+  subsets: ["latin"], // sesuaikan subset yang diperlukan
+  weight: ["400", "500", "600", "700"], // pilih weight yang kamu mau
 });
+
 
 interface iDetail {
   tanggal: "string";
@@ -44,27 +44,21 @@ interface iSIM {
   polres_badung: Array<iDetail>;
 }
 
-interface iJadwal {
-  nama: string;
+
+type DataJadwal = {
+  polres: string;
   lokasi: string[];
   waktu: string;
-}
+};
 
 export default function Page() {
   const router = useRouter();
   const toast = useToast();
 
   const [json, setJson] = useState<iSIM>();
-  const [jadwalSIM1, setJadwalSIM1] = useState<Array<iJadwal>>([]);
-  const [jadwalSIM2, setJadwalSIM2] = useState<Array<iJadwal>>([]);
+  const [jadwal, setJadwal] = useState<DataJadwal[][]>([]);
   const [caption, setCaption] = useState("");
-  const [top1, setTop1] = useState(0);
   const [tanggal, setTanggal] = useState(dateMySql(new Date()));
-  const [day, setDay] = useState(new Date().getDay());
-
-  const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-
-  let addTop = 0;
 
   useEffect(() => {
     async function fetchData() {
@@ -104,78 +98,40 @@ export default function Page() {
 
   const onChangeTanggal = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTanggal(e.target.value);
-    setDay(new Date(e.target.value).getDay());
-
-    const jadwal1: Array<iJadwal> = [];
-    const jadwal2: Array<iJadwal> = [];
-    const dtFormat = formatDate(e.target.value);
-
-    for (const key in json) {
-      const array = json[key as keyof iSIM];
-      const filter = array.filter((array) => array.tanggal === dtFormat);
-
-      if (filter.length > 0) {
-        const arrLokasi: string[] = Array.isArray(filter[0].lokasi) ? filter[0].lokasi : [filter[0].lokasi];
-
-        const dt = {
-          nama: formatString(key),
-          lokasi: arrLokasi,
-          waktu: filter[0].waktu,
-        };
-
-        if (jadwal1.length < 5) {
-          jadwal1.push(dt);
-        } else {
-          jadwal2.push(dt);
-        }
-      }
-    }
-
-    const topJadwal1 = 100 + (5 - jadwal1.length) * 20;
-
-    const text = `SIM Keliling Polda Bali ${dtFormat} menyediakan layanan perpanjangan SIM bagi warga Bali dengan persyaratan sebagai berikut :
-
-    - Membawa E-KTP asli beserta fotocopy sebanyak 2 lembar.
-    - Membawa SIM asli yang masih aktif masa berlakunya, dilengkapi dengan fotocopy 2 lembar.
-    - Menyertakan surat keterangan sehat jasmani dan rohani (psikologi).
-
-Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk kelancaran proses perpanjangan SIM Anda.
-
-#planetdenpasar #planetkitabali  #infonetizenbali #infosemetonbali #simkelilingbali #simA #simC #bali`;
-
-    setCaption(text);
-
-    setJadwalSIM1(jadwal1);
-    setJadwalSIM2(jadwal2);
-    setTop1(topJadwal1);
   };
 
+  function chunkArray<T>(array: T[], size: number): T[][] {
+    const result: T[][] = [];
+    for (let i = 0; i < array.length; i += size) {
+      result.push(array.slice(i, i + size));
+    }
+    return result;
+  }
+
   const filter = () => {
-    const jadwal1: Array<iJadwal> = [];
-    const jadwal2: Array<iJadwal> = [];
+    const data: Array<DataJadwal> = [];
     const dtFormat = formatDate(tanggal);
 
     for (const key in json) {
       const array = json[key as keyof iSIM];
+
+
       const filter = array.filter((array) => array.tanggal === dtFormat);
 
       if (filter.length > 0) {
         const arrLokasi: string[] = Array.isArray(filter[0].lokasi) ? filter[0].lokasi : [filter[0].lokasi];
         const dt = {
-          nama: formatString(key),
+          polres: formatString(key),
           lokasi: arrLokasi,
           waktu: filter[0].waktu,
         };
 
-        if (jadwal1.length < 5) {
-          jadwal1.push(dt);
-        } else {
-          jadwal2.push(dt);
-        }
+        data.push(dt);
       }
     }
 
-    const topJadwal1 = 100 + (5 - jadwal1.length) * 20;
+
+    const chunks = chunkArray(data, 4);
 
     const text = `SIM Keliling Polda Bali ${dtFormat} menyediakan layanan perpanjangan SIM bagi warga Bali dengan persyaratan sebagai berikut :
 
@@ -188,9 +144,7 @@ Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk
 #planetdenpasar #planetkitabali  #infonetizenbali #infosemetonbali #simkelilingbali #simA #simC #bali`;
 
     setCaption(text);
-    setJadwalSIM1(jadwal1);
-    setJadwalSIM2(jadwal2);
-    setTop1(topJadwal1);
+    setJadwal(chunks);
   };
 
   const createFileName = () => {
@@ -242,6 +196,12 @@ Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk
     });
   };
 
+  const tgl = new Intl.DateTimeFormat("id-ID", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric"
+  }).format(new Date(tanggal))
+
   return (
     <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
       <Box>
@@ -288,120 +248,68 @@ Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk
                   setCaption(e.target.value);
                 }}
               />
-              <Center id="canvas1" style={{ position: "relative", width: 340 }}>
-                <Image src={"/images/sim.jpg"} w={340} fit="cover" alt="media" />
-                <Center style={{ position: "absolute" }} bg="white" px={2} marginTop={-280}>
-                  <Text fontSize={12} className={roboto.className} textAlign="center" color="#e21e1f">
-                    {`${days[day].toUpperCase()}, ${formatDate(tanggal).toUpperCase()}`}
-                  </Text>
-                </Center>
+              {jadwal.map((chunk, idx) => (
+                <div key={idx} style={{ marginTop: 40 }}>
+                  <div id={`canvas${idx}`} style={{ position: "relative", width: 340 }} >
+                    <Image src={"/images/SIM-BACKGROUND.jpg"} w={340} fit="cover" alt="media" />
+                    <Text style={{ position: "absolute", top: 92, right: 110 }} className={poppins.className} fontSize={12} fontWeight={600} color={"#d9812c"}>{tgl.toUpperCase()}</Text>
 
-                {jadwalSIM1.map?.((dt: iJadwal, index) => {
-                  if (index > 0 && jadwalSIM1[index - 1].lokasi.length > 1) {
-                    addTop += 16;
-                  }
+                    {chunk.map?.((dt, index) => {
+                      const lokasi = Array.isArray(dt.lokasi) ? dt.lokasi.join("\n") : dt.lokasi;
+                      const posTop = (index * 55) + 130;
+                      return (
+                        <Flex key={index}>
+                          <Box
+                            style={{
+                              position: "absolute",
+                              left: 10,
+                              top: posTop,
+                              borderWidth: 0.5,
+                              borderRadius: 5,
+                              borderColor: "#0d2644"
+                            }}
+                            p={1}
+                            w={85}
+                            h={50}
+                            bg={"#0d2644"}
+                            alignContent={"center"}
+                          >
+                            <Text fontSize={10.5} color={"white"} fontWeight={600} textAlign={"center"} lineHeight={1.3} className={poppins.className}>{dt.polres}</Text>
+                          </Box>
+                          <Box
+                            style={{
+                              position: "absolute",
+                              left: 100,
+                              top: posTop,
+                              borderWidth: 0.5,
+                              borderRadius: 5,
+                              borderColor: "#0d2644",
+                            }}
+                            p={1}
+                            w={230}
+                            h={50}
+                            alignContent={"center"}
+                            className={poppins.className}
+                            fontSize={10}
+                            fontWeight={500}
+                            lineHeight={dt.lokasi.length > 1 ? 1.3 : 1.5}
+                            whiteSpace="pre-line" // 👈 supaya \n terbaca
+                          >
+                            {lokasi}
+                            <Text fontWeight={700}>{dt.waktu}</Text> {/* 👈 tambahkan marginTop */}
+                          </Box>
+                        </Flex>
 
-                  const top = addTop + top1 + index * 36;
-
-                  return (
-                    <Container
-                      key={index}
-                      style={{
-                        position: "absolute",
-                        top: top,
-                      }}
-                    >
-                      <Center
-                        style={{ position: "absolute", left: 10 }}
-                        bg="#022c98"
-                        w={130}
-                        h={dt.lokasi.length > 1 ? 12 : 8}
-                      >
-                        <Text fontSize={11} className={roboto.className} textAlign="center" color="white">
-                          {dt.nama}
-                        </Text>
-                      </Center>
-                      <Box
-                        style={{ position: "absolute", left: 145, paddingTop: 3, paddingLeft: 5 }}
-                        bg="rgba(255,255,255,0.9)"
-                        w={185}
-                        h={dt.lokasi.length > 1 ? 12 : 8}
-                      >
-                        {dt.lokasi.map?.((dt2: string, index2) => (
-                          <Text key={index2} fontSize={9} className={roboto.className} color="#022c98">
-                            {dt2}
-                          </Text>
-                        ))}
-
-                        <Text fontSize={9} className={roboto.className} color="#022c98">
-                          {dt.waktu}
-                        </Text>
-                      </Box>
-                    </Container>
-                  );
-                })}
-              </Center>
-              <Button onClick={() => download("canvas1", createFileName())} colorScheme="teal" size="sm" mt={4} ml={1}>
-                Download
-              </Button>
+                      )
+                    })}
+                  </div>
+                  <Button colorScheme="teal" onClick={() => download(`canvas${idx}`, createFileName())} size="sm" mt={4}>
+                    Download
+                  </Button>
+                </div>
+              ))}
             </CardBody>
           </Card>
-          {jadwalSIM2.length > 0 && (
-            <Card>
-              <CardBody>
-                <Center id="canvas2" style={{ position: "relative", width: 340 }}>
-                  <Image src={"/images/sim.jpg"} w={340} fit="cover" alt="media" />
-                  <Center style={{ position: "absolute" }} bg="white" px={2} marginTop={-280}>
-                    <Text fontSize={12} className={roboto.className} textAlign="center" color="#e21e1f">
-                      {`${days[day].toUpperCase()}, ${formatDate(tanggal).toUpperCase()}`}
-                    </Text>
-                  </Center>
-
-                  {jadwalSIM2.map?.((dt: iJadwal, index) => {
-                    if (index > 0 && jadwalSIM1[index - 1].lokasi.length > 1) {
-                      addTop += 16;
-                    }
-
-                    const top = addTop + top1 + 10 + index * 36;
-
-                    return (
-                      <Container key={index} style={{ position: "absolute", top: top }}>
-                        <Center style={{ position: "absolute", left: 10 }} bg="#022c98" w={130} h={8}>
-                          <Text fontSize={11} className={roboto.className} textAlign="center" color="white">
-                            {dt.nama}
-                          </Text>
-                        </Center>
-                        <Box
-                          style={{ position: "absolute", left: 145, paddingTop: 3, paddingLeft: 5 }}
-                          bg="rgba(255,255,255,0.9)"
-                          w={185}
-                          h={8}
-                        >
-                          {dt.lokasi.map?.((dt2: string, index2) => (
-                            <Text key={index2} fontSize={9} className={roboto.className} color="#022c98">
-                              {dt2}
-                            </Text>
-                          ))}
-                          <Text fontSize={9} className={roboto.className} color="#022c98">
-                            {dt.waktu}
-                          </Text>
-                        </Box>
-                      </Container>
-                    );
-                  })}
-                </Center>
-                <Button
-                  onClick={() => download("canvas2", createFileName())}
-                  colorScheme="teal"
-                  size="sm"
-                  mt={4}
-                  ml={1}
-                >
-                  Download
-                </Button>
-              </CardBody>
-            </Card>
-          )}
         </SimpleGrid>
       </Box>
     </VStack>
