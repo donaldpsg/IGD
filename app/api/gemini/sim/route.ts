@@ -41,9 +41,7 @@ export async function POST(req: Request) {
       .trim();
 
     return NextResponse.json({ text });
-  } catch (error: any) {
-    console.error("Gemini API Error:", error);
-
-    return NextResponse.json({ error: true, message: error.message ?? "Internal server error" }, { status: 500 });
+  } catch (error) {
+    return NextResponse.json({ error }, { status: 500 });
   }
 }
