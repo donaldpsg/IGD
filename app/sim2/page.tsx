@@ -24,7 +24,6 @@ import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa";
 import { dateMySql } from "../config";
-import { GoogleGenAI } from "@google/genai";
 import { Poppins } from "next/font/google";
 import * as htmlToImage from "html-to-image";
 
@@ -122,70 +121,41 @@ export default function Page() {
         });
 
         try {
-            const apiRapid = "https://instagram120.p.rapidapi.com/api/instagram/links";
-            const xRapidApiKey = "93b488f6f7msh4e6c6df286868e0p1bf4c6jsn7e78bf5fa74b";
-            const xRapidApiHost = "instagram120.p.rapidapi.com";
-
-            const response = await fetch(apiRapid, {
+            const response = await fetch("/api/instagram", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-rapidapi-key": xRapidApiKey,
-                    "x-rapidapi-host": xRapidApiHost,
-                },
-                body: JSON.stringify({
-                    url: urlSource,
-                }),
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url: urlSource })
             });
 
             const dataSource: DataSource[] = await response.json();
+
             const links: string[] = dataSource.flatMap((item: DataSource) =>
                 item.urls.map((u: UrlSource) => u.url)
             );
 
-            const ai = new GoogleGenAI({ apiKey: "AIzaSyB0UfAHQyhCUay316B2nm_CTKrTra0aQSY" });
+
             const imageUrl1 = links.length > 0 ? `/api/proxy?url=${encodeURIComponent(links[0])}` : "/images/SIM1.jpg";
             const imageUrl2 = links.length > 1 ? `/api/proxy?url=${encodeURIComponent(links[1])}` : "/images/SIM2.jpg";
+
+            const res1 = await fetch(imageUrl1);
+            const base64ImageData1 = Buffer.from(await res1.arrayBuffer()).toString('base64');
+
+            const res2 = await fetch(imageUrl2);
+            const base64ImageData2 = Buffer.from(await res2.arrayBuffer()).toString('base64');
 
             const date = new Date(tanggal);
             const hari = days[date.getDay()];
             const tgl = date.getDate();
 
-            const res1 = await fetch(imageUrl1);
-            const imageArrayBuffer1 = await res1.arrayBuffer();
-            const base64ImageData1 = Buffer.from(imageArrayBuffer1).toString('base64');
-
-            const res2 = await fetch(imageUrl2);
-            const imageArrayBuffer2 = await res2.arrayBuffer();
-            const base64ImageData2 = Buffer.from(imageArrayBuffer2).toString('base64');
-
-            const prompt = `Cari jadwal sim untuk hari ${hari} tanggal ${tgl} dari kedua gambar ini.Output data berupa JSON dengan key polres, lokasi dan waktu. Jika ada jadwal SENIN s/d SABTU itu artinya jadwal sim mencakup dari hari senin sampai sabtu. Output hanya JSON, tanpa kata pengantar atau penutup`
-
-            const result = await ai.models.generateContent({
-                model: "gemini-2.5-flash",
-                contents: [
-                    // gambar pertama
-                    {
-                        inlineData: {
-                            mimeType: "image/jpeg",
-                            data: base64ImageData1,
-                        },
-                    },
-                    // gambar kedua
-                    {
-                        inlineData: {
-                            mimeType: "image/jpeg",
-                            data: base64ImageData2,
-                        },
-                    },
-                    { text: prompt }
-                ],
+            const responseAI = await fetch('/api/gemini/sim', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ base64ImageData1, base64ImageData2, hari, tgl }),
             });
 
-            let text = result.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
-            text = text.replace(/```json/gi, "").replace(/```/g, "").trim();
+            const dataAI = await responseAI.json();
 
-            const data: DataItem[] = JSON.parse(text);
+            const data: DataItem[] = JSON.parse(dataAI.text);
             const grouped = Object.values(
                 data.reduce<Record<string, DataJadwal>>((acc, item) => {
                     if (!acc[item.polres]) {

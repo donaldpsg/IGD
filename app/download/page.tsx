@@ -33,7 +33,6 @@ import * as htmlToImage from "html-to-image";
 import { Roboto } from "next/font/google";
 import { hashtag } from "../config";
 import { DownloadIcon } from "@chakra-ui/icons";
-import { GoogleGenAI } from "@google/genai";
 
 const roboto = Roboto({
   weight: "700",
@@ -81,7 +80,6 @@ export default function Page() {
 
   const router = useRouter();
   const toast = useToast();
-  const ai = new GoogleGenAI({ apiKey: "AIzaSyB0UfAHQyhCUay316B2nm_CTKrTra0aQSY" });
 
   // const accessToken = "IGQWRQOTZAPUlpXdGgxMDgwV283Nk5fVDJ2NTZAwX081UVNCLXFneDYyUEJmMWZAyODFtQTRTTWRHbVlyS041YW55MThIQUlLWU9ZANGZAsMnI4eXJUckdGV3pyMnZAQUGMzOEhyWnhhbjUzY2dIZA1FGMUMxN3RTc3BHX2sZD"
 
@@ -182,21 +180,12 @@ export default function Page() {
     });
 
     try {
-      const apiRapid = "https://instagram120.p.rapidapi.com/api/instagram/links";
-      const xRapidApiKey = "93b488f6f7msh4e6c6df286868e0p1bf4c6jsn7e78bf5fa74b";
-      const xRapidApiHost = "instagram120.p.rapidapi.com";
-
-      const response = await fetch(apiRapid, {
+      const response = await fetch("/api/instagram", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-rapidapi-key": xRapidApiKey,
-          "x-rapidapi-host": xRapidApiHost,
-        },
-        body: JSON.stringify({
-          url,
-        }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url })
       });
+
       const data = await response.json();
 
       const links: IMedia[] = (data as IApiResponseItem[]).map((item, index) => ({
@@ -205,21 +194,28 @@ export default function Page() {
       }));
 
       if (data[0].meta.title.length > 50) {
-        const resTitle = await ai.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`,
+        const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`
+        const resTitle = await fetch('/api/gemini', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: promptTitle }),
+        });
+        const dataTitle = await resTitle.json();
+
+        const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. Jika diperlukan, akhiri dengan satu pertanyaan untuk memicu komentar. Namun jangan dipaksakan harus ada pertanyaan di akhir. Lengkapi juga dengan hashtag populer yang terkait dengan berita. Output hanya berisi caption, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`
+        const resCaption = await fetch('/api/gemini', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: promptCaption }),
         });
 
-        const resCaption = await ai.models.generateContent({
-          model: "gemini-2.5-flash",
-          contents: `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. Jika diperlukan, akhiri dengan satu pertanyaan untuk memicu komentar. Namun jangan dipaksakan harus ada pertanyaan di akhir. Lengkapi juga dengan hashtag populer yang terkait dengan berita. Output hanya berisi caption, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`,
-        });
+        const dataCaption = await resCaption.json();
 
-        if (resCaption.text) {
-          const textCaption = `${resCaption.text} ${hashtag.join(" ")}`
+        if (dataCaption.text) {
+          const textCaption = `${dataCaption.text} ${hashtag.join(" ")}`
           setAICaption(textCaption);
         }
-        setTitle(resTitle.text || "");
+        setTitle(dataTitle.text || "");
       }
 
       setOriginalCaption(data[0].meta.title);
