@@ -45,15 +45,32 @@ type DataJadwal = {
     waktu: string;
 };
 
+interface UrlSource {
+    url: string;
+    name: string;
+    extension: string;
+}
+
+interface DataSource {
+    urls: UrlSource[];
+    meta: string; // atau bikin interface sendiri
+    pictureUrl: string;
+    pictureUrlWrapped: string;
+}
+
 export default function Page() {
     const router = useRouter();
     const toast = useToast();
 
     const [tanggal, setTanggal] = useState(dateMySql(new Date()));
     const [caption, setCaption] = useState("");
+
+
     const [jadwal, setJadwal] = useState<DataJadwal[][]>([]);
+    const urlSource = "https://www.instagram.com/share/p/BAMqlRLBXU"
 
     const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+
 
     const showToast = useCallback(
         async (title: string, iStatus: number, message: string) => {
@@ -105,9 +122,30 @@ export default function Page() {
         });
 
         try {
+            const apiRapid = "https://instagram120.p.rapidapi.com/api/instagram/links";
+            const xRapidApiKey = "93b488f6f7msh4e6c6df286868e0p1bf4c6jsn7e78bf5fa74b";
+            const xRapidApiHost = "instagram120.p.rapidapi.com";
+
+            const response = await fetch(apiRapid, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-rapidapi-key": xRapidApiKey,
+                    "x-rapidapi-host": xRapidApiHost,
+                },
+                body: JSON.stringify({
+                    url: urlSource,
+                }),
+            });
+
+            const dataSource: DataSource[] = await response.json();
+            const links: string[] = dataSource.flatMap((item: DataSource) =>
+                item.urls.map((u: UrlSource) => u.url)
+            );
+
             const ai = new GoogleGenAI({ apiKey: "AIzaSyB0UfAHQyhCUay316B2nm_CTKrTra0aQSY" });
-            const imageUrl1 = "/images/SIM1.jpg";
-            const imageUrl2 = "/images/SIM2.jpg";
+            const imageUrl1 = links.length > 0 ? `/api/proxy?url=${encodeURIComponent(links[0])}` : "/images/SIM1.jpg";
+            const imageUrl2 = links.length > 1 ? `/api/proxy?url=${encodeURIComponent(links[1])}` : "/images/SIM2.jpg";
 
             const date = new Date(tanggal);
             const hari = days[date.getDay()];
@@ -176,13 +214,13 @@ export default function Page() {
             )
             const textCaption = `SIM Keliling Polda Bali ${tglCaption} menyediakan layanan perpanjangan SIM bagi warga Bali dengan persyaratan sebagai berikut :
 
-    - Membawa E-KTP asli beserta fotocopy sebanyak 2 lembar.
-    - Membawa SIM asli yang masih aktif masa berlakunya, dilengkapi dengan fotocopy 2 lembar.
-    - Menyertakan surat keterangan sehat jasmani dan rohani (psikologi).
+                - Membawa E-KTP asli beserta fotocopy sebanyak 2 lembar.
+                - Membawa SIM asli yang masih aktif masa berlakunya, dilengkapi dengan fotocopy 2 lembar.
+                - Menyertakan surat keterangan sehat jasmani dan rohani (psikologi).
 
-Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk kelancaran proses perpanjangan SIM Anda.
+            Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk kelancaran proses perpanjangan SIM Anda.
 
-#planetdenpasar #planetkitabali  #infonetizenbali #infosemetonbali #simkelilingbali #simA #simC #bali`;
+            #planetdenpasar #planetkitabali  #infonetizenbali #infosemetonbali #simkelilingbali #simA #simC #bali`;
 
             setCaption(textCaption)
             toast.closeAll();
@@ -305,7 +343,7 @@ Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk
                                                         p={1}
                                                         w={85}
                                                         h={50}
-                                                        bg={"#0d2644"}
+                                                        bgGradient="linear(0deg, #0c2442, #4f7492)"
                                                         alignContent={"center"}
                                                     >
                                                         <Text fontSize={10.5} color={"white"} fontWeight={600} textAlign={"center"} lineHeight={1.3} className={poppins.className}>{dt.polres}</Text>
