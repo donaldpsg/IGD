@@ -357,7 +357,7 @@ export default function Page() {
                                     </InputRightElement>
                                 </InputGroup>
                             </FormControl>
-                            <Box position="relative" w={325} h={406} mt={2} overflow="hidden">
+                            <Box position="relative" w={325} h={406} mt={3} overflow="hidden">
                                 <Image
                                     src={images[index]}
                                     alt=""
