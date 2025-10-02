@@ -2,16 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
     try {
-        const { content, path, message } = await req.json();
+        const { content } = await req.json();
 
         // content: string yang mau disimpan
         // path: nama file di repo misal 'data/file.txt'
         // message: commit message
 
         const githubToken = process.env.GITHUB_TOKEN!;
-        const owner = "username-kamu"; // ganti dengan username kamu
-        const repo = "nama-repo-kamu"; // ganti dengan nama repo
-        const branch = "main"; // atau nama branch lain
+        const owner = "donaldpsg"; // ganti dengan username kamu
+        const repo = "IGD"; // ganti dengan nama repo
+        const branch = "master"; // atau nama branch lain
+        const path = "data/url.txt";
+        const message = "update via API url.txt";
 
         // Cek apakah file sudah ada (untuk dapat sha)
         const fileUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
@@ -55,4 +57,37 @@ export async function POST(req: NextRequest) {
             { status: 500 }
         );
     }
+}
+
+export async function GET() {
+    const owner = "donaldpsg";
+    const repo = "IGD";
+    const path = "data/url.txt";
+
+    try {
+        const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+            headers: {
+                Authorization: `token ${process.env.GITHUB_TOKEN}`, // optional kalau repo public
+                Accept: "application/vnd.github.v3+json",
+            },
+        });
+
+        if (!res.ok) throw new Error("Gagal ambil file");
+        const data = await res.json();
+
+        // isi file dalam Base64
+        const base64 = data.content;
+
+        // decode jadi string
+        const content = Buffer.from(base64, "base64").toString("utf-8");
+
+        return NextResponse.json({ content });
+    } catch (error) {
+        return NextResponse.json(
+            { error },
+            { status: 500 }
+        );
+    }
+
+
 }

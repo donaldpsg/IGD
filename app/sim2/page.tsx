@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect, ChangeEvent } from "react";
 import {
     FormControl,
     Input,
@@ -18,14 +18,18 @@ import {
     FormLabel,
     Textarea,
     Text,
-    Flex
+    Flex,
+    InputGroup,
+    InputRightElement,
+    Icon
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaPaste } from "react-icons/fa";
 import { dateMySql } from "../config";
 import { Poppins } from "next/font/google";
 import * as htmlToImage from "html-to-image";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 
 const poppins = Poppins({
     subsets: ["latin"], // sesuaikan subset yang diperlukan
@@ -63,13 +67,13 @@ export default function Page() {
 
     const [tanggal, setTanggal] = useState(dateMySql(new Date()));
     const [caption, setCaption] = useState("");
-
-
+    const [urlSource, setUrlSource] = useState("");
+    const [urls, setUrls] = useState<string[]>([])
+    const [images, setImages] = useState<string[]>([])
+    const [index, setIndex] = useState(0);
     const [jadwal, setJadwal] = useState<DataJadwal[][]>([]);
-    const urlSource = "https://www.instagram.com/share/p/BAMqlRLBXU"
 
     const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
-
 
     const showToast = useCallback(
         async (title: string, iStatus: number, message: string) => {
@@ -86,6 +90,48 @@ export default function Page() {
         },
         [toast]
     );
+
+    const fetchData = useCallback(async () => {
+        showToast("Loading", 5, "Please wait...");
+
+        try {
+            const resGit = await fetch("/api/github", {
+                method: "GET",
+                headers: { "Content-Type": "application/json" }
+            });
+
+            const dataGit = await resGit.json();
+
+            const response = await fetch("/api/instagram", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ url: dataGit.content })
+            });
+
+            const dataSource: DataSource[] = await response.json();
+
+            const links: string[] = dataSource.flatMap((item: DataSource) =>
+                item.urls.map((u: UrlSource) => u.url)
+            );
+
+            const imageUrl1 = links.length > 0 ? `/api/proxy?url=${encodeURIComponent(links[0])}` : "/images/SIM1.jpg";
+            const imageUrl2 = links.length > 1 ? `/api/proxy?url=${encodeURIComponent(links[1])}` : "/images/SIM2.jpg";
+
+            setUrlSource(dataGit.content)
+            setUrls(links)
+            setImages([imageUrl1, imageUrl2]);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+
+        toast.closeAll()
+    }, [showToast, toast]);
+
+
+
+    useEffect(() => {
+        fetchData(); // Panggil fungsi untuk memuat data
+    }, [toast, fetchData]);
 
     const copy = () => {
         navigator.clipboard.writeText(caption);
@@ -112,6 +158,31 @@ export default function Page() {
         return result;
     }
 
+    const saveDataSource = async () => {
+        toast({
+            title: "Please wait",
+            description: "Saving data...",
+            status: "loading",
+            duration: null,
+        });
+
+        try {
+            await fetch("/api/github", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ content: urlSource })
+            });
+
+            toast.closeAll();
+            await fetchData()
+
+        } catch (e) {
+            toast.closeAll();
+            console.log(e);
+            showToast("Error", 1, (e as Error).message);
+        }
+    }
+
     const submit = async () => {
         toast({
             title: "Please wait",
@@ -121,21 +192,8 @@ export default function Page() {
         });
 
         try {
-            const response = await fetch("/api/instagram", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ url: urlSource })
-            });
-
-            const dataSource: DataSource[] = await response.json();
-
-            const links: string[] = dataSource.flatMap((item: DataSource) =>
-                item.urls.map((u: UrlSource) => u.url)
-            );
-
-
-            const imageUrl1 = links.length > 0 ? `/api/proxy?url=${encodeURIComponent(links[0])}` : "/images/SIM1.jpg";
-            const imageUrl2 = links.length > 1 ? `/api/proxy?url=${encodeURIComponent(links[1])}` : "/images/SIM2.jpg";
+            const imageUrl1 = urls.length > 0 ? `/api/proxy?url=${encodeURIComponent(urls[0])}` : "/images/SIM1.jpg";
+            const imageUrl2 = urls.length > 1 ? `/api/proxy?url=${encodeURIComponent(urls[1])}` : "/images/SIM2.jpg";
 
             const res1 = await fetch(imageUrl1);
             const base64ImageData1 = Buffer.from(await res1.arrayBuffer()).toString('base64');
@@ -182,14 +240,11 @@ export default function Page() {
             }).format(
                 new Date(tanggal)
             )
-            const textCaption = `SIM Keliling Polda Bali ${tglCaption} menyediakan layanan perpanjangan SIM bagi warga Bali dengan persyaratan sebagai berikut :
-
-                - Membawa E-KTP asli beserta fotocopy sebanyak 2 lembar.
-                - Membawa SIM asli yang masih aktif masa berlakunya, dilengkapi dengan fotocopy 2 lembar.
-                - Menyertakan surat keterangan sehat jasmani dan rohani (psikologi).
-
-            Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk kelancaran proses perpanjangan SIM Anda.
-
+            const textCaption = `SIM Keliling Polda Bali ${tglCaption} menyediakan layanan perpanjangan SIM bagi warga Bali dengan persyaratan sebagai berikut :\n
+            - Membawa E-KTP asli beserta fotocopy sebanyak 2 lembar.\n
+            - Membawa SIM asli yang masih aktif masa berlakunya, dilengkapi dengan fotocopy 2 lembar.\n
+            - Menyertakan surat keterangan sehat jasmani dan rohani (psikologi).\n\n
+            Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk kelancaran proses perpanjangan SIM Anda.\n\n
             #planetdenpasar #planetkitabali  #infonetizenbali #infosemetonbali #simkelilingbali #simA #simC #bali`;
 
             setCaption(textCaption)
@@ -199,7 +254,6 @@ export default function Page() {
             console.log(e);
             showToast("Error", 1, (e as Error).message);
         }
-
     }
 
     const tgl = new Intl.DateTimeFormat("id-ID", {
@@ -244,6 +298,29 @@ export default function Page() {
         return fileName;
     };
 
+    const paste = async () => {
+        try {
+            // Check if the browser supports the Clipboard API
+            if (navigator.clipboard && typeof navigator.clipboard.readText === "function") {
+                // Use the Clipboard API to read text from the clipboard
+                const text = await navigator.clipboard.readText();
+                setUrlSource(text);
+            } else {
+                showToast("Error", 1, "Clipboard API is not supported in this browser.");
+            }
+        } catch (e) {
+            showToast("Error", 1, (e as Error).message);
+        }
+    };
+
+    const prevSlide = () => {
+        setIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+    };
+
+    const nextSlide = () => {
+        setIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    };
+
     return (
         <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
             <Box>
@@ -262,6 +339,76 @@ export default function Page() {
             </Box>
             <Box>
                 <SimpleGrid columns={{ md: 2, sm: 1 }} m={4} spacing={8}>
+                    <Card>
+                        <CardBody>
+                            <FormControl>
+                                <FormLabel>DataSource URL</FormLabel>
+                                <InputGroup>
+                                    <Input
+                                        type="text"
+                                        value={urlSource}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setUrlSource(e.target.value)}
+                                        placeholder="Paste URL Instagram"
+                                    />
+                                    <InputRightElement>
+                                        <Button onClick={paste}>
+                                            <Icon as={FaPaste} color="#493628" />
+                                        </Button>
+                                    </InputRightElement>
+                                </InputGroup>
+                            </FormControl>
+                            <Box position="relative" w={325} h={406} mt={2} overflow="hidden">
+                                <Image
+                                    src={images[index]}
+                                    alt=""
+                                    w="full"
+                                    h="full"
+                                    objectFit="cover"
+                                />
+                                {/* Tombol navigasi */}
+                                <Flex
+                                    position="absolute"
+                                    top="50%"
+                                    left="0"
+                                    transform="translateY(-50%)"
+                                    px={2}
+                                >
+                                    <IconButton
+                                        aria-label="Previous Slide"
+                                        icon={<ChevronLeftIcon boxSize={8} />}
+                                        onClick={prevSlide}
+                                        size="sm"
+                                        variant="solid"
+                                        colorScheme="blue" // warna kontras
+                                        borderRadius="full"
+                                        boxShadow="xl"
+                                    />
+                                </Flex>
+
+                                <Flex
+                                    position="absolute"
+                                    top="50%"
+                                    right="0"
+                                    transform="translateY(-50%)"
+                                    px={2}
+                                >
+                                    <IconButton
+                                        aria-label="Next Slide"
+                                        icon={<ChevronRightIcon boxSize={8} />}
+                                        onClick={nextSlide}
+                                        size="sm"
+                                        variant="solid"
+                                        colorScheme="blue"
+                                        borderRadius="full"
+                                        boxShadow="xl"
+                                    />
+                                </Flex>
+                            </Box>
+                            <Button onClick={saveDataSource} colorScheme="teal" size="sm" mt={4} ml={1}>
+                                Update DataSource
+                            </Button>
+                        </CardBody>
+                    </Card>
                     <Card>
                         <CardBody>
                             <FormControl>
