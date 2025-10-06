@@ -133,15 +133,18 @@ export default function Page() {
 
     const chunks = chunkArray(data, 4);
 
-    const text = `SIM Keliling Polda Bali ${dtFormat} menyediakan layanan perpanjangan SIM bagi warga Bali dengan persyaratan sebagai berikut :
+    const text = `📢 Layanan SIM Keliling Polda Bali – ${dtFormat}
 
-    - Membawa E-KTP asli beserta fotocopy sebanyak 2 lembar.
-    - Membawa SIM asli yang masih aktif masa berlakunya, dilengkapi dengan fotocopy 2 lembar.
-    - Menyertakan surat keterangan sehat jasmani dan rohani (psikologi).
+Perpanjang SIM A & C dengan mudah melalui layanan SIM Keliling Polda Bali.
 
-Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk kelancaran proses perpanjangan SIM Anda.
+Syarat yang harus dibawa:
+✅ E‑KTP asli + 2 lembar fotokopi
+✅ SIM asli yang masih berlaku + 2 lembar fotokopi
+✅ Surat keterangan sehat jasmani & rohani (psikologi)
 
-#planetdenpasar #planetkitabali  #infonetizenbali #infosemetonbali #simkelilingbali #simA #simC #bali`;
+Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan cepat dan lancar. 🚗🏍️
+
+#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #simkelilingbali #simA #simC #bali`;
 
     setCaption(text);
     setJadwal(chunks);
@@ -256,7 +259,7 @@ Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk
 
                     {chunk.map?.((dt, index) => {
                       const lokasi = Array.isArray(dt.lokasi) ? dt.lokasi.join("\n") : dt.lokasi;
-                      const posTop = (index * 55) + 130;
+                      const posTop = (index * 50) + 140;
                       return (
                         <Flex key={index}>
                           <Box
@@ -270,8 +273,8 @@ Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk
                             }}
                             p={1}
                             w={85}
-                            h={50}
-                            bg={"#0d2644"}
+                            h={45}
+                            bgGradient="linear(0deg, #0c2442, #4f7492)"
                             alignContent={"center"}
                           >
                             <Text fontSize={10.5} color={"white"} fontWeight={600} textAlign={"center"} lineHeight={1.3} className={poppins.className}>{dt.polres}</Text>
@@ -287,10 +290,10 @@ Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk
                             }}
                             p={1}
                             w={230}
-                            h={50}
+                            h={45}
                             alignContent={"center"}
                             className={poppins.className}
-                            fontSize={10}
+                            fontSize={9.5}
                             fontWeight={500}
                             lineHeight={dt.lokasi.length > 1 ? 1.3 : 1.5}
                             whiteSpace="pre-line" // 👈 supaya \n terbaca

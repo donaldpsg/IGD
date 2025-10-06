@@ -231,12 +231,18 @@ export default function Page() {
         month: "long",
         year: "numeric",
       }).format(new Date(tanggal));
-      const textCaption = `SIM Keliling Polda Bali ${tglCaption} menyediakan layanan perpanjangan SIM bagi warga Bali dengan persyaratan sebagai berikut :\n
-            - Membawa E-KTP asli beserta fotocopy sebanyak 2 lembar.\n
-            - Membawa SIM asli yang masih aktif masa berlakunya, dilengkapi dengan fotocopy 2 lembar.\n
-            - Menyertakan surat keterangan sehat jasmani dan rohani (psikologi).\n\n
-            Pastikan semua persyaratan dipenuhi sebelum mendatangi lokasi SIM Keliling untuk kelancaran proses perpanjangan SIM Anda.\n\n
-            #planetdenpasar #planetkitabali  #infonetizenbali #infosemetonbali #simkelilingbali #simA #simC #bali`;
+      const textCaption = `📢 Layanan SIM Keliling Polda Bali – ${tglCaption}
+
+Perpanjang SIM A & C dengan mudah melalui layanan SIM Keliling Polda Bali.
+
+Syarat yang harus dibawa:
+✅ E‑KTP asli + 2 lembar fotokopi
+✅ SIM asli yang masih berlaku + 2 lembar fotokopi
+✅ Surat keterangan sehat jasmani & rohani (psikologi)
+
+Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan cepat dan lancar. 🚗🏍️
+
+#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #simkelilingbali #simA #simC #bali`;
 
       setCaption(textCaption);
       toast.closeAll();
@@ -426,7 +432,7 @@ export default function Page() {
 
                     {chunk.map?.((dt, index) => {
                       const lokasi = Array.isArray(dt.lokasi) ? dt.lokasi.join("\n") : dt.lokasi;
-                      const posTop = index * 55 + 130;
+                      const posTop = index * 50 + 140;
                       return (
                         <Flex key={index}>
                           <Box
@@ -440,7 +446,7 @@ export default function Page() {
                             }}
                             p={1}
                             w={85}
-                            h={50}
+                            h={45}
                             bgGradient="linear(0deg, #0c2442, #4f7492)"
                             alignContent={"center"}
                           >
@@ -466,10 +472,10 @@ export default function Page() {
                             }}
                             p={1}
                             w={230}
-                            h={50}
+                            h={45}
                             alignContent={"center"}
                             className={poppins.className}
-                            fontSize={10}
+                            fontSize={9.5}
                             fontWeight={500}
                             lineHeight={dt.lokasi.length > 1 ? 1.3 : 1.5}
                             whiteSpace="pre-line" // 👈 supaya \n terbaca
