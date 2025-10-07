@@ -203,10 +203,8 @@ export default function Page() {
 
       const dataAI = await responseAI.json();
 
-      console.log(dataAI);
-
       const data: DataItem[] = JSON.parse(dataAI.text);
-      console.log(data);
+
       const grouped = Object.values(
         data.reduce<Record<string, DataJadwal>>((acc, item) => {
           if (!acc[item.polres]) {

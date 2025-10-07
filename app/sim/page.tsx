@@ -27,6 +27,7 @@ import { useRouter } from "next/navigation";
 import * as htmlToImage from "html-to-image";
 import { dateMySql } from "../config";
 import { Poppins } from "next/font/google";
+
 const poppins = Poppins({
   subsets: ["latin"], // sesuaikan subset yang diperlukan
   weight: ["400", "500", "600", "700"], // pilih weight yang kamu mau

@@ -48,6 +48,17 @@ export default function Page() {
               SIM KELILING (AI)
             </Button>
           </SimpleGrid>
+          <SimpleGrid columns={2} spacing={2} mt={2}>
+            <Button
+              colorScheme="teal"
+              onClick={() => {
+                router.push(`/pln`);
+              }}
+            >
+              PLN
+            </Button>
+
+          </SimpleGrid>
           <SimpleGrid columns={1} spacing={2} mt={2}>
             <a href="/images/slide-pd.jpg" download="slide.jpg">
               <Button
