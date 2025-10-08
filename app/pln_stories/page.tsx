@@ -351,7 +351,7 @@ export default function Page() {
                                     </div>
                                     <Button
                                         colorScheme="teal"
-                                        onClick={() => download(`canvas-pln`, createFileName())}
+                                        onClick={() => download(`canvas${idx}`, createFileName())}
                                         size="sm"
                                         mt={4}
                                     >
