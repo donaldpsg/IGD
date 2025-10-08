@@ -55,9 +55,16 @@ export default function Page() {
                 router.push(`/pln`);
               }}
             >
-              PLN
+              PLN (Story)
             </Button>
-
+            <Button
+              colorScheme="teal"
+              onClick={() => {
+                router.push(`/pln_stories`);
+              }}
+            >
+              PLN (Stories)
+            </Button>
           </SimpleGrid>
           <SimpleGrid columns={1} spacing={2} mt={2}>
             <a href="/images/slide-pd.jpg" download="slide.jpg">
