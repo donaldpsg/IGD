@@ -90,7 +90,6 @@ export default function Page() {
         });
 
         try {
-
             const resIG = await fetch("/api/instagram/stories", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -122,6 +121,21 @@ export default function Page() {
             const dataJSON: DataPemeliharaan[] = JSON.parse(dataAI.text);
             setData(dataJSON);
             setImages(imagesURL)
+
+            if (dataJSON.length > 0) {
+                const textCaption = `⚡ PENGUMUMAN PEMELIHARAAN JARINGAN LISTRIK ⚡
+
+Halo, Sobat PLN! 👋
+
+PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
+📅 ${dataJSON[dataJSON.length - 1].tanggal_pemeliharaan}
+
+#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #PLN #PLNBali #InfoPemeliharaan #PLNGerakCepat #PLNSiaga #Bali #InfoPLN #PLNUpdate`;
+
+                setCaption(textCaption)
+
+            }
+
             toast.closeAll();
         } catch (e) {
             toast.closeAll();
@@ -172,6 +186,37 @@ export default function Page() {
 
     const nextSlide = () => {
         setIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+    };
+
+    const downloadAll = async () => {
+        for (let i = 0; i < data.length; i++) {
+            const elementId = `canvas${i}`;
+            const filename = createFileName(); // bisa pakai index atau dt.nama kalau ada
+            const element = document.getElementById(elementId);
+
+            if (!element) {
+                console.warn(`Element ${elementId} not found`);
+                continue;
+            }
+
+            // opsional: beri jeda agar prosesnya stabil dan tidak crash browser
+            await new Promise((r) => setTimeout(r, 300));
+
+            const dataUrl = await htmlToImage.toJpeg(element, { quality: 0.95, backgroundColor: "#ffffff" });
+            const link = document.createElement("a");
+            link.download = `${filename}.jpeg`;
+            link.href = dataUrl;
+            link.click();
+        }
+
+        toast({
+            title: "Selesai",
+            description: "All images downloaded successfully",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+            position: "bottom-left",
+        });
     };
 
     return (
@@ -253,9 +298,20 @@ export default function Page() {
                                     setCaption(e.target.value);
                                 }}
                             />
-                            <Button onClick={copy} mt={2} colorScheme="teal" size="sm" disabled={caption ? false : true}>
-                                Copy Caption
-                            </Button>
+                            <Flex justify="space-between">
+                                <Button onClick={copy} colorScheme="teal" size="sm" disabled={caption ? false : true}>
+                                    Copy Caption
+                                </Button>
+
+                                <Button
+                                    colorScheme="teal"
+                                    onClick={downloadAll}
+                                    size="sm"
+
+                                >
+                                    Download All
+                                </Button>
+                            </Flex>
 
                             {data.map((dt, idx) => (
                                 <div key={idx} style={{ marginBottom: 40, marginTop: 40 }}>
