@@ -258,9 +258,9 @@ export default function Page() {
                             </Button>
 
                             {data.map((dt, idx) => (
-                                <div key={idx} style={{ marginTop: 40 }}>
+                                <div key={idx} style={{ marginBottom: 40, marginTop: 40 }}>
                                     <div id={`canvas${idx}`} style={{ position: "relative", width: 340 }}>
-                                        <Image src={"/images/PLN-BACKGROUND.jpg"} mt={4} w={340} fit="cover" alt="media" />
+                                        <Image src={"/images/PLN-BACKGROUND.jpg"} w={340} fit="cover" alt="media" />
                                         <Box
                                             style={{
                                                 position: "absolute",
@@ -347,7 +347,6 @@ export default function Page() {
 
                                             );
                                         })}
-
                                     </div>
                                     <Button
                                         colorScheme="teal"
