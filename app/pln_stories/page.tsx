@@ -47,7 +47,8 @@ export default function Page() {
     const router = useRouter();
     const toast = useToast();
     const [caption, setCaption] = useState("");
-    const [data, setData] = useState<DataPemeliharaan[]>([]);
+    const [tanggal, setTanggal] = useState("");
+    const [data, setData] = useState<Lokasi[][]>([]);
     const [images, setImages] = useState<string[]>([]);
     const [index, setIndex] = useState(0);
     const [username, setUsername] = useState("plndistribusibali")
@@ -80,6 +81,14 @@ export default function Page() {
             position: "bottom-left",
         });
     };
+
+    function chunkArray<T>(array: T[], size: number): T[][] {
+        const result: T[][] = [];
+        for (let i = 0; i < array.length; i += size) {
+            result.push(array.slice(i, i + size));
+        }
+        return result;
+    }
 
     const submit = async () => {
         toast({
@@ -119,8 +128,17 @@ export default function Page() {
 
             const dataAI = await responseAI.json();
             const dataJSON: DataPemeliharaan[] = JSON.parse(dataAI.text);
-            setData(dataJSON);
+
+
+            const dataLokasi: Lokasi[] = dataJSON.flatMap(detail => detail.lokasi_pemeliharaan);
+            const chunk = chunkArray(dataLokasi, 4)
+
+            setData(chunk);
             setImages(imagesURL)
+
+            if (dataJSON.length > 0) {
+                setTanggal(dataJSON[dataJSON.length - 1].tanggal_pemeliharaan)
+            }
 
             if (dataJSON.length > 0) {
                 const textCaption = `⚡ PENGUMUMAN PEMELIHARAAN JARINGAN LISTRIK ⚡
@@ -312,41 +330,55 @@ PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
                                     Download All
                                 </Button>
                             </Flex>
+                            <div style={{ marginBottom: 40, marginTop: 40 }}>
+                                <div id={`headline`} style={{ position: "relative", width: 340 }}>
+                                    <Image src={"/images/PLN1.jpg"} w={340} fit="cover" alt="media" />
+                                    <Box
+                                        style={{
+                                            position: "absolute",
+                                            top: 212,
+                                            left: 25,
+                                            backgroundColor: "#14546d",
+                                            textAlign: "center",
+                                            borderRadius: 5,
+                                            width: 180
+                                        }}
+                                        py={1}
+                                    >
+                                        <Text color={"white"} className={poppins.className} fontWeight={500}>{tanggal}</Text>
+                                    </Box>
+                                    <Button
+                                        colorScheme="teal"
+                                        onClick={() => download(`headline`, createFileName())}
+                                        size="sm"
+                                        mt={4}
+                                    >
+                                        Download
+                                    </Button>
+                                </div>
+                            </div>
 
-                            {data.map((dt, idx) => (
+                            {data.map((chunk, idx) => (
                                 <div key={idx} style={{ marginBottom: 40, marginTop: 40 }}>
                                     <div id={`canvas${idx}`} style={{ position: "relative", width: 340 }}>
                                         <Image src={"/images/PLN-BACKGROUND.jpg"} w={340} fit="cover" alt="media" />
                                         <Box
                                             style={{
                                                 position: "absolute",
-                                                top: 95,
+                                                top: 92,
                                                 left: 0,
                                                 width: "100%", // penuh selebar canvas
-                                                backgroundColor: "#f1eb25",
-                                                padding: "4px 8px",
+                                                backgroundColor: "#14546d",
+                                                padding: "1px",
                                                 textAlign: "center",
                                             }}
                                         >
-                                            <Text
-                                                className={poppins.className}
-                                                fontSize={13}
-                                                fontWeight={600}
-                                                color="#14546d"
-                                                whiteSpace="nowrap" // pastikan tidak wrap
-                                            >
-                                                {dt.unit_pelaksana} {" "}
-                                                <Text as="span"
-                                                    className={poppins.className}
-                                                    fontSize={13}
-                                                    fontWeight={600} color="#e62a2b">
-                                                    {dt.tanggal_pemeliharaan.toUpperCase()}
-                                                </Text>
-                                            </Text>
+                                            <Text color={"#fff"} className={poppins.className} fontSize={14} >{tanggal}</Text>
                                         </Box>
-                                        {dt.lokasi_pemeliharaan.map?.((dt2, index) => {
+
+                                        {chunk.map?.((dt2, index) => {
                                             const lokasi = Array.isArray(dt2.lokasi) ? dt2.lokasi.join(" • ") : dt2.lokasi;
-                                            const posTop = index * 67 + 133;
+                                            const posTop = index * 67 + 125;
                                             return (
                                                 <VStack
                                                     key={index}
