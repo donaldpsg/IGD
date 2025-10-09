@@ -347,15 +347,16 @@ PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
                                     >
                                         <Text color={"white"} className={poppins.className} fontWeight={500}>{tanggal}</Text>
                                     </Box>
-                                    <Button
-                                        colorScheme="teal"
-                                        onClick={() => download(`headline`, createFileName())}
-                                        size="sm"
-                                        mt={4}
-                                    >
-                                        Download
-                                    </Button>
+
                                 </div>
+                                <Button
+                                    colorScheme="teal"
+                                    onClick={() => download(`headline`, createFileName())}
+                                    size="sm"
+                                    mt={4}
+                                >
+                                    Download
+                                </Button>
                             </div>
 
                             {data.map((chunk, idx) => (
