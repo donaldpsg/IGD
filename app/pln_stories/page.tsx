@@ -148,6 +148,8 @@ Halo, Sobat PLN! 👋
 PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
 📅 ${dataJSON[dataJSON.length - 1].tanggal_pemeliharaan}
 
+Sumber : @${username}
+
 #planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #PLN #PLNBali #InfoPemeliharaan #PLNGerakCepat #PLNSiaga #Bali #InfoPLN #PLNUpdate`;
 
                 setCaption(textCaption)

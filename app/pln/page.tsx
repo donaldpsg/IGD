@@ -106,7 +106,6 @@ export default function Page() {
         });
 
         try {
-
             const resIG = await fetch("/api/instagram/story", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -139,6 +138,8 @@ Halo, Sobat PLN! 👋
 
 PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
 📅 ${dataJSON.tanggal_pemeliharaan}
+
+Sumber : ${dataIG[0].meta.sourceUrl}
 
 #planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #PLN #PLNBali #InfoPemeliharaan #PLNGerakCepat #PLNSiaga #Bali #InfoPLN #PLNUpdate`;
 
@@ -228,7 +229,6 @@ PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
                             {image && (
                                 <Image alt="" src={image} mt={4} w={330} h={586} objectFit="cover" />
                             )}
-
                         </CardBody>
                     </Card>
                     <Card>

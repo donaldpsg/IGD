@@ -66,6 +66,17 @@ export default function Page() {
               PLN (Stories)
             </Button>
           </SimpleGrid>
+          <SimpleGrid columns={2} spacing={2} mt={2}>
+            <Button
+              colorScheme="teal"
+              onClick={() => {
+                router.push(`/pdam`);
+              }}
+            >
+              Gangguan Air
+            </Button>
+
+          </SimpleGrid>
           <SimpleGrid columns={1} spacing={2} mt={2}>
             <a href="/images/slide-pd.jpg" download="slide.jpg">
               <Button
