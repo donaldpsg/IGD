@@ -2,6 +2,7 @@
 import React, { useState, useCallback, ChangeEvent } from "react";
 import {
     FormControl,
+    FormLabel,
     Input,
     Button,
     SimpleGrid,
@@ -45,6 +46,7 @@ export default function Page() {
     const toast = useToast();
 
     const [url, setUrl] = useState("")
+    const [urlStory, setUrlStory] = useState("")
     const [caption, setCaption] = useState("");
     const [data, setData] = useState<DataGangguan>();
     const [image, setImage] = useState("")
@@ -94,6 +96,21 @@ export default function Page() {
         }
     };
 
+    const pasteStory = async () => {
+        try {
+            // Check if the browser supports the Clipboard API
+            if (navigator.clipboard && typeof navigator.clipboard.readText === "function") {
+                // Use the Clipboard API to read text from the clipboard
+                const text = await navigator.clipboard.readText();
+                setUrlStory(text);
+            } else {
+                showToast("Error", 1, "Clipboard API is not supported in this browser.");
+            }
+        } catch (e) {
+            showToast("Error", 1, (e as Error).message);
+        }
+    };
+
     function chunkArray<T>(array: T[], size: number): T[][] {
         const result: T[][] = [];
         for (let i = 0; i < array.length; i += size) {
@@ -110,16 +127,35 @@ export default function Page() {
             duration: null,
         });
 
+
+        let imageUrl = "";
+
         try {
-            const resIG = await fetch("/api/instagram", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ url })
-            });
+            if (url) {
 
-            const dataIG = await resIG.json();
+                const resIG = await fetch("/api/instagram", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url })
+                });
 
-            const imageUrl = `/api/proxy?url=${encodeURIComponent(dataIG[0].pictureUrl)}`
+                const dataIG = await resIG.json();
+
+                imageUrl = `/api/proxy?url=${encodeURIComponent(dataIG[0].pictureUrl)}`
+            } else {
+
+                const resIG = await fetch("/api/instagram/story", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ url: urlStory })
+                });
+                const dataIG = await resIG.json();
+                console.log(dataIG)
+                const story = dataIG.result
+                console.log(story)
+                imageUrl = `/api/proxy?url=${encodeURIComponent(story[0].image_versions2.candidates[0].url)}`
+            }
+
             const resImage = await fetch(imageUrl);
             const base64ImageData = Buffer.from(await resImage.arrayBuffer()).toString("base64");
 
@@ -142,7 +178,7 @@ export default function Page() {
 
 ${dataJSON.informasi_gangguan}
 
-Sumber : ${dataIG[0].meta.sourceUrl}
+Sumber : 
 
 #planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #bali #Infogangguanair `;
 
@@ -216,15 +252,32 @@ Sumber : ${dataIG[0].meta.sourceUrl}
                     <Card>
                         <CardBody>
                             <FormControl>
+                                <FormLabel>URL Post</FormLabel>
                                 <InputGroup>
                                     <Input
                                         type="text"
                                         value={url}
                                         onChange={(e: ChangeEvent<HTMLInputElement>) => setUrl(e.target.value)}
-                                        placeholder="Paste URL Instagram"
+                                        placeholder="Paste URL Instagram Post"
                                     />
                                     <InputRightElement>
                                         <Button onClick={paste}>
+                                            <Icon as={FaPaste} color="#493628" />
+                                        </Button>
+                                    </InputRightElement>
+                                </InputGroup>
+                            </FormControl>
+                            <FormControl mt={4}>
+                                <FormLabel>or URL Story</FormLabel>
+                                <InputGroup>
+                                    <Input
+                                        type="text"
+                                        value={urlStory}
+                                        onChange={(e: ChangeEvent<HTMLInputElement>) => setUrlStory(e.target.value)}
+                                        placeholder="Paste URL Instagram Story"
+                                    />
+                                    <InputRightElement>
+                                        <Button onClick={pasteStory}>
                                             <Icon as={FaPaste} color="#493628" />
                                         </Button>
                                     </InputRightElement>
