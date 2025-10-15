@@ -119,6 +119,22 @@ export default function Page() {
         return result;
     }
 
+    function getInstagramUsername(url: string): string | null {
+        try {
+            const parsedUrl = new URL(url);
+            const parts = parsedUrl.pathname.split("/").filter(Boolean);
+
+            // Contoh: ['stories', 'tirtamangutama', '3743711467117056753']
+            if (parts[0] === "stories" && parts[1]) {
+                return parts[1];
+            }
+
+            return null;
+        } catch {
+            return null; // kalau bukan URL valid
+        }
+    }
+
     const submit = async () => {
         toast({
             title: "Please wait",
@@ -127,8 +143,8 @@ export default function Page() {
             duration: null,
         });
 
-
         let imageUrl = "";
+        let username = "";
 
         try {
             if (url) {
@@ -142,6 +158,7 @@ export default function Page() {
                 const dataIG = await resIG.json();
 
                 imageUrl = `/api/proxy?url=${encodeURIComponent(dataIG[0].pictureUrl)}`
+                username = dataIG[0].meta.sourceUrl
             } else {
 
                 const resIG = await fetch("/api/instagram/story", {
@@ -150,10 +167,10 @@ export default function Page() {
                     body: JSON.stringify({ url: urlStory })
                 });
                 const dataIG = await resIG.json();
-                console.log(dataIG)
                 const story = dataIG.result
-                console.log(story)
+
                 imageUrl = `/api/proxy?url=${encodeURIComponent(story[0].image_versions2.candidates[0].url)}`
+                username = getInstagramUsername(urlStory) ?? "";
             }
 
             const resImage = await fetch(imageUrl);
@@ -178,7 +195,7 @@ export default function Page() {
 
 ${dataJSON.informasi_gangguan}
 
-Sumber : 
+Sumber : ${username}
 
 #planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #bali #Infogangguanair `;
 
