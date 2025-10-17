@@ -73,9 +73,16 @@ export default function Page() {
                 router.push(`/pdam`);
               }}
             >
-              Gangguan Air
+              GANGGUAN AIR
             </Button>
-
+            <Button
+              colorScheme="teal"
+              onClick={() => {
+                router.push(`/samsat`);
+              }}
+            >
+              SAMSAT KELILING
+            </Button>
           </SimpleGrid>
           <SimpleGrid columns={1} spacing={2} mt={2}>
             <a href="/images/slide-pd.jpg" download="slide.jpg">

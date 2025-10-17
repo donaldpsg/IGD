@@ -129,7 +129,6 @@ export default function Page() {
             const dataAI = await responseAI.json();
             const dataJSON: DataPemeliharaan[] = JSON.parse(dataAI.text);
 
-
             const dataLokasi: Lokasi[] = dataJSON.flatMap(detail => detail.lokasi_pemeliharaan);
             const chunk = chunkArray(dataLokasi, 4)
 
