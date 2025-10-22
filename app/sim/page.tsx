@@ -159,7 +159,7 @@ Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan 
     const timestamp = Date.now();
 
     // Construct the file name using the random string, timestamp, and extension
-    const fileName = `pd_${randomString}_${timestamp}`;
+    const fileName = `sim_${randomString}_${timestamp}`;
 
     return fileName;
   };

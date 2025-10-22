@@ -15,27 +15,35 @@ import {
     Text,
     Textarea,
     CardHeader,
-    Flex,
-    Heading
+    FormControl,
+    FormLabel,
+    Input
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
-// import * as htmlToImage from "html-to-image";
-// import { Poppins } from "next/font/google";
+import * as htmlToImage from "html-to-image";
+import { Poppins } from "next/font/google";
+import { dateMySql } from "../config";
 
+const poppins = Poppins({
+    subsets: ["latin"], // sesuaikan subset yang diperlukan
+    weight: ["400", "500", "600", "700"], // pilih weight yang kamu mau
+});
 
-// const poppins = Poppins({
-//     subsets: ["latin"], // sesuaikan subset yang diperlukan
-//     weight: ["400", "500", "600", "700"], // pilih weight yang kamu mau
-// });
+interface LokasiSamsat {
+    kota: string;
+    lokasi: string;
+    jam: string;
+}
 
 export default function Page() {
     const router = useRouter();
     const toast = useToast();
-    //const [data, setData] = useState([]);
+    const [data, setData] = useState<LokasiSamsat[]>([]);
     const [imagesBase64, setImagesBase64] = useState<string[]>([]);
     const [caption, setCaption] = useState("");
+    const [tanggal, setTanggal] = useState(dateMySql(new Date()));
 
     const days = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
 
@@ -55,43 +63,44 @@ export default function Page() {
         [toast]
     );
 
-    const fetchData = useCallback(async () => {
-        showToast("Loading", 5, "Please wait...");
-
-        try {
-
-            const imgDenpasar = "/images/SAMSAT-DENPASAR.heic";
-            const imgGianyar = "/images/SAMSAT-GIANYAR.jpg";
-
-            const res1 = await fetch(imgDenpasar);
-            const base64ImageData1 = Buffer.from(await res1.arrayBuffer()).toString("base64");
-
-            const res2 = await fetch(imgGianyar);
-            const base64ImageData2 = Buffer.from(await res2.arrayBuffer()).toString("base64");
-
-            setImagesBase64([base64ImageData1, base64ImageData2]);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
-
-        toast.closeAll();
-    }, [showToast, toast]);
 
     useEffect(() => {
-        fetchData(); // Panggil fungsi untuk memuat data
-    }, [toast, fetchData]);
+        const fetchImages = async () => {
+            const res = await fetch("/api/samsat");
+            const data: string[] = await res.json();
+            setImagesBase64(data); // langsung simpan array base64
+        };
 
-    const copy = () => {
-        navigator.clipboard.writeText(caption);
+        fetchImages();
+    }, []);
 
-        toast({
-            title: "Success",
-            description: `Copied to cliboard`,
-            status: "success",
-            duration: 9000,
-            isClosable: true,
-            position: "bottom-left",
-        });
+
+    const copy = async () => {
+        try {
+            await navigator.clipboard.writeText(caption ?? "");
+            toast({
+                title: "Success",
+                description: `Copied to clipboard`,
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+                position: "bottom-left",
+            });
+        } catch (e) {
+            console.error("Failed to copy to clipboard:", e);
+            toast({
+                title: "Error",
+                description: `Failed to copy to clipboard`,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+                position: "bottom-left",
+            });
+        }
+    };
+
+    const onChangeTanggal = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTanggal(e.target.value);
     };
 
     const submit = async () => {
@@ -103,7 +112,7 @@ export default function Page() {
         });
 
         try {
-            const date = new Date();
+            const date = new Date(tanggal);
             const hari = days[date.getDay()];
             const tgl = new Intl.DateTimeFormat("id-ID", {
                 day: "numeric",
@@ -111,7 +120,7 @@ export default function Page() {
                 year: "numeric"
             }).format(date);
 
-            const prompt = `Cari jadwal samsat keliling kota Denpasar dan Gianyar untuk hari ${hari} tanggal ${tgl} dari kedua gambar ini. 
+            const prompt = `Cari jadwal samsat keliling kota Denpasar, Gianyar dan Tabanan untuk hari ${hari} tanggal ${tgl} dari kedua gambar ini. 
     Output data berupa JSON dengan key kota, lokasi dan jam. 
     Output hanya JSON, tanpa kata pengantar atau penutup.`
 
@@ -122,8 +131,24 @@ export default function Page() {
             });
 
             const dataAI = await responseAI.json();
-            console.log(dataAI)
-            //setData(JSON.parse(dataAI.text))
+
+            setData(JSON.parse(dataAI.text))
+
+            const tgl_caption = new Intl.DateTimeFormat("id-ID", {
+                weekday: "long",
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            }).format(new Date(tanggal))
+
+            const text = `📢 Jadwal Samsat Keliling – ${tgl_caption}
+
+Yuk, manfaatkan layanan cepat dan mudah tanpa harus ke kantor Samsat!
+Jangan lupa bawa dokumen lengkap dan datang lebih awal ya!
+
+#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #SamsatKeliling #Bali #SamsatBali #PelayananPublik`;
+
+            setCaption(text);
 
 
             toast.closeAll();
@@ -133,6 +158,49 @@ export default function Page() {
             showToast("Error", 1, (e as Error).message);
         }
     }
+
+    const tgl = new Intl.DateTimeFormat("id-ID", {
+        weekday: "long",
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+    }).format(new Date(tanggal))
+
+    const createFileName = () => {
+        // Generate a random string
+        const randomString = Math.random().toString(36).substring(2, 10);
+
+        // Get the current timestamp
+        const timestamp = Date.now();
+
+        // Construct the file name using the random string, timestamp, and extension
+        const fileName = `samsat_${randomString}_${timestamp}`;
+
+        return fileName;
+    };
+
+    const download = (elementId: string, filename: string) => {
+        const element = document.getElementById(elementId);
+
+        if (!element) {
+            toast({
+                title: "Error",
+                description: `Element with id "${elementId}" not found.`,
+                status: "error",
+                duration: 9000,
+                isClosable: true,
+                position: "bottom-left",
+            });
+            return;
+        }
+
+        htmlToImage.toJpeg(element, { quality: 0.95 }).then(function (dataUrl) {
+            const link = document.createElement("a");
+            link.download = `${filename}.jpeg`;
+            link.href = dataUrl;
+            link.click();
+        });
+    };
 
     return (
         <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
@@ -154,14 +222,19 @@ export default function Page() {
                 <SimpleGrid columns={{ md: 2, sm: 1 }} m={4} spacing={8}>
                     <Card>
                         <CardHeader>
-                            <Flex>
-                                <Text fontWeight="semibold">SAMSAT KELILING</Text>
-                                <Spacer />
-                                <Button onClick={submit} colorScheme="teal" size="sm" >
-                                    Get Data
-                                </Button>
-                            </Flex>
+                            <Text fontWeight="semibold">SAMSAT KELILING</Text>
                         </CardHeader>
+                        <CardBody>
+                            <FormControl>
+                                <FormLabel>Date</FormLabel>
+                                <Input type="date" value={tanggal} onChange={(e) => onChangeTanggal(e)} />
+                            </FormControl>
+                            <Button onClick={submit} colorScheme="teal" size="sm" mt={4}>
+                                Get Data
+                            </Button>
+                        </CardBody>
+                    </Card>
+                    <Card>
                         <CardBody>
                             <Textarea
                                 value={caption}
@@ -172,10 +245,42 @@ export default function Page() {
                                     setCaption(e.target.value);
                                 }}
                             />
-                            <Button mt={4} onClick={copy} colorScheme="teal" size="sm" disabled={caption ? false : true} mb={4}>
+                            <Button mt={4} onClick={copy} colorScheme="teal" size="sm" disabled={!caption} mb={4}>
                                 Copy Caption
                             </Button>
-                            <Heading as='h3' size='lg' color="red">UNDER CONSTRUCTION</Heading>
+                            <div id={`canvas-samsat`} style={{ position: "relative", width: 340 }} >
+                                <Image src={"/images/SAMSAT-BACKGROUND.jpg"} w={340} fit="cover" alt="media" />
+                                <Text style={{ position: "absolute", top: 78, color: "#443230", left: "50%", transform: "translateX(-50%)" }} className={poppins.className} fontSize={12} fontWeight={600} color={"#d9812c"}>{tgl.toUpperCase()}</Text>
+                                {data.map?.((dt, index) => {
+                                    const posTop = (index * 53) + 125;
+                                    return (
+                                        <VStack key={index}>
+                                            <Box style={{
+                                                position: "absolute",
+                                                left: 30,
+                                                top: posTop,
+                                                borderWidth: 0.5,
+                                                backgroundColor: "#fffaeb",
+                                                width: "84%",
+                                                padding: 5,
+                                                textAlign: "center"
+                                            }}>
+                                                <Text fontWeight={500} fontSize={10} color="#443230" className={poppins.className}>{dt.lokasi}</Text>
+                                            </Box>
+                                            <Box
+                                                style={{
+                                                    position: "absolute", left: "50%", transform: "translateX(-50%)", top: posTop - 15, backgroundColor: "#443230", width: "50%", paddingLeft: 10, paddingTop: 2, paddingBottom: 2, borderRadius: 5
+                                                }}>
+                                                <Text fontWeight={500} fontSize={10} color="white" className={poppins.className}>{dt.kota} - {dt.jam}</Text>
+                                            </Box>
+                                        </VStack>
+
+                                    )
+                                })}
+                            </div>
+                            <Button colorScheme="teal" onClick={() => download(`canvas-samsat`, createFileName())} size="sm" mt={4}>
+                                Download
+                            </Button>
                         </CardBody>
                     </Card>
                 </SimpleGrid>
