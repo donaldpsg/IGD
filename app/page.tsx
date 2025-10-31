@@ -1,5 +1,5 @@
 "use client";
-import { Center, VStack, Button, Image, Box, SimpleGrid } from "@chakra-ui/react";
+import { Center, VStack, Button, Image, Box, SimpleGrid, Text, Link } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
 import { DownloadIcon } from "@chakra-ui/icons";
 
@@ -121,8 +121,13 @@ export default function Page() {
               </Button>
             </a>
           </SimpleGrid>
-
         </Box>
+        <Text>
+          Copyright by{" "}
+          <Link href="mailto:donald.siregar@live.com" color="blue.400">
+            Donald Siregar
+          </Link>
+        </Text>
       </VStack>
     </Center>
   );
