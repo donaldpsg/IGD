@@ -96,7 +96,7 @@ export default function Page() {
             <Button
               colorScheme="teal"
               onClick={() => {
-                router.push(`/x_image`);
+                router.push(`/twitter_image`);
               }}
             >
               X IMAGE

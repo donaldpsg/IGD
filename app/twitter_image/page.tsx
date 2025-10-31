@@ -99,7 +99,7 @@ export default function Page() {
             const fd = new FormData();
             fd.append('pid', pid || "");
 
-            const response = await fetch("/api/x_image", {
+            const response = await fetch("/api/twitter_image", {
                 method: "POST",
                 body: fd
             });
