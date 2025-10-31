@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <Center height="50vh">
       <VStack>
-        <Image src="/images/logo-pd.png" alt="logo" h={128} />
+        <Image src="/images/logo-pd.png" alt="logo" h={128} style={{ marginTop: 100 }} />
         <Box mt={10} borderWidth={2} borderRadius={10} p={4}>
           <SimpleGrid columns={2} spacing={2}>
             <Button
