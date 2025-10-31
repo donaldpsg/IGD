@@ -84,14 +84,22 @@ export default function Page() {
               SAMSAT KELILING
             </Button>
           </SimpleGrid>
-          <SimpleGrid columns={1} spacing={2} mt={2}>
+          <SimpleGrid columns={2} spacing={2} mt={2}>
+            <Button
+              colorScheme="teal"
+              onClick={() => {
+                router.push(`/all_media`);
+              }}
+            >
+              X VIDEO
+            </Button>
             <a href="/images/slide-pd.jpg" download="slide.jpg">
               <Button
                 colorScheme="teal"
                 width="100%"
                 leftIcon={<DownloadIcon />}
               >
-                SLIDE PLANET DENPASAR
+                SLIDE PD
               </Button>
             </a>
           </SimpleGrid>
