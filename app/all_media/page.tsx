@@ -84,7 +84,7 @@ export default function Page() {
             });
 
             const data = await response.json();
-            console.log(data)
+            // console.log(data)
             const urlVideo = data.url ? data.url : data.entries[0].url
 
             const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline dan harus bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.description}`

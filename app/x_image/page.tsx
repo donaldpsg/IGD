@@ -106,7 +106,7 @@ export default function Page() {
 
             const res = await response.json();
             const data = res.data
-            console.log(data.card.legacy.binding_values[13].value.image_value.url)
+            // console.log(data.card.legacy.binding_values[13].value.image_value.url)
 
 
             const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline dan harus bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.legacy.full_text}`
