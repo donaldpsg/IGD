@@ -93,6 +93,17 @@ export default function Page() {
             >
               X VIDEO
             </Button>
+            <Button
+              colorScheme="teal"
+              onClick={() => {
+                router.push(`/x_image`);
+              }}
+            >
+              X IMAGE
+            </Button>
+          </SimpleGrid>
+          <SimpleGrid columns={2} spacing={2} mt={2}>
+
             <a href="/images/slide-pd.jpg" download="slide.jpg">
               <Button
                 colorScheme="teal"

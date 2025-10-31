@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback, ChangeEvent, FormEvent, useRef } from "react";
+import { useState, useCallback, ChangeEvent, FormEvent } from "react";
 import {
     FormControl,
     Input,
@@ -28,8 +28,8 @@ import { Icon, useToast } from "@chakra-ui/react";
 import { FaPaste, FaDownload, FaArrowLeft, FaCopy } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { hashtag } from "../config";
-import * as htmlToImage from "html-to-image";
 import { Roboto } from "next/font/google";
+import * as htmlToImage from "html-to-image";
 
 const roboto = Roboto({
     weight: "700",
@@ -40,9 +40,8 @@ export default function Page() {
     const [url, setUrl] = useState("");
     const [caption, setCaption] = useState("");
     const [AICaption, setAICaption] = useState("")
+    const [imageURL, setImageUrl] = useState("");
     const [title, setTitle] = useState("")
-    const [videoURL, setVideoURL] = useState("");
-    const [imageURL, setImageURL] = useState("");
 
     const router = useRouter();
     const toast = useToast();
@@ -63,6 +62,26 @@ export default function Page() {
         [toast]
     );
 
+    function getPostIdFromXUrl(url: string): string | null {
+        try {
+            const parsed = new URL(url);
+            const segments = parsed.pathname.split("/").filter(Boolean);
+
+            // Cari segmen "status" lalu ambil angka sesudahnya
+            const statusIndex = segments.findIndex((s) => s === "status");
+            if (statusIndex !== -1 && segments[statusIndex + 1]) {
+                const pid = segments[statusIndex + 1];
+                // Validasi: pastikan hanya angka
+                return /^\d+$/.test(pid) ? pid : null;
+            }
+
+            return null;
+        } catch {
+            return null;
+        }
+    }
+
+
 
     const submit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -75,19 +94,22 @@ export default function Page() {
         });
 
         try {
-            const fd = new FormData();
-            fd.append('url', url);
+            const pid = getPostIdFromXUrl(url);
 
-            const response = await fetch("/api/all_media", {
+            const fd = new FormData();
+            fd.append('pid', pid || "");
+
+            const response = await fetch("/api/x_image", {
                 method: "POST",
                 body: fd
             });
 
-            const data = await response.json();
-            console.log(data)
-            const urlVideo = data.url ? data.url : data.entries[0].url
+            const res = await response.json();
+            const data = res.data
+            console.log(data.card.legacy.binding_values[13].value.image_value.url)
 
-            const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline dan harus bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.description}`
+
+            const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline dan harus bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.legacy.full_text}`
             const resTitle = await fetch('/api/gemini', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -95,7 +117,7 @@ export default function Page() {
             });
             const dataTitle = await resTitle.json();
 
-            const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. Jika diperlukan, akhiri dengan satu pertanyaan untuk memicu komentar. Namun jangan dipaksakan harus ada pertanyaan di akhir. Lengkapi juga dengan hashtag populer yang terkait dengan berita. Output hanya berisi caption dan harus dalam bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.description}`
+            const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. Jika diperlukan, akhiri dengan satu pertanyaan untuk memicu komentar. Namun jangan dipaksakan harus ada pertanyaan di akhir. Lengkapi juga dengan hashtag populer yang terkait dengan berita. Output hanya berisi caption dan harus dalam bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.legacy.full_text}`
             const resCaption = await fetch('/api/gemini', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -109,10 +131,15 @@ export default function Page() {
                 setAICaption(textCaption);
             }
 
-            setCaption(`${data.description}\n\n${hashtag.join(" ")}`)
+            if (dataCaption.text) {
+                const textCaption = `${dataCaption.text} ${hashtag.join(" ")}`
+                setAICaption(textCaption);
+            }
+
+            setCaption(`${data.legacy.full_text}\n\n${hashtag.join(" ")}`)
+            setImageUrl(data.card.legacy.binding_values[13].value.image_value.url)
             setTitle(dataTitle.text || "");
-            setVideoURL(urlVideo)
-            setImageURL(data.thumbnails[4].url)
+
 
             toast.closeAll();
 
@@ -148,27 +175,39 @@ export default function Page() {
         }
     };
 
-    const handleDownload = async () => {
-        const response = await fetch("/api/all_media/download", {
+    async function handleDownload(imageURL: string) {
+        const response = await fetch("/api/x_image/download", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url: videoURL }),
+            body: JSON.stringify({ url: imageURL }),
         });
+
+        if (!response.ok) {
+            alert("Download failed");
+            return;
+        }
+
+        // Ambil nama file dari header
+        const disposition = response.headers.get("Content-Disposition");
+        let filename = "image.jpg";
+
+        if (disposition && disposition.includes("filename=")) {
+            const match = disposition.match(/filename="?([^"]+)"?/);
+            if (match?.[1]) filename = match[1];
+        }
 
         const blob = await response.blob();
         const blobUrl = window.URL.createObjectURL(blob);
 
-        const randomString = Math.random().toString(36).substring(2, 10);
-
         const a = document.createElement("a");
         a.href = blobUrl;
-        a.download = `video-${randomString}.mp4`;
+        a.download = filename; // ✅ gunakan nama file dari header
         document.body.appendChild(a);
         a.click();
         a.remove();
 
         window.URL.revokeObjectURL(blobUrl);
-    };
+    }
 
     const createFileName = () => {
         // Generate a random string
@@ -256,14 +295,16 @@ export default function Page() {
                                 size="sm"
                                 colorScheme="teal"
                                 width="100%"
-                                onClick={handleDownload}
-                                disabled={videoURL ? false : true}
+                                onClick={() => handleDownload(imageURL)}
                             >
-                                Download Video
+                                Download Image
                             </Button>
                         </CardBody>
                     </Card>
                     <Card>
+                        <CardHeader>
+                            <Text fontWeight="semibold">DETAIL</Text>
+                        </CardHeader>
                         <CardBody>
                             <Textarea
                                 value={caption}
@@ -286,7 +327,6 @@ export default function Page() {
                                 <Button leftIcon={<FaCopy />} onClick={copyAI} ml={2} colorScheme="teal" size="sm" disabled={AICaption ? false : true}>
                                     AI Caption
                                 </Button>
-
                             </Flex>
 
                             <FormControl mt={4}>
@@ -310,7 +350,6 @@ export default function Page() {
                             </Button>
                         </CardBody>
                     </Card>
-
                     <Center id="canvas" style={{ position: "relative", width: 380, height: 475 }}>
                         <Image src="/images/logo-pd.png" w={100} style={{ position: "absolute", top: 15 }} alt="logo white" />
                         <Image
@@ -337,6 +376,7 @@ export default function Page() {
                         Download Thumbnail
                     </Button>
                 </SimpleGrid>
+
             </Box>
         </VStack>
     )
