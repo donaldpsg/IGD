@@ -136,10 +136,9 @@ export default function Page() {
                 setAICaption(textCaption);
             }
 
-            setCaption(`${data.legacy.full_text}\n\n${hashtag.join(" ")}`)
+            setCaption(`${data.legacy.full_text}\n${hashtag.join(" ")}`)
             setImageUrl(data.card.legacy.binding_values[13].value.image_value.url)
             setTitle(dataTitle.text || "");
-
 
             toast.closeAll();
 

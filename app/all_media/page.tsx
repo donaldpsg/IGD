@@ -109,7 +109,7 @@ export default function Page() {
                 setAICaption(textCaption);
             }
 
-            setCaption(`${data.description}\n\n${hashtag.join(" ")}`)
+            setCaption(`${data.description}\n${hashtag.join(" ")}`)
             setTitle(dataTitle.text || "");
             setVideoURL(urlVideo)
             setImageURL(data.thumbnails[4].url)
@@ -286,7 +286,6 @@ export default function Page() {
                                 <Button leftIcon={<FaCopy />} onClick={copyAI} ml={2} colorScheme="teal" size="sm" disabled={AICaption ? false : true}>
                                     AI Caption
                                 </Button>
-
                             </Flex>
 
                             <FormControl mt={4}>

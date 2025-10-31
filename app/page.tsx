@@ -103,7 +103,14 @@ export default function Page() {
             </Button>
           </SimpleGrid>
           <SimpleGrid columns={2} spacing={2} mt={2}>
-
+            <Button
+              colorScheme="teal"
+              onClick={() => {
+                router.push(`/webpage`);
+              }}
+            >
+              WEBPAGE
+            </Button>
             <a href="/images/slide-pd.jpg" download="slide.jpg">
               <Button
                 colorScheme="teal"
