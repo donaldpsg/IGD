@@ -42,10 +42,10 @@ export default function Page() {
             <Button
               colorScheme="teal"
               onClick={() => {
-                router.push(`/sim2`);
+                router.push(`/webpage`);
               }}
             >
-              SIM KELILING (AI)
+              WEBPAGE
             </Button>
           </SimpleGrid>
           <SimpleGrid columns={2} spacing={2} mt={2}>
@@ -102,22 +102,15 @@ export default function Page() {
               X IMAGE
             </Button>
           </SimpleGrid>
-          <SimpleGrid columns={2} spacing={2} mt={2}>
-            <Button
-              colorScheme="teal"
-              onClick={() => {
-                router.push(`/webpage`);
-              }}
-            >
-              WEBPAGE
-            </Button>
+          <SimpleGrid columns={1} spacing={2} mt={2}>
+
             <a href="/images/slide-pd.jpg" download="slide.jpg">
               <Button
                 colorScheme="teal"
                 width="100%"
                 leftIcon={<DownloadIcon />}
               >
-                SLIDE PD
+                SLIDE PLANET DENPASAR
               </Button>
             </a>
           </SimpleGrid>

@@ -82,8 +82,9 @@ export default function Page() {
 
             const prompt = `Tulis ulang berita dari halaman berikut ${url} sebagai caption Instagram yang mudah dicerna namun tetap formal. 
             Lengkapi juga dengan hashtag populer yang terkait dengan berita. 
+            Carikan juga gambar yang relevan untuk berita tersebut.
             Gunakan bahasa Indonesia yang mudah dipahami.
-             Output tanpa kata pengantar atau penutup.`
+            Jadi outputnya harus berupa JSON dengan key caption dan url_gambar tanpa kata pengantar atau penutup.`
 
             const resPrompt = await fetch('/api/gemini', {
                 method: 'POST',
@@ -91,24 +92,15 @@ export default function Page() {
                 body: JSON.stringify({ prompt: prompt }),
             });
             const data = await resPrompt.json();
-            setCaption(`${data.text}\n${hashtag.join(" ")}`)
 
-            //             const promptGambar = `Analisis semua gambar yang muncul di halaman ${url}.
-            // Pilih gambar utama (featured image) yang paling relevan dengan isi berita, bukan logo atau iklan.
-            // Kriteria pemilihan:
-            // Letaknya di dalam elemen artikel utama, bukan sidebar atau footer.
-            // Ukurannya paling besar.
-            // Jika ada caption, pastikan caption-nya relevan dengan judul berita.
-            // Output harus berupa url gambar, tidak ada kata pengantar dan penutup
-            // `
+            let jsonText = data.text;
 
-            //             const resPromptGambar = await fetch('/api/gemini', {
-            //                 method: 'POST',
-            //                 headers: { 'Content-Type': 'application/json' },
-            //                 body: JSON.stringify({ prompt: promptGambar }),
-            //             });
-            //             const dataGambar = await resPromptGambar.json();
-            //             console.log(dataGambar);
+            // 2️⃣ Hapus tanda ```json dan ``` di awal/akhir jika ada
+            jsonText = jsonText.replace(/```json|```/g, '').trim();
+
+            const parsed = JSON.parse(jsonText);
+
+            setCaption(`${parsed.caption}\n${hashtag.join(" ")}`)
 
             toast.closeAll()
 
@@ -166,6 +158,7 @@ export default function Page() {
                     </Card>
                     <Card>
                         <CardBody>
+
                             <Textarea
                                 value={caption}
                                 style={{ whiteSpace: "pre-wrap" }}

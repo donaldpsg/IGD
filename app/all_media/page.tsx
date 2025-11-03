@@ -277,7 +277,7 @@ export default function Page() {
                             />
 
                             <Text mt={3} fontWeight="semibold">AI Caption</Text>
-                            <Text fontStyle="italic" fontSize={15}>{AICaption}</Text>
+                            <Text fontStyle="italic" fontSize={15} style={{ whiteSpace: "pre-wrap" }}>{AICaption}</Text>
 
                             <Flex mt={3} mb={3}>
                                 <Button leftIcon={<FaCopy />} onClick={copy} colorScheme="teal" size="sm" disabled={caption ? false : true}>
