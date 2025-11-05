@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback, ChangeEvent, FormEvent } from "react";
+import { useState, useCallback, ChangeEvent, FormEvent, useRef } from "react";
 import {
     FormControl,
     Input,
@@ -22,10 +22,11 @@ import {
     Text,
     FormLabel,
     Center,
-    Container
+    Container,
+    Heading
 } from "@chakra-ui/react";
 import { Icon, useToast } from "@chakra-ui/react";
-import { FaPaste, FaDownload, FaArrowLeft, FaCopy } from "react-icons/fa";
+import { FaPaste, FaDownload, FaArrowLeft, FaCopy, FaPlay, FaPause, FaCamera } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { hashtag } from "../config";
 import * as htmlToImage from "html-to-image";
@@ -43,6 +44,9 @@ export default function Page() {
     const [title, setTitle] = useState("")
     const [videoURL, setVideoURL] = useState("");
     const [imageURL, setImageURL] = useState("");
+    const [imageFile, setImageFile] = useState("")
+    const [isVideo, setIsVideo] = useState(false);
+    const videoRef = useRef<HTMLVideoElement | null>(null);
 
     const router = useRouter();
     const toast = useToast();
@@ -63,6 +67,65 @@ export default function Page() {
         [toast]
     );
 
+    const onChangeFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { files } = e.target;
+        const selectedFiles = files as FileList;
+
+        if (selectedFiles) {
+            toast({
+                title: "Please wait",
+                description: "Rendering video...",
+                status: "loading",
+                duration: null,
+            });
+
+            const fileType = selectedFiles[0]["type"];
+            const imageTypes = ["image/gif", "image/jpeg", "image/png", "image/jpeg", , "image/webp"];
+
+            if (imageTypes.includes(fileType)) {
+                const blob = new Blob([selectedFiles[0]]);
+                const imgsrc = URL.createObjectURL(blob);
+                setImageFile(imgsrc);
+                setIsVideo(false);
+            } else {
+                if (videoRef.current) {
+                    const videoSrc = URL.createObjectURL(new Blob([selectedFiles[0]], { type: "video/mp4" }));
+                    videoRef.current.src = videoSrc;
+                    setIsVideo(true);
+                    setImageFile("");
+                }
+            }
+
+            toast.closeAll();
+        }
+    };
+
+    const screenShotVideo = () => {
+        const videoElement = document.getElementById("video") as HTMLVideoElement;
+        const canvasElement = document.getElementById("canvasElement") as HTMLCanvasElement;
+
+        // Set canvas size to video frame size
+        canvasElement.width = videoElement.videoWidth;
+        canvasElement.height = videoElement.videoHeight;
+
+        // Draw the current frame of the video onto the canvas
+        const context = canvasElement.getContext("2d");
+        if (context) {
+            context.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+        }
+
+        setImageFile(canvasElement.toDataURL("image/png"));
+    };
+
+    const play = async () => {
+        const videoElement = document.getElementById("video") as HTMLVideoElement;
+        await videoElement.play();
+    };
+
+    const pause = () => {
+        const videoElement = document.getElementById("video") as HTMLVideoElement;
+        videoElement.pause();
+    };
 
     const submit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -84,7 +147,7 @@ export default function Page() {
             });
 
             const data = await response.json();
-            console.log(data)
+
             const urlVideo = data.url ? data.url : data.entries[0].url
 
             const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline dan harus bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.description}`
@@ -287,7 +350,48 @@ export default function Page() {
                                     AI Caption
                                 </Button>
                             </Flex>
+                        </CardBody>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                            <Heading size="xs">THUMBNAIL HEADLINE</Heading>
+                        </CardHeader>
+                        <CardBody>
+                            <FormControl>
+                                <FormLabel>Image</FormLabel>
+                                <Input type="file" accept="image/*|video/*" size="sm" onChange={(e) => onChangeFile(e)} />
+                            </FormControl>
+                            <video id="video" ref={videoRef} controls style={{ display: isVideo ? "" : "none", marginTop: 10 }} />
+                            <canvas
+                                style={{
+                                    display: "none",
+                                }}
+                                id="canvasElement"
+                            ></canvas>
 
+                            <SimpleGrid columns={6} spacing={3} mt={2}>
+                                <IconButton
+                                    colorScheme="teal"
+                                    aria-label="Play"
+                                    icon={<FaPlay />}
+                                    style={{ display: isVideo ? "" : "none" }}
+                                    onClick={play}
+                                />
+                                <IconButton
+                                    colorScheme="teal"
+                                    aria-label="Pause"
+                                    icon={<FaPause />}
+                                    style={{ display: isVideo ? "" : "none" }}
+                                    onClick={pause}
+                                />
+                                <IconButton
+                                    colorScheme="teal"
+                                    aria-label="Screenshot"
+                                    icon={<FaCamera />}
+                                    style={{ display: isVideo ? "" : "none" }}
+                                    onClick={screenShotVideo}
+                                />
+                            </SimpleGrid>
                             <FormControl mt={4}>
                                 <FormLabel>
                                     Title <span style={{ color: "red", fontSize: 14 }}>({`${title.trim().length}/100`})</span>
@@ -313,7 +417,9 @@ export default function Page() {
                     <Center id="canvas" style={{ position: "relative", width: 380, height: 475 }}>
                         <Image src="/images/logo-pd.png" w={100} style={{ position: "absolute", top: 15 }} alt="logo white" />
                         <Image
-                            src={imageURL ? imageURL : "/images/no-image.jpg"}
+                            src={
+                                imageFile ? imageFile : imageURL ? `/api/proxy?url=${encodeURIComponent(imageURL)}` : "/images/no-image.jpg"
+                            }
                             w={380}
                             h={475}
                             fit="cover"

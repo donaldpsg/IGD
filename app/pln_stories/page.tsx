@@ -137,12 +137,10 @@ export default function Page() {
                 dataJSON = [dataJSON];
             }
 
-
             const dataLokasi: Lokasi[] = dataJSON.flatMap(detail => detail.lokasi_pemeliharaan);
             const chunk = chunkArray(dataLokasi, 4)
 
             setData(chunk);
-
 
             if (dataJSON.length > 0) {
                 setTanggal(dataJSON[dataJSON.length - 1].tanggal_pemeliharaan)
@@ -218,6 +216,18 @@ Sumber : @${username}
     };
 
     const downloadAll = async () => {
+        const elementHeadlineId = `headline`;
+        const filenameHeadline = createFileName(); // bisa pakai index atau dt.nama kalau ada
+        const elementHeadline = document.getElementById(elementHeadlineId);
+
+        if (elementHeadline) {
+            const dataHeadline = await htmlToImage.toJpeg(elementHeadline, { quality: 0.95, backgroundColor: "#ffffff" });
+            const linkHeadline = document.createElement("a");
+            linkHeadline.download = `${filenameHeadline}.jpeg`;
+            linkHeadline.href = dataHeadline;
+            linkHeadline.click();
+        }
+
         for (let i = 0; i < data.length; i++) {
             const elementId = `canvas${i}`;
             const filename = createFileName(); // bisa pakai index atau dt.nama kalau ada
@@ -239,7 +249,7 @@ Sumber : @${username}
         }
 
         toast({
-            title: "Selesai",
+            title: "Done",
             description: "All images downloaded successfully",
             status: "success",
             duration: 3000,
