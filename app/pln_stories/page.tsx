@@ -108,6 +108,7 @@ export default function Page() {
             const dataIG = await resIG.json();
             const stories = dataIG.result
 
+
             const imagesBase64: string[] = [];
             const imagesURL: string[] = [];
             for (const story of stories) {
@@ -119,6 +120,8 @@ export default function Page() {
                 imagesURL.push(imageUrl)
             }
 
+            setImages(imagesURL)
+
             const prompt = `Tolong deteksi semua gambar ini. Jika ada gambar yang isinya jadwal pemeliharaan listrik maka baca dan ekstrak informasi pemeliharaan jaringan listrik dari gambar tersebut.  Sajikan output hanya dalam format JSON dengan key tanggal_pemeliharaan, unit_pelaksana dan lokasi_pemeliharaan. untuk key lokasi_pemeliharaan berupa object array dengan key ulp, waktu dan lokasi. Format tanggal_pemeliharaan harus dd MMMM YYYY`
             const responseAI = await fetch("/api/gemini/pln_stories", {
                 method: "POST",
@@ -127,13 +130,19 @@ export default function Page() {
             });
 
             const dataAI = await responseAI.json();
-            const dataJSON: DataPemeliharaan[] = JSON.parse(dataAI.text);
+            let dataJSON: DataPemeliharaan[] = JSON.parse(dataAI.text);
+
+            // pastikan hasilnya array
+            if (!Array.isArray(dataJSON)) {
+                dataJSON = [dataJSON];
+            }
+
 
             const dataLokasi: Lokasi[] = dataJSON.flatMap(detail => detail.lokasi_pemeliharaan);
             const chunk = chunkArray(dataLokasi, 4)
 
             setData(chunk);
-            setImages(imagesURL)
+
 
             if (dataJSON.length > 0) {
                 setTanggal(dataJSON[dataJSON.length - 1].tanggal_pemeliharaan)
@@ -154,6 +163,7 @@ Sumber : @${username}
                 setCaption(textCaption)
 
             }
+
 
             toast.closeAll();
         } catch (e) {
