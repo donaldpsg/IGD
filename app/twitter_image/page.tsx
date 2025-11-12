@@ -47,7 +47,6 @@ export default function Page() {
     const [images, setImages] = useState<string[]>([]);
     const [imageURL, setImageUrl] = useState("");
     const [title, setTitle] = useState("")
-    const [source, setSource] = useState("")
     const [imageFile, setImageFile] = useState("")
     const [isVideo, setIsVideo] = useState(false);
     const [ratio, setRatio] = useState('1')
