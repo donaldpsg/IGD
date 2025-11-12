@@ -147,7 +147,7 @@ export default function Page() {
             }
 
             if (dataJSON.length > 0) {
-                const textCaption = `⚡ PENGUMUMAN PEMELIHARAAN JARINGAN LISTRIK ⚡
+                const textCaption = `⚡ PENGUMUMAN PEMADAMAN JARINGAN LISTRIK ⚡
 
 Halo, Sobat PLN! 👋
 
@@ -156,7 +156,7 @@ PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
 
 Sumber : @${username}
 
-#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #PLN #PLNBali #InfoPemeliharaan #PLNGerakCepat #PLNSiaga #Bali #InfoPLN #PLNUpdate`;
+#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #PLN #PLNBali #InfoPemeliharaan #InfoPemadaman #PLNGerakCepat #PLNSiaga #Bali #InfoPLN #PLNUpdate`;
 
                 setCaption(textCaption)
 

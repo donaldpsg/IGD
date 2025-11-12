@@ -23,7 +23,10 @@ import {
     FormLabel,
     Center,
     Container,
-    Heading
+    Heading,
+    Radio,
+    RadioGroup,
+    Stack
 } from "@chakra-ui/react";
 import { Icon, useToast } from "@chakra-ui/react";
 import { FaPaste, FaDownload, FaArrowLeft, FaCopy, FaPlay, FaPause, FaCamera } from "react-icons/fa";
@@ -45,6 +48,9 @@ export default function Page() {
     const [videoURL, setVideoURL] = useState("");
     const [imageURL, setImageURL] = useState("");
     const [imageFile, setImageFile] = useState("")
+    const [ratio, setRatio] = useState('1')
+    const [widthThumb, setWidthThumb] = useState(380)
+    const [heightThumb, setHeightThumb] = useState(676)
     const [isVideo, setIsVideo] = useState(false);
     const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -148,6 +154,7 @@ export default function Page() {
 
             const data = await response.json();
 
+
             const urlVideo = data.url ? data.url : data.entries[0].url
 
             const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline dan harus bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.description}`
@@ -158,7 +165,8 @@ export default function Page() {
             });
             const dataTitle = await resTitle.json();
 
-            const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. Jika diperlukan, akhiri dengan satu pertanyaan untuk memicu komentar. Namun jangan dipaksakan harus ada pertanyaan di akhir. Lengkapi juga dengan hashtag populer yang terkait dengan berita. Output hanya berisi caption dan harus dalam bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.description}`
+            const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. 
+            Lengkapi juga dengan hashtag populer yang terkait dengan berita. Sebelum hashtag tuliskan Sumber : ${data.uploader_id}/X. Output hanya berisi caption dan harus dalam bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.description}`
             const resCaption = await fetch('/api/gemini', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -172,7 +180,7 @@ export default function Page() {
                 setAICaption(textCaption);
             }
 
-            setCaption(`${data.description}\n${hashtag.join(" ")}`)
+            setCaption(`${data.description}\n\n Source : ${data.uploader_id}(X)\n\n${hashtag.join(" ")}`)
             setTitle(dataTitle.text || "");
             setVideoURL(urlVideo)
             setImageURL(data.thumbnails[4].url)
@@ -271,6 +279,18 @@ export default function Page() {
         setTitle(text);
     };
 
+    const onChangeRatio = (value: string) => {
+        setRatio(value)
+
+        if (value === "1") {
+            setWidthThumb(380)
+            setHeightThumb(676)
+        } else {
+            setWidthThumb(380)
+            setHeightThumb(475)
+        }
+    }
+
     return (
         <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
             <Box>
@@ -361,6 +381,15 @@ export default function Page() {
                                 <FormLabel>Image</FormLabel>
                                 <Input type="file" accept="image/*|video/*" size="sm" onChange={(e) => onChangeFile(e)} />
                             </FormControl>
+                            <FormControl mt={4}>
+                                <FormLabel>Thumbnail Ratio</FormLabel>
+                                <RadioGroup onChange={onChangeRatio} value={ratio}>
+                                    <Stack direction='row'>
+                                        <Radio value='1'>9:16</Radio>
+                                        <Radio value='2'>3:4</Radio>
+                                    </Stack>
+                                </RadioGroup>
+                            </FormControl>
                             <video id="video" ref={videoRef} controls style={{ display: isVideo ? "" : "none", marginTop: 10 }} />
                             <canvas
                                 style={{
@@ -414,14 +443,14 @@ export default function Page() {
                         </CardBody>
                     </Card>
 
-                    <Center id="canvas" style={{ position: "relative", width: 380, height: 475 }}>
+                    <Center id="canvas" style={{ position: "relative", width: widthThumb, height: heightThumb }}>
                         <Image src="/images/logo-pd.png" w={100} style={{ position: "absolute", top: 15 }} alt="logo white" />
                         <Image
                             src={
                                 imageFile ? imageFile : imageURL ? `/api/proxy?url=${encodeURIComponent(imageURL)}` : "/images/no-image.jpg"
                             }
-                            w={380}
-                            h={475}
+                            w={widthThumb}
+                            h={heightThumb}
                             fit="cover"
                             alt="media"
                         />

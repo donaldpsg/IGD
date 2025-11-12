@@ -132,7 +132,7 @@ export default function Page() {
             setData(dataJSON)
             setImage(imageUrl)
 
-            const textCaption = `⚡ PENGUMUMAN PEMELIHARAAN JARINGAN LISTRIK ⚡
+            const textCaption = `⚡ PENGUMUMAN PEMADAMAN JARINGAN LISTRIK ⚡
 
 Halo, Sobat PLN! 👋
 
@@ -141,7 +141,7 @@ PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
 
 Sumber : ${dataIG[0].meta.sourceUrl}
 
-#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #PLN #PLNBali #InfoPemeliharaan #PLNGerakCepat #PLNSiaga #Bali #InfoPLN #PLNUpdate`;
+#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #PLN #PLNBali #InfoPemeliharaan #InfoPemadaman #PLNGerakCepat #PLNSiaga #Bali #InfoPLN #PLNUpdate`;
 
             setCaption(textCaption)
             toast.closeAll();

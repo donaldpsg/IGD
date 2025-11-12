@@ -25,6 +25,9 @@ import {
   Center,
   Text,
   Container,
+  Radio,
+  RadioGroup,
+  Stack
 } from "@chakra-ui/react";
 import { Icon, useToast } from "@chakra-ui/react";
 import { FaPaste, FaDownload, FaArrowLeft, FaPlay, FaPause, FaCamera, FaCopy } from "react-icons/fa";
@@ -75,6 +78,9 @@ export default function Page() {
   const [gambar, setGambar] = useState("");
   const [imageFile, setImageFile] = useState("");
   const [title, setTitle] = useState(``);
+  const [ratio, setRatio] = useState('1')
+  const [widthThumb, setWidthThumb] = useState(380)
+  const [heightThumb, setHeightThumb] = useState(676)
   const [isVideo, setIsVideo] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -303,6 +309,19 @@ export default function Page() {
     setTitle(text);
   };
 
+  const onChangeRatio = (value: string) => {
+    setRatio(value)
+
+    if (value === "1") {
+      setWidthThumb(380)
+      setHeightThumb(676)
+    } else {
+      setWidthThumb(380)
+      setHeightThumb(475)
+    }
+  }
+
+
   return (
     <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
       <Box>
@@ -411,6 +430,15 @@ export default function Page() {
                 <FormLabel>Image</FormLabel>
                 <Input type="file" accept="image/*|video/*" size="sm" onChange={(e) => onChangeFile(e)} />
               </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>Thumbnail Ratio</FormLabel>
+                <RadioGroup onChange={onChangeRatio} value={ratio}>
+                  <Stack direction='row'>
+                    <Radio value='1'>9:16</Radio>
+                    <Radio value='2'>3:4</Radio>
+                  </Stack>
+                </RadioGroup>
+              </FormControl>
               <video id="video" ref={videoRef} controls style={{ display: isVideo ? "" : "none", marginTop: 10 }} />
               <canvas
                 style={{
@@ -463,21 +491,21 @@ export default function Page() {
             </CardBody>
           </Card>
 
-          <Center id="canvas" style={{ position: "relative", width: 380, height: 475 }}>
+          <Center id="canvas" style={{ position: "relative", width: widthThumb, height: heightThumb }}>
             <Image src="/images/logo-pd.png" w={100} style={{ position: "absolute", top: 15 }} alt="logo white" />
             <Image
               src={
                 imageFile ? imageFile : gambar ? `/api/proxy?url=${encodeURIComponent(gambar)}` : "/images/no-image.jpg"
               }
-              w={380}
-              h={475}
+              w={widthThumb}
+              h={heightThumb}
               fit="cover"
               alt="media"
             />
             {title !== "" && (
               <Container
                 style={{ position: "absolute", bottom: 40, boxShadow: "7px 7px #148b9d" }}
-                bg="rgba(255,255,255,0.9)"
+                bg="rgba(255,255,255,0.95)"
                 w="85%"
                 p={2}
               >
