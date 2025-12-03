@@ -164,7 +164,7 @@ export default function Page() {
                 3. Memiliki struktur kalimat dan gaya penulisan yang berbeda dari sumber.
                 4. Tetap menggunakan nada profesional seperti gaya media berita.
                 5. Tidak menambahkan opini pribadi atau informasi baru yang tidak ada di sumber.
-            Lengkapi juga dengan hashtag populer yang terkait dengan berita. 
+            Lengkapi juga dengan 1 hashtag populer yang terkait dengan berita. 
             Output hanya berupa teks hasil penulisan ulang (tanpa tambahan komentar atau catatan).`
 
             const resPrompt = await fetch('/api/gemini', {

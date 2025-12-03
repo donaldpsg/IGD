@@ -166,7 +166,7 @@ export default function Page() {
             const dataTitle = await resTitle.json();
 
             const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. 
-            Lengkapi juga dengan hashtag populer yang terkait dengan berita. Sebelum hashtag tuliskan Sumber : ${data.uploader_id}/X. Output hanya berisi caption dan harus dalam bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.description}`
+            Lengkapi juga dengan 1 hashtag populer yang terkait dengan berita. Sebelum hashtag tuliskan Sumber : ${data.uploader_id}/X. Output hanya berisi caption dan harus dalam bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.description}`
             const resCaption = await fetch('/api/gemini', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
