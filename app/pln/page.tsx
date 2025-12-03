@@ -141,7 +141,7 @@ PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
 
 Sumber : ${dataIG[0].meta.sourceUrl}
 
-#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #PLN #PLNBali #InfoPemeliharaan #InfoPemadaman #PLNGerakCepat #PLNSiaga #Bali #InfoPLN #PLNUpdate`;
+#planetdenpasar #PLNBali #InfoPemadaman`;
 
             setCaption(textCaption)
             toast.closeAll();

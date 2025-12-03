@@ -147,7 +147,7 @@ export default function Page() {
 Yuk, manfaatkan layanan cepat dan mudah tanpa harus ke kantor Samsat!
 Jangan lupa bawa dokumen lengkap dan datang lebih awal ya!
 
-#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #SamsatKeliling #Bali #SamsatBali #PelayananPublik`;
+#planetdenpasar #SamsatKelilingBali #SamsatBali`;
 
             setCaption(text);
 

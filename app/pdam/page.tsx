@@ -197,7 +197,7 @@ ${dataJSON.informasi_gangguan}
 
 Sumber : ${username}
 
-#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #bali #Infogangguanair `;
+#planetdenpasar #infonetizenbali #Infogangguanair `;
 
             setImage(imageUrl)
             setData(dataJSON)

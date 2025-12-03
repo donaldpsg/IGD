@@ -145,7 +145,7 @@ Syarat yang harus dibawa:
 
 Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan cepat dan lancar. 🚗🏍️
 
-#planetdenpasar #planetkitabali #infonetizenbali #infosemetonbali #simkelilingbali #simA #simC #bali`;
+#planetdenpasar #infonetizenbali #simkelilingbali`;
 
     setCaption(text);
     setJadwal(chunks);
