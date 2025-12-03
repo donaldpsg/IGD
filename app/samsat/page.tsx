@@ -120,7 +120,7 @@ export default function Page() {
                 year: "numeric"
             }).format(date);
 
-            const prompt = `Cari jadwal samsat keliling kota Denpasar, Gianyar dan Tabanan untuk hari ${hari} tanggal ${tgl} dari kedua gambar ini. 
+            const prompt = `Cari jadwal samsat keliling kota Denpasar, Gianyar, Badung dan Tabanan untuk hari ${hari} tanggal ${tgl} dari kedua gambar ini. 
     Output data berupa JSON dengan key kota, lokasi dan jam.
     Kalau memang tidak ada jadwal samsat keliling pada salah satu kota, jangan dibuatkan data JSON nya.
     Output hanya JSON, tanpa kata pengantar atau penutup.`
