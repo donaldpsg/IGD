@@ -184,8 +184,9 @@ export default function Page() {
             });
 
             const dataAI = await responseAI.json();
-            const dataJSON: DataGangguan = JSON.parse(dataAI.text);
             console.log(dataAI)
+            const dataJSON: DataGangguan = JSON.parse(dataAI.text);
+
 
             if (dataJSON.tanggal === dataJSON.estimasi_pengerjaan) {
                 dataJSON.estimasi_pengerjaan = ""
