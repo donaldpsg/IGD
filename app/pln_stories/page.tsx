@@ -122,7 +122,12 @@ export default function Page() {
 
             setImages(imagesURL)
 
-            const prompt = `Tolong deteksi semua gambar ini. Jika ada gambar yang isinya jadwal pemeliharaan listrik maka baca dan ekstrak informasi pemeliharaan jaringan listrik dari gambar tersebut.  Sajikan output hanya dalam format JSON dengan key tanggal_pemeliharaan, unit_pelaksana dan lokasi_pemeliharaan. untuk key lokasi_pemeliharaan berupa object array dengan key ulp, waktu dan lokasi. Format tanggal_pemeliharaan harus dd MMMM YYYY`
+            const prompt = `Tolong deteksi semua gambar ini. 
+            Jika ada gambar yang isinya jadwal pemeliharaan listrik maka baca dan ekstrak informasi pemeliharaan jaringan listrik dari gambar tersebut. 
+            Sajikan output hanya dalam format JSON dengan key tanggal_pemeliharaan, unit_pelaksana dan lokasi_pemeliharaan. 
+            Untuk key lokasi_pemeliharaan berupa object array dengan key ulp, waktu dan lokasi. 
+            Format tanggal_pemeliharaan harus dd MMMM YYYY. 
+            Pada data JSON, area-area yang berada di kota Denpasar ada di urutan atas, kemudian area-area di Badung urutan berikutnya dan kemudian diikuti oleh area-area di kota-kota lainnya.`
             const responseAI = await fetch("/api/gemini/pln_stories", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

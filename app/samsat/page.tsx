@@ -123,7 +123,8 @@ export default function Page() {
             const prompt = `Cari jadwal samsat keliling kota Denpasar, Gianyar, Badung dan Tabanan untuk hari ${hari} tanggal ${tgl} dari kedua gambar ini. 
     Output data berupa JSON dengan key kota, lokasi dan jam.
     Kalau memang tidak ada jadwal samsat keliling pada salah satu kota, jangan dibuatkan data JSON nya.
-    Output hanya JSON, tanpa kata pengantar atau penutup.`
+    Output hanya JSON, tanpa kata pengantar atau penutup. 
+    Pada data JSON, kota Denpasar adalah urutan pertama, Badung urutan kedua dan kemudian diikuti oleh kota-kota lainnya`
 
             const responseAI = await fetch("/api/gemini/pln_stories", {
                 method: "POST",
