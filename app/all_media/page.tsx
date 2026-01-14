@@ -200,7 +200,7 @@ export default function Page() {
 
             setVideoURL(urlVideo)
             setImageURL(data.legacy.entities.media[0].media_url_https)
-
+            toast.closeAll();
         } catch (e) {
             toast.closeAll();
             console.log(e);
