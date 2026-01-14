@@ -181,14 +181,13 @@ export default function Page() {
 
                 if (resCaption.ok) {
                     const dataCaption = await resCaption.json();
-                    console.log(dataCaption)
 
                     if (dataCaption.text) {
                         const textCaption = `${dataCaption.text} ${hashtag.join(" ")}`
                         setAICaption(textCaption);
                     }
 
-                    setCaption(`${data.description}\n\n Source : ${data.uploader_id}(X)\n\n${hashtag.join(" ")}`)
+                    setCaption(`${data.legacy.full_text}\n\n Source : ${data.legacy.entities.media[0].url}(X)\n\n${hashtag.join(" ")}`)
                     setTitle(dataTitle.text || "");
                 }
 
