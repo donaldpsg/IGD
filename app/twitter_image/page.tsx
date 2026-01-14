@@ -182,32 +182,39 @@ export default function Page() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prompt: promptTitle }),
             });
-            const dataTitle = await resTitle.json();
 
-            const source = data.core.user_results.result.legacy.screen_name
+            if (resTitle.ok) {
+                const dataTitle = await resTitle.json();
 
-            const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. 
+                const source = data.legacy.entities.media[0].url
+
+                const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. 
             Lengkapi juga dengan 1 hashtag populer yang terkait dengan berita. Sebelum hashtag tuliskan Sumber : ${source}/X. 
             Output hanya berisi caption dan harus dalam bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.legacy.full_text}`
-            const resCaption = await fetch('/api/gemini', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: promptCaption }),
-            });
+                const resCaption = await fetch('/api/gemini', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: promptCaption }),
+                });
 
-            const dataCaption = await resCaption.json();
+                const dataCaption = await resCaption.json();
 
-            if (dataCaption.text) {
-                const textCaption = `${dataCaption.text} ${hashtag.join(" ")}`
-                setAICaption(textCaption);
+                if (dataCaption.text) {
+                    const textCaption = `${dataCaption.text} ${hashtag.join(" ")}`
+                    setAICaption(textCaption);
+                }
+
+
+                setCaption(`${data.legacy.full_text}\n\nSource : ${source}(X)\n\n${hashtag.join(" ")}`)
+                setTitle(dataTitle.text || "");
+            } else {
+                toast.closeAll();
+                showToast("Error", 1, "Google AI Error. Unable to generate AI caption.");
             }
 
 
-            setCaption(`${data.legacy.full_text}\n\nSource : ${source}(X)\n\n${hashtag.join(" ")}`)
-            setTitle(dataTitle.text || "");
-
             const arrImage: string[] = [];
-            for (const media of data.legacy.extended_entities.media) {
+            for (const media of data.legacy.entities.media) {
                 arrImage.push(media.media_url_https)
             }
 

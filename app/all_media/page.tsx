@@ -144,48 +144,62 @@ export default function Page() {
         });
 
         try {
-            const fd = new FormData();
-            fd.append('url', url);
+            const pid = getPostIdFromXUrl(url);
 
-            const response = await fetch("/api/all_media", {
+            const fd = new FormData();
+            fd.append('pid', pid || "");
+
+            const response = await fetch("/api/twitter_image", {
                 method: "POST",
                 body: fd
             });
 
-            const data = await response.json();
+            const res = await response.json();
+            const data = res.data
 
+            // console.log(data.legacy.full_text)
 
-            const urlVideo = data.url ? data.url : data.entries[0].url
+            const urlVideo = data.legacy ? data.legacy.entities.media[0].video_info.variants[0].url : ""
 
-            const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline dan harus bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.description}`
+            const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline dan harus bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.legacy.full_text}`
             const resTitle = await fetch('/api/gemini', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prompt: promptTitle }),
             });
-            const dataTitle = await resTitle.json();
 
-            const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. 
-            Lengkapi juga dengan 1 hashtag populer yang terkait dengan berita. Sebelum hashtag tuliskan Sumber : ${data.uploader_id}/X. Output hanya berisi caption dan harus dalam bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.description}`
-            const resCaption = await fetch('/api/gemini', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ prompt: promptCaption }),
-            });
 
-            const dataCaption = await resCaption.json();
+            if (resTitle.ok) {
+                const dataTitle = await resTitle.json();
+                const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal.
+                Lengkapi juga dengan 1 hashtag populer yang terkait dengan berita. Sebelum hashtag tuliskan Sumber : ${data.legacy.entities.media[0].url}. Output hanya berisi caption dan harus dalam bahasa indonesia, tanpa kata pengantar atau penutup.\n${data.legacy.full_text}`
+                const resCaption = await fetch('/api/gemini', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: promptCaption }),
+                });
 
-            if (dataCaption.text) {
-                const textCaption = `${dataCaption.text} ${hashtag.join(" ")}`
-                setAICaption(textCaption);
+                if (resCaption.ok) {
+                    const dataCaption = await resCaption.json();
+                    console.log(dataCaption)
+
+                    if (dataCaption.text) {
+                        const textCaption = `${dataCaption.text} ${hashtag.join(" ")}`
+                        setAICaption(textCaption);
+                    }
+
+                    setCaption(`${data.description}\n\n Source : ${data.uploader_id}(X)\n\n${hashtag.join(" ")}`)
+                    setTitle(dataTitle.text || "");
+                }
+
+            } else {
+                toast.closeAll();
+                showToast("Error", 1, "Google AI Error. Unable to generate AI caption.");
             }
 
-            setCaption(`${data.description}\n\n Source : ${data.uploader_id}(X)\n\n${hashtag.join(" ")}`)
-            setTitle(dataTitle.text || "");
-            setVideoURL(urlVideo)
-            setImageURL(data.thumbnails[4].url)
 
-            toast.closeAll();
+            setVideoURL(urlVideo)
+            setImageURL(data.legacy.entities.media[0].media_url_https)
 
         } catch (e) {
             toast.closeAll();
@@ -288,6 +302,25 @@ export default function Page() {
         } else {
             setWidthThumb(380)
             setHeightThumb(475)
+        }
+    }
+
+    function getPostIdFromXUrl(url: string): string | null {
+        try {
+            const parsed = new URL(url);
+            const segments = parsed.pathname.split("/").filter(Boolean);
+
+            // Cari segmen "status" lalu ambil angka sesudahnya
+            const statusIndex = segments.findIndex((s) => s === "status");
+            if (statusIndex !== -1 && segments[statusIndex + 1]) {
+                const pid = segments[statusIndex + 1];
+                // Validasi: pastikan hanya angka
+                return /^\d+$/.test(pid) ? pid : null;
+            }
+
+            return null;
+        } catch {
+            return null;
         }
     }
 

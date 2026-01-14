@@ -132,28 +132,34 @@ export default function Page() {
                 body: JSON.stringify({ imagesBase64, prompt }),
             });
 
-            const dataAI = await responseAI.json();
+            if (responseAI.ok) {
+                const dataAI = await responseAI.json();
 
-            setData(JSON.parse(dataAI.text))
+                setData(JSON.parse(dataAI.text))
 
-            const tgl_caption = new Intl.DateTimeFormat("id-ID", {
-                weekday: "long",
-                day: "2-digit",
-                month: "long",
-                year: "numeric"
-            }).format(new Date(tanggal))
+                const tgl_caption = new Intl.DateTimeFormat("id-ID", {
+                    weekday: "long",
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric"
+                }).format(new Date(tanggal))
 
-            const text = `📢 Jadwal Samsat Keliling – ${tgl_caption}
+                const text = `📢 Jadwal Samsat Keliling – ${tgl_caption}
 
 Yuk, manfaatkan layanan cepat dan mudah tanpa harus ke kantor Samsat!
 Jangan lupa bawa dokumen lengkap dan datang lebih awal ya!
 
 #planetdenpasar #SamsatKelilingBali #SamsatBali`;
 
-            setCaption(text);
+                setCaption(text);
 
 
-            toast.closeAll();
+                toast.closeAll();
+            } else {
+                toast.closeAll();
+                showToast("Error", 1, "Google AI Error. Unable to generate AI caption.");
+            }
+
         } catch (e) {
             toast.closeAll();
             console.log(e);

@@ -127,12 +127,13 @@ export default function Page() {
                 body: JSON.stringify({ base64ImageData, prompt }),
             });
 
-            const dataAI = await responseAI.json();
-            const dataJSON: DataPemeliharaan = JSON.parse(dataAI.text);
-            setData(dataJSON)
-            setImage(imageUrl)
+            if (responseAI.ok) {
+                const dataAI = await responseAI.json();
+                const dataJSON: DataPemeliharaan = JSON.parse(dataAI.text);
+                setData(dataJSON)
+                setImage(imageUrl)
 
-            const textCaption = `⚡ PENGUMUMAN PEMADAMAN JARINGAN LISTRIK ⚡
+                const textCaption = `⚡ PENGUMUMAN PEMADAMAN JARINGAN LISTRIK ⚡
 
 Halo, Sobat PLN! 👋
 
@@ -143,8 +144,13 @@ Sumber : ${dataIG[0].meta.sourceUrl}
 
 #planetdenpasar #PLNBali #InfoPemadaman`;
 
-            setCaption(textCaption)
-            toast.closeAll();
+                setCaption(textCaption)
+                toast.closeAll();
+            } else {
+                toast.closeAll();
+                showToast("Error", 1, "Google AI Error. Unable to generate AI caption.");
+            }
+
         } catch (e) {
             toast.closeAll();
             console.log(e);

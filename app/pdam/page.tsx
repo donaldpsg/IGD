@@ -183,17 +183,17 @@ export default function Page() {
                 body: JSON.stringify({ base64ImageData, prompt }),
             });
 
-            const dataAI = await responseAI.json();
-            console.log(dataAI)
-            const dataJSON: DataGangguan = JSON.parse(dataAI.text);
+            if (responseAI.ok) {
+                const dataAI = await responseAI.json();
+                const dataJSON: DataGangguan = JSON.parse(dataAI.text);
 
 
-            if (dataJSON.tanggal === dataJSON.estimasi_pengerjaan) {
-                dataJSON.estimasi_pengerjaan = ""
-            }
-            const loc = chunkArray(dataJSON.area_terdampak, 10)
+                if (dataJSON.tanggal === dataJSON.estimasi_pengerjaan) {
+                    dataJSON.estimasi_pengerjaan = ""
+                }
+                const loc = chunkArray(dataJSON.area_terdampak, 10)
 
-            const text = `📢 Informasi Gangguan AIR PDAM ${dataJSON.tanggal}
+                const text = `📢 Informasi Gangguan AIR PDAM ${dataJSON.tanggal}
 
 ${dataJSON.informasi_gangguan}
 
@@ -201,11 +201,15 @@ Sumber : ${username}
 
 #planetdenpasar #infonetizenbali #Infogangguanair `;
 
-            setImage(imageUrl)
-            setData(dataJSON)
-            setLokasi(loc)
-            setCaption(text)
-            toast.closeAll();
+                setImage(imageUrl)
+                setData(dataJSON)
+                setLokasi(loc)
+                setCaption(text)
+                toast.closeAll();
+            } else {
+                toast.closeAll();
+                showToast("Error", 1, "Google AI Error. Unable to generate AI caption.");
+            }
 
         } catch (e) {
             toast.closeAll();

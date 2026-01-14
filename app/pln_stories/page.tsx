@@ -134,25 +134,26 @@ export default function Page() {
                 body: JSON.stringify({ imagesBase64, prompt }),
             });
 
-            const dataAI = await responseAI.json();
-            let dataJSON: DataPemeliharaan[] = JSON.parse(dataAI.text);
+            if (responseAI.ok) {
+                const dataAI = await responseAI.json();
+                let dataJSON: DataPemeliharaan[] = JSON.parse(dataAI.text);
 
-            // pastikan hasilnya array
-            if (!Array.isArray(dataJSON)) {
-                dataJSON = [dataJSON];
-            }
+                // pastikan hasilnya array
+                if (!Array.isArray(dataJSON)) {
+                    dataJSON = [dataJSON];
+                }
 
-            const dataLokasi: Lokasi[] = dataJSON.flatMap(detail => detail.lokasi_pemeliharaan);
-            const chunk = chunkArray(dataLokasi, 4)
+                const dataLokasi: Lokasi[] = dataJSON.flatMap(detail => detail.lokasi_pemeliharaan);
+                const chunk = chunkArray(dataLokasi, 4)
 
-            setData(chunk);
+                setData(chunk);
 
-            if (dataJSON.length > 0) {
-                setTanggal(dataJSON[dataJSON.length - 1].tanggal_pemeliharaan)
-            }
+                if (dataJSON.length > 0) {
+                    setTanggal(dataJSON[dataJSON.length - 1].tanggal_pemeliharaan)
+                }
 
-            if (dataJSON.length > 0) {
-                const textCaption = `⚡ PENGUMUMAN PEMADAMAN JARINGAN LISTRIK ⚡
+                if (dataJSON.length > 0) {
+                    const textCaption = `⚡ PENGUMUMAN PEMADAMAN JARINGAN LISTRIK ⚡
 
 Halo, Sobat PLN! 👋
 
@@ -163,12 +164,15 @@ Sumber : @${username}
 
 #planetdenpasar #PLNBali #InfoPemadaman`;
 
-                setCaption(textCaption)
+                    setCaption(textCaption)
 
+                }
+                toast.closeAll();
+            } else {
+                toast.closeAll();
+                showToast("Error", 1, "Google AI Error. Unable to generate AI caption.");
             }
 
-
-            toast.closeAll();
         } catch (e) {
             toast.closeAll();
             console.log(e);
