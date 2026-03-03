@@ -1,400 +1,396 @@
 {
   "polres_badung": [
-    {
-      "tanggal": "2 Februari 2026",
-      "hari": "Senin",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "3 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "4 Februari 2026",
-      "hari": "Rabu",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "5 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "6 Februari 2026",
-      "hari": "Jumat",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "7 Februari 2026",
-      "hari": "Sabtu",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "9 Februari 2026",
-      "hari": "Senin",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "10 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "11 Februari 2026",
-      "hari": "Rabu",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "12 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "13 Februari 2026",
-      "hari": "Jumat",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "14 Februari 2026",
-      "hari": "Sabtu",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "16 Februari 2026",
-      "hari": "Senin",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "17 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "18 Februari 2026",
-      "hari": "Rabu",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "19 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "20 Februari 2026",
-      "hari": "Jumat",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "21 Februari 2026",
-      "hari": "Sabtu",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "23 Februari 2026",
-      "hari": "Senin",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "24 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "25 Februari 2026",
-      "hari": "Rabu",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "26 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "27 Februari 2026",
-      "hari": "Jumat",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "28 Februari 2026",
-      "hari": "Sabtu",
-      "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    }
-  ],
+  {
+    "tanggal": "2 Maret 2026",
+    "hari": "Senin",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "3 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "4 Maret 2026",
+    "hari": "Rabu",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "5 Maret 2026",
+    "hari": "Kamis",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "6 Maret 2026",
+    "hari": "Jumat",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "7 Maret 2026",
+    "hari": "Sabtu",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "9 Maret 2026",
+    "hari": "Senin",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "10 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "11 Maret 2026",
+    "hari": "Rabu",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "12 Maret 2026",
+    "hari": "Kamis",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "13 Maret 2026",
+    "hari": "Jumat",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "14 Maret 2026",
+    "hari": "Sabtu",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "16 Maret 2026",
+    "hari": "Senin",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "17 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "18 Maret 2026",
+    "hari": "Rabu",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "19 Maret 2026",
+    "hari": "Kamis",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "20 Maret 2026",
+    "hari": "Jumat",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "21 Maret 2026",
+    "hari": "Sabtu",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "23 Maret 2026",
+    "hari": "Senin",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "24 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "25 Maret 2026",
+    "hari": "Rabu",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "26 Maret 2026",
+    "hari": "Kamis",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "27 Maret 2026",
+    "hari": "Jumat",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "28 Maret 2026",
+    "hari": "Sabtu",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "30 Maret 2026",
+    "hari": "Senin",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "31 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  }
+],
   "polres_buleleng": [
-    {
-      "tanggal": "4 Februari 2026",
-      "hari": "Rabu",
-      "lokasi": ["DESA KEKERAN, KEC. BUSUNGBIU"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "12 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["PARKIRAN KRISNA TEMUKUS, KEC. BANJAR"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "19 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["DESA SANGGALANGIT, KEC. GEROKGAK"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "24 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["PURA MADUE KARANG, KEC. KUBUTAMBAHAN"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    }
-  ],
+  {
+    "tanggal": "3 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": [
+      "DESA PATAS, KEC. GEROKGAK"
+    ],
+    "waktu": "08.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "5 Maret 2026",
+    "hari": "Kamis",
+    "lokasi": [
+      "DESA KEKERAN, KEC. BUSUNG BIU"
+    ],
+    "waktu": "08.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "10 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": [
+      "DESA TAMBLANG, KEC. KUBUTAMBAHAN"
+    ],
+    "waktu": "08.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "12 Maret 2026",
+    "hari": "Kamis",
+    "lokasi": [
+      "DESA PENYABANGAN, KEC. GEROKGAK"
+    ],
+    "waktu": "08.00 WITA s/d SELESAI"
+  }
+],
   "polres_tabanan": [
-    {
-      "tanggal": "3 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["ASTRAMOTORGROKGAK, TABANAN"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "10 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["ASTRAMOTORGROKGAK, TABANAN"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "24 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["ASTRAMOTORGROKGAK, TABANAN"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "5 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["KURNIA SEAFOOD, BERABAN"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "12 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["KURNIA SEAFOOD, BERABAN"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "19 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["COCO MART KAMPUNG LOT, BERABAN"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "26 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["COCO MART KAMPUNG LOT, BERABAN"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "7 Februari 2026",
-      "hari": "Sabtu",
-      "lokasi": ["DEPAN BPD TABANAN"],
-      "waktu": "18.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "14 Februari 2026",
-      "hari": "Sabtu",
-      "lokasi": ["DEPAN BPD TABANAN"],
-      "waktu": "18.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "21 Februari 2026",
-      "hari": "Sabtu",
-      "lokasi": ["DEPAN BPD TABANAN"],
-      "waktu": "18.00 WITA s/d SELESAI"
-    }
-  ],
+  {
+    "tanggal": "3 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["ASTRA MOTOR GROKGAK, TABANAN"],
+    "waktu": "08.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "5 Maret 2026",
+    "hari": "Kamis",
+    "lokasi": ["KURNIA SEAFOOD, BERABAN"],
+    "waktu": "08.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "10 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["ASTRA MOTOR GROKGAK, TABANAN"],
+    "waktu": "08.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "12 Maret 2026",
+    "hari": "Kamis",
+    "lokasi": ["COCO MART KAMPUNG LOT, BERABAN"],
+    "waktu": "08.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "7 Maret 2026",
+    "hari": "Sabtu",
+    "lokasi": ["DEPAN BPD TABANAN"],
+    "waktu": "18.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "14 Maret 2026",
+    "hari": "Sabtu",
+    "lokasi": ["DEPAN BPD TABANAN"],
+    "waktu": "18.00 WITA s/d SELESAI"
+  }
+],
   "polres_gianyar": [
-    {
-      "tanggal": "3 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["OBYEK WISATA GOA GAJAH"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "10 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["OBYEK WISATA GOA GAJAH"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "19 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["CENTRAL PARKIR MONKEY FOREST"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "26 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["CENTRAL PARKIR MONKEY FOREST"],
-      "waktu": "08.30 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "8 Februari 2026",
-      "hari": "Minggu",
-      "lokasi": ["ALUN-ALUN GIANYAR"],
-      "waktu": "07.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "15 Februari 2026",
-      "hari": "Minggu",
-      "lokasi": ["ALUN-ALUN GIANYAR"],
-      "waktu": "07.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "22 Februari 2026",
-      "hari": "Minggu",
-      "lokasi": ["ALUN-ALUN GIANYAR"],
-      "waktu": "07.00 WITA s/d SELESAI"
-    }
-  ],
+  {
+    "tanggal": "3 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["OBYEK WISATA GOA GAJAH"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "10 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["OBYEK WISATA GOA GAJAH"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "26 Maret 2026",
+    "hari": "Kamis",
+    "lokasi": ["CENTRAL PARKIR MONKEY FOREST"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "8 Maret 2026",
+    "hari": "Minggu",
+    "lokasi": ["ALUN-ALUN GIANYAR"],
+    "waktu": "07.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "15 Maret 2026",
+    "hari": "Minggu",
+    "lokasi": ["ALUN-ALUN GIANYAR"],
+    "waktu": "07.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "22 Maret 2026",
+    "hari": "Minggu",
+    "lokasi": ["ALUN-ALUN GIANYAR"],
+    "waktu": "07.00 WITA s/d SELESAI"
+  }
+],
   "polres_klungkung": [
   {
-    "tanggal": "2 Februari 2026",
+    "tanggal": "2 Maret 2026",
     "hari": "Senin",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "3 Februari 2026",
+    "tanggal": "3 Maret 2026",
     "hari": "Selasa",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "4 Februari 2026",
+    "tanggal": "4 Maret 2026",
     "hari": "Rabu",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "5 Februari 2026",
+    "tanggal": "5 Maret 2026",
     "hari": "Kamis",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "6 Februari 2026",
+    "tanggal": "6 Maret 2026",
     "hari": "Jumat",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "9 Februari 2026",
+    "tanggal": "9 Maret 2026",
     "hari": "Senin",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "10 Februari 2026",
+    "tanggal": "10 Maret 2026",
     "hari": "Selasa",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "11 Februari 2026",
+    "tanggal": "11 Maret 2026",
     "hari": "Rabu",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "12 Februari 2026",
+    "tanggal": "12 Maret 2026",
     "hari": "Kamis",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "13 Februari 2026",
+    "tanggal": "13 Maret 2026",
     "hari": "Jumat",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "16 Februari 2026",
+    "tanggal": "16 Maret 2026",
     "hari": "Senin",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "17 Februari 2026",
+    "tanggal": "17 Maret 2026",
     "hari": "Selasa",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "18 Februari 2026",
+    "tanggal": "18 Maret 2026",
     "hari": "Rabu",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "19 Februari 2026",
-    "hari": "Kamis",
-    "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
-    "waktu": "08.30 WITA s/d SELESAI"
-  },
-  {
-    "tanggal": "20 Februari 2026",
+    "tanggal": "20 Maret 2026",
     "hari": "Jumat",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "23 Februari 2026",
+    "tanggal": "23 Maret 2026",
     "hari": "Senin",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "24 Februari 2026",
+    "tanggal": "24 Maret 2026",
     "hari": "Selasa",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "25 Februari 2026",
+    "tanggal": "25 Maret 2026",
     "hari": "Rabu",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "26 Februari 2026",
+    "tanggal": "26 Maret 2026",
     "hari": "Kamis",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   },
   {
-    "tanggal": "27 Februari 2026",
+    "tanggal": "27 Maret 2026",
     "hari": "Jumat",
+    "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "30 Maret 2026",
+    "hari": "Senin",
+    "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "31 Maret 2026",
+    "hari": "Selasa",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   }
@@ -432,79 +428,63 @@
     }
   ],
   "polres_karangasem": [
-    {
-      "tanggal": "3 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["OBJEK WISATA CANDIDASA"],
-      "waktu": "11.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "6 Februari 2026",
-      "hari": "Jumat",
-      "lokasi": ["TERMINAL BEBANDEM"],
-      "waktu": "11.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "10 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["PASAR PESANGKAN"],
-      "waktu": "11.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "13 Februari 2026",
-      "hari": "Jumat",
-      "lokasi": ["POLSEK MANGGIS"],
-      "waktu": "11.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "20 Februari 2026",
-      "hari": "Jumat",
-      "lokasi": ["PASAR SINDUWATI SIDEMEN"],
-      "waktu": "11.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "24 Februari 2026",
-      "hari": "Kamis",
-      "lokasi": ["POLSEK RENDANG"],
-      "waktu": "11.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "27 Februari 2026",
-      "hari": "Jumat",
-      "lokasi": ["POLSEK ABANG"],
-      "waktu": "11.00 WITA s/d SELESAI"
-    }
-  ],
+  {
+    "tanggal": "4 Maret 2026",
+    "hari": "Rabu",
+    "lokasi": [
+      "POLSEK PADANGBAI"
+    ],
+    "waktu": "09.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "11 Maret 2026",
+    "hari": "Rabu",
+    "lokasi": [
+      "POLSEK ABANG"
+    ],
+    "waktu": "09.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "17 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": [
+      "PASAR SINDUWATI SIDEMEN"
+    ],
+    "waktu": "09.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "25 Maret 2026",
+    "hari": "Rabu",
+    "lokasi": [
+      "POLSEK RENDANG"
+    ],
+    "waktu": "09.00 WITA s/d SELESAI"
+  }
+],
   "polres_jembrana": [
-    {
-      "tanggal": "3 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["PASAR MELAYA"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "6 Februari 2026",
-      "hari": "Jumat",
-      "lokasi": ["PASAR SENGGOL PEKUTATAN"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "10 Februari 2026",
-      "hari": "Selasa",
-      "lokasi": ["TPI PENGAMBENGAN"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "13 Februari 2026",
-      "hari": "Jumat",
-      "lokasi": ["LAPANGAN DESA YEHEMBANG"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    },
-    {
-      "tanggal": "20 Februari 2026",
-      "hari": "Jumat",
-      "lokasi": ["TPI PENGAMBENGAN"],
-      "waktu": "08.00 WITA s/d SELESAI"
-    }
-  ]
+  {
+    "tanggal": "3 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["WATERBEE GILIMANUK"],
+    "waktu": "08.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "10 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["TPI PENGAMBENGAN"],
+    "waktu": "08.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "17 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["LAPANGAN PERDUNG"],
+    "waktu": "08.00 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "24 Maret 2026",
+    "hari": "Selasa",
+    "lokasi": ["PASAR SENGGOL PEKUTATAN"],
+    "waktu": "08.00 WITA s/d SELESAI"
+  }
+]
 }
