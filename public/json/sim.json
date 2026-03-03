@@ -155,6 +155,24 @@
     "hari": "Selasa",
     "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
     "waktu": "08.30 WITA s/d SELESAI"
+  },
+   {
+    "tanggal": "1 April 2026",
+    "hari": "Rabu",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+   {
+    "tanggal": "2 April 2026",
+    "hari": "Kamis",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  }, 
+  {
+    "tanggal": "3 April 2026",
+    "hari": "Jumat",
+    "lokasi": ["DAMKAR DALUNG (TIMUR PASAR DALUNG)", "MALL PELAYANAN PUBLIK (PUSPEM BADUNG)"],
+    "waktu": "08.30 WITA s/d SELESAI"
   }
 ],
   "polres_buleleng": [
@@ -391,6 +409,24 @@
   {
     "tanggal": "31 Maret 2026",
     "hari": "Selasa",
+    "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "1 April 2026",
+    "hari": "Rabu",
+    "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "2 April 2026",
+    "hari": "Kamis",
+    "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
+    "waktu": "08.30 WITA s/d SELESAI"
+  },
+  {
+    "tanggal": "3 April 2026",
+    "hari": "Jumat",
     "lokasi": ["DEPAN KANTOR BUPATI KLUNGKUNG"],
     "waktu": "08.30 WITA s/d SELESAI"
   }
