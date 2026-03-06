@@ -122,12 +122,28 @@ export default function Page() {
 
             setImages(imagesURL)
 
-            const prompt = `Tolong deteksi semua gambar ini. 
-            Jika ada gambar yang isinya jadwal pemeliharaan listrik maka baca dan ekstrak informasi pemeliharaan jaringan listrik dari gambar tersebut. 
-            Sajikan output hanya dalam format JSON dengan key tanggal_pemeliharaan, unit_pelaksana dan lokasi_pemeliharaan. 
-            Untuk key lokasi_pemeliharaan berupa object array dengan key ulp, waktu dan lokasi. 
-            Format tanggal_pemeliharaan harus dd MMMM YYYY. 
-            Pada data JSON, area-area yang berada di kota Denpasar ada di urutan atas, kemudian area-area di Badung urutan berikutnya dan kemudian diikuti oleh area-area di kota-kota lainnya.`
+            const hariIni = new Date().toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+
+
+            const prompt = `Terdapat beberapa gambar yang diunggah. Tugas Anda adalah melakukan ekstraksi data yang sangat spesifik:
+
+                1. PERIKSA TANGGAL: Cari gambar yang secara eksplisit mencantumkan tanggal "${hariIni}".
+                2. FILTER KETAT: Jika sebuah gambar mencantumkan tanggal LAIN (misal: 5 Maret), BERHENTI membaca gambar tersebut. JANGAN mengambil lokasi manapun dari gambar yang tanggalnya tidak cocok.
+                3. EKSTRAKSI: Hanya dari gambar yang bertanggal "${hariIni}", ambil data:
+                - unit_pelaksana (contoh: PLN UP3 BALI TIMUR)
+                - lokasi_pemeliharaan: daftar objek { ulp, waktu, lokasi }
+
+                Output harus murni JSON:
+                {
+                "tanggal_pemeliharaan": "${hariIni}",
+                "unit_pelaksana": "...",
+                "lokasi_pemeliharaan": [
+                    { "ulp": "...", "waktu": "...", "lokasi": "..." }
+                ]
+                }
+
+                Urutan: Denpasar, Badung, baru kota lainnya. Jika tidak ada yang cocok dengan "${hariIni}", kembalikan {}.`;
+
             const responseAI = await fetch("/api/gemini/pln_stories", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -144,7 +160,8 @@ export default function Page() {
                 }
 
                 const dataLokasi: Lokasi[] = dataJSON.flatMap(detail => detail.lokasi_pemeliharaan);
-                const chunk = chunkArray(dataLokasi, 4)
+                const chunk = chunkArray(dataLokasi, 3)
+                console.log(chunk)
 
                 setData(chunk);
 
@@ -409,7 +426,7 @@ Sumber : @${username}
 
                                         {chunk.map?.((dt2, index) => {
                                             const lokasi = Array.isArray(dt2.lokasi) ? dt2.lokasi.join(" • ") : dt2.lokasi;
-                                            const posTop = index * 67 + 125;
+                                            const posTop = index * 90 + 125;
                                             return (
                                                 <VStack
                                                     key={index}
@@ -452,8 +469,8 @@ Sumber : @${username}
                                                         px={1}
                                                         mx={4}
                                                         w={310}
-                                                        h={9}
-                                                        alignContent={"center"}
+                                                        h={14}
+                                                        justifyContent={"flex-start"}
                                                         className={poppins.className}
                                                         fontSize={10}
                                                         fontWeight={500}
