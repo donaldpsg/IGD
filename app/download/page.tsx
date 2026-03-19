@@ -27,7 +27,7 @@ import {
   Container,
   Radio,
   RadioGroup,
-  Stack
+  Stack,
 } from "@chakra-ui/react";
 import { Icon, useToast } from "@chakra-ui/react";
 import { FaPaste, FaDownload, FaArrowLeft, FaPlay, FaPause, FaCamera, FaCopy } from "react-icons/fa";
@@ -78,9 +78,9 @@ export default function Page() {
   const [gambar, setGambar] = useState("");
   const [imageFile, setImageFile] = useState("");
   const [title, setTitle] = useState(``);
-  const [ratio, setRatio] = useState('1')
-  const [widthThumb, setWidthThumb] = useState(380)
-  const [heightThumb, setHeightThumb] = useState(676)
+  const [ratio, setRatio] = useState("1");
+  const [widthThumb, setWidthThumb] = useState(380);
+  const [heightThumb, setHeightThumb] = useState(676);
   const [isVideo, setIsVideo] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
@@ -102,7 +102,7 @@ export default function Page() {
         position: "bottom-left",
       });
     },
-    [toast]
+    [toast],
   );
 
   const onRepostChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -189,10 +189,12 @@ export default function Page() {
       const response = await fetch("/api/instagram", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ url })
+        body: JSON.stringify({ url }),
       });
 
       const data = await response.json();
+
+      console.log(data);
 
       const links: IMedia[] = (data as IApiResponseItem[]).map((item, index) => ({
         url: item.urls[0]?.url ?? "",
@@ -200,10 +202,10 @@ export default function Page() {
       }));
 
       if (data[0].meta.title.length > 50) {
-        const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`
-        const resTitle = await fetch('/api/gemini', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+        const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`;
+        const resTitle = await fetch("/api/gemini", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ prompt: promptTitle }),
         });
 
@@ -212,17 +214,17 @@ export default function Page() {
 
           const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. 
         Lengkapi juga dengan 1 hashtag populer yang terkait dengan berita. 
-        Output hanya berisi caption, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`
-          const resCaption = await fetch('/api/gemini', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+        Output hanya berisi caption, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`;
+          const resCaption = await fetch("/api/gemini", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ prompt: promptCaption }),
           });
 
           const dataCaption = await resCaption.json();
 
           if (dataCaption.text) {
-            const textCaption = `${dataCaption.text} ${hashtag.join(" ")}`
+            const textCaption = `${dataCaption.text} ${hashtag.join(" ")}`;
             setAICaption(textCaption);
           }
           setTitle(dataTitle.text || "");
@@ -230,7 +232,6 @@ export default function Page() {
           toast.closeAll();
           showToast("Error", 1, "Google AI Error. Unable to generate AI caption.");
         }
-
       }
 
       setOriginalCaption(data[0].meta.title);
@@ -317,17 +318,16 @@ export default function Page() {
   };
 
   const onChangeRatio = (value: string) => {
-    setRatio(value)
+    setRatio(value);
 
     if (value === "1") {
-      setWidthThumb(380)
-      setHeightThumb(676)
+      setWidthThumb(380);
+      setHeightThumb(676);
     } else {
-      setWidthThumb(380)
-      setHeightThumb(475)
+      setWidthThumb(380);
+      setHeightThumb(475);
     }
-  }
-
+  };
 
   return (
     <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
@@ -414,14 +414,31 @@ export default function Page() {
                   setCaption(e.target.value);
                 }}
               />
-              <Text mt={3} fontWeight="semibold">AI Caption</Text>
-              <Text fontStyle="italic" fontSize={15} style={{ whiteSpace: "pre-wrap" }}>{AICaption}</Text>
+              <Text mt={3} fontWeight="semibold">
+                AI Caption
+              </Text>
+              <Text fontStyle="italic" fontSize={15} style={{ whiteSpace: "pre-wrap" }}>
+                {AICaption}
+              </Text>
 
               <Flex mt={3}>
-                <Button leftIcon={<FaCopy />} onClick={copy} colorScheme="teal" size="sm" disabled={caption ? false : true}>
+                <Button
+                  leftIcon={<FaCopy />}
+                  onClick={copy}
+                  colorScheme="teal"
+                  size="sm"
+                  disabled={caption ? false : true}
+                >
                   Original Caption
                 </Button>
-                <Button leftIcon={<FaCopy />} onClick={copyAI} ml={2} colorScheme="teal" size="sm" disabled={AICaption ? false : true}>
+                <Button
+                  leftIcon={<FaCopy />}
+                  onClick={copyAI}
+                  ml={2}
+                  colorScheme="teal"
+                  size="sm"
+                  disabled={AICaption ? false : true}
+                >
                   AI Caption
                 </Button>
                 <Spacer />
@@ -440,9 +457,9 @@ export default function Page() {
               <FormControl mt={4}>
                 <FormLabel>Thumbnail Ratio</FormLabel>
                 <RadioGroup onChange={onChangeRatio} value={ratio}>
-                  <Stack direction='row'>
-                    <Radio value='1'>9:16</Radio>
-                    <Radio value='2'>3:4</Radio>
+                  <Stack direction="row">
+                    <Radio value="1">9:16</Radio>
+                    <Radio value="2">3:4</Radio>
                   </Stack>
                 </RadioGroup>
               </FormControl>
