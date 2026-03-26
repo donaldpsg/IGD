@@ -356,12 +356,12 @@ Sumber : ${username}
                                                 width: "91%",
                                                 padding: "8px 12px",
                                                 textAlign: "justify",
-                                                lineHeight: 1.5,
+                                                lineHeight: 1.4,
                                                 backgroundColor: "#ffffff",
                                                 borderRadius: "8px",
                                             }}
                                         >
-                                            <Text className={poppins.className} fontSize={11.5} fontWeight={500}>
+                                            <Text className={poppins.className} fontSize={11.5} fontWeight={500} >
                                                 {data?.informasi_gangguan}
                                             </Text>
                                         </Box>

@@ -474,7 +474,8 @@ Sumber : @${username}
                                                         className={poppins.className}
                                                         fontSize={10}
                                                         fontWeight={500}
-                                                        whiteSpace="pre-line" // 👈 supaya \n terbaca
+                                                        whiteSpace="pre-line"
+                                                        lineHeight={1.4} // 👈 supaya \n terbaca
                                                     >
                                                         {lokasi}
 
