@@ -160,8 +160,42 @@ export default function Page() {
                 }
 
                 const dataLokasi: Lokasi[] = dataJSON.flatMap(detail => detail.lokasi_pemeliharaan);
-                const chunk = chunkArray(dataLokasi, 3)
-                console.log(chunk)
+
+                // Chunking dinamis berdasarkan estimasi tinggi per item
+                // Canvas width=340, gambar asli 1080x1350 → tinggi natural = 340*(1350/1080) = 425px
+                // PaddingTop 125px untuk header → sisa usable = 425-125-20(pb) = 280px
+                // Gunakan 240px agar ada margin aman di bawah
+                const CANVAS_USABLE_HEIGHT = 240; // px, area tersedia (konservatif)
+                const HEADER_HEIGHT = 24; // h={6} = 6*4px = 24px
+                const LOKASI_MIN_HEIGHT = 56; // minH={14} = 14*4px = 56px
+                const CHARS_PER_LINE = 42; // konservatif: lebih sedikit char/baris
+                const LINE_HEIGHT_PX = 16; // lineHeight 1.4 * fontSize 10px + padding
+
+                const chunkDynamic = (items: Lokasi[]): Lokasi[][] => {
+                    const result: Lokasi[][] = [];
+                    let current: Lokasi[] = [];
+                    let usedHeight = 0;
+
+                    for (const item of items) {
+                        const lokasiText = Array.isArray(item.lokasi) ? item.lokasi.join(" • ") : item.lokasi;
+                        const estimatedLines = Math.max(1, Math.ceil(lokasiText.length / CHARS_PER_LINE));
+                        const lokasiHeight = Math.max(LOKASI_MIN_HEIGHT, estimatedLines * LINE_HEIGHT_PX + 8);
+                        const itemHeight = HEADER_HEIGHT + lokasiHeight;
+
+                        if (current.length > 0 && usedHeight + itemHeight > CANVAS_USABLE_HEIGHT) {
+                            result.push(current);
+                            current = [];
+                            usedHeight = 0;
+                        }
+                        current.push(item);
+                        usedHeight += itemHeight;
+                    }
+                    if (current.length > 0) result.push(current);
+                    return result;
+                };
+
+                const chunk = chunkDynamic(dataLokasi);
+                console.log("Dynamic chunks:", chunk);
 
                 setData(chunk);
 
@@ -408,82 +442,90 @@ Sumber : @${username}
 
                             {data.map((chunk, idx) => (
                                 <div key={idx} style={{ marginBottom: 40, marginTop: 40 }}>
-                                    <div id={`canvas${idx}`} style={{ position: "relative", width: 340 }}>
-                                        <Image src={"/images/PLN-BACKGROUND.jpg"} w={340} fit="cover" alt="media" />
-                                        <Box
-                                            style={{
-                                                position: "absolute",
-                                                top: 92,
-                                                left: 0,
-                                                width: "100%", // penuh selebar canvas
-                                                backgroundColor: "#14546d",
-                                                padding: "1px",
-                                                textAlign: "center",
-                                            }}
-                                        >
-                                            <Text color={"#fff"} className={poppins.className} fontSize={14} >{tanggal}</Text>
-                                        </Box>
+                                    <div
+                                        id={`canvas${idx}`}
+                                        style={{
+                                            position: "relative",
+                                            width: 340,
+                                            height: 425, // tinggi tetap = natural image ratio (1080x1350 @ width 340)
+                                            backgroundImage: "url('/images/PLN-BACKGROUND.jpg')",
+                                            backgroundSize: "100% 100%",
+                                            backgroundRepeat: "no-repeat",
+                                            overflow: "hidden", // konten tidak boleh melebihi batas canvas
+                                        }}
+                                    >
+                                        {/* Konten mengalir secara normal (flow layout) */}
+                                        <div style={{ position: "relative", zIndex: 1 }}>
+                                            {/* Header tanggal — sama seperti sebelumnya, top 92 */}
+                                            <Box
+                                                style={{
+                                                    position: "absolute",
+                                                    top: 92,
+                                                    left: 0,
+                                                    width: "100%",
+                                                    backgroundColor: "#14546d",
+                                                    padding: "1px",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                <Text color={"#fff"} className={poppins.className} fontSize={14}>{tanggal}</Text>
+                                            </Box>
 
-                                        {chunk.map?.((dt2, index) => {
-                                            const lokasi = Array.isArray(dt2.lokasi) ? dt2.lokasi.join(" • ") : dt2.lokasi;
-                                            const posTop = index * 90 + 125;
-                                            return (
-                                                <VStack
-                                                    key={index}
-                                                    style={{
-                                                        position: "absolute",
-                                                        top: posTop,
-                                                    }}
-                                                    align="flex-start"
-                                                    spacing={0}
-                                                >
-                                                    <Box
-                                                        bgColor="#14546d"
-                                                        className={poppins.className}
-                                                        fontSize={11}
-                                                        fontWeight={600}
-                                                        color="white"
-                                                        p={1}
-                                                        w={310}
-                                                        mx={4}
-                                                        h={6}
-                                                        style={{
-                                                            borderRightWidth: 0.5,
-                                                            borderLeftWidth: 0.5,
-                                                            borderColor: "#0d2644",
-                                                        }}
-                                                    >
-                                                        <Flex justify="space-between" w="100%">
-                                                            <Text>{dt2.ulp}</Text>
-                                                            <Text>{dt2.waktu}</Text>
-                                                        </Flex>
-
-                                                    </Box>
-                                                    <Box
-                                                        key={index}
-                                                        style={{
-                                                            borderWidth: 0.5,
-                                                            borderColor: "#0d2644",
-                                                        }}
-                                                        py={0.5}
-                                                        px={1}
-                                                        mx={4}
-                                                        w={310}
-                                                        h={14}
-                                                        justifyContent={"flex-start"}
-                                                        className={poppins.className}
-                                                        fontSize={10}
-                                                        fontWeight={500}
-                                                        whiteSpace="pre-line"
-                                                        lineHeight={1.4} // 👈 supaya \n terbaca
-                                                    >
-                                                        {lokasi}
-
-                                                    </Box>
+                                            {/* Spacer agar konten dimulai di bawah header tanggal */}
+                                            <div style={{ paddingTop: 125 }}>
+                                                <VStack align="flex-start" spacing={0} pb={4}>
+                                                    {chunk.map?.((dt2, index) => {
+                                                        const lokasi = Array.isArray(dt2.lokasi) ? dt2.lokasi.join(" • ") : dt2.lokasi;
+                                                        return (
+                                                            <React.Fragment key={index}>
+                                                                <Box
+                                                                    bgColor="#14546d"
+                                                                    className={poppins.className}
+                                                                    fontSize={11}
+                                                                    fontWeight={600}
+                                                                    color="white"
+                                                                    p={1}
+                                                                    w={310}
+                                                                    mx={4}
+                                                                    h={6}
+                                                                    style={{
+                                                                        borderRightWidth: 0.5,
+                                                                        borderLeftWidth: 0.5,
+                                                                        borderColor: "#0d2644",
+                                                                    }}
+                                                                >
+                                                                    <Flex justify="space-between" w="100%">
+                                                                        <Text>{dt2.ulp}</Text>
+                                                                        <Text>{dt2.waktu}</Text>
+                                                                    </Flex>
+                                                                </Box>
+                                                                <Box
+                                                                    style={{
+                                                                        borderWidth: 0.5,
+                                                                        borderColor: "#0d2644",
+                                                                    }}
+                                                                    py={0.5}
+                                                                    px={1}
+                                                                    mx={4}
+                                                                    w={310}
+                                                                    minH={14}
+                                                                    mb={1}
+                                                                    color="#0d2644"
+                                                                    justifyContent={"flex-start"}
+                                                                    className={poppins.className}
+                                                                    fontSize={9.5}
+                                                                    fontWeight={500}
+                                                                    whiteSpace="pre-line"
+                                                                    lineHeight={1.3}
+                                                                >
+                                                                    {lokasi}
+                                                                </Box>
+                                                            </React.Fragment>
+                                                        );
+                                                    })}
                                                 </VStack>
-
-                                            );
-                                        })}
+                                            </div>
+                                        </div>
                                     </div>
                                     <Button
                                         colorScheme="teal"

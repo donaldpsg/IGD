@@ -128,7 +128,7 @@ export default function Page() {
       });
 
       const fileType = selectedFiles[0]["type"];
-      const imageTypes = ["image/gif", "image/jpeg", "image/png", "image/jpeg", , "image/webp"];
+      const imageTypes = ["image/gif", "image/jpeg", "image/png", "image/webp"];
 
       if (imageTypes.includes(fileType)) {
         const blob = new Blob([selectedFiles[0]]);
@@ -166,13 +166,11 @@ export default function Page() {
   };
 
   const play = async () => {
-    const videoElement = document.getElementById("video") as HTMLVideoElement;
-    await videoElement.play();
+    if (videoRef.current) await videoRef.current.play();
   };
 
   const pause = () => {
-    const videoElement = document.getElementById("video") as HTMLVideoElement;
-    videoElement.pause();
+    videoRef.current?.pause();
   };
 
   const submit = async (e: FormEvent<HTMLFormElement>) => {
@@ -203,29 +201,29 @@ export default function Page() {
 
       if (data[0].meta.title.length > 50) {
         const promptTitle = `Buatlah headline berita yang maksimal 100 karakter dari teks berikut. Output hanya berisi headline, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`;
-        const resTitle = await fetch("/api/gemini", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: promptTitle }),
-        });
+        const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. Lengkapi juga dengan 1 hashtag populer yang terkait dengan berita. Output hanya berisi caption, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`;
 
-        if (resTitle.ok) {
-          const dataTitle = await resTitle.json();
-
-          const promptCaption = `Tulis ulang berita ini sebagai caption Instagram yang mudah dicerna namun tetap formal. 
-        Lengkapi juga dengan 1 hashtag populer yang terkait dengan berita. 
-        Output hanya berisi caption, tanpa kata pengantar atau penutup.\n${data[0].meta.title}`;
-          const resCaption = await fetch("/api/gemini", {
+        const [resTitle, resCaption] = await Promise.all([
+          fetch("/api/gemini", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt: promptTitle }),
+          }),
+          fetch("/api/gemini", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ prompt: promptCaption }),
-          });
+          }),
+        ]);
 
-          const dataCaption = await resCaption.json();
+        if (resTitle.ok && resCaption.ok) {
+          const [dataTitle, dataCaption] = await Promise.all([
+            resTitle.json(),
+            resCaption.json(),
+          ]);
 
           if (dataCaption.text) {
-            const textCaption = `${dataCaption.text} ${hashtag.join(" ")}`;
-            setAICaption(textCaption);
+            setAICaption(`${dataCaption.text} ${hashtag.join(" ")}`);
           }
           setTitle(dataTitle.text || "");
         } else {
@@ -254,14 +252,9 @@ export default function Page() {
     }
   };
 
-  const copy = () => {
-    navigator.clipboard.writeText(caption);
-    showToast("Success", 0, "Copied to cliboard");
-  };
-
-  const copyAI = () => {
-    navigator.clipboard.writeText(AICaption);
-    showToast("Success", 0, "Copied to cliboard");
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    showToast("Success", 0, "Copied to clipboard");
   };
 
   const paste = async () => {
@@ -424,20 +417,20 @@ export default function Page() {
               <Flex mt={3}>
                 <Button
                   leftIcon={<FaCopy />}
-                  onClick={copy}
+                  onClick={() => copyToClipboard(caption)}
                   colorScheme="teal"
                   size="sm"
-                  disabled={caption ? false : true}
+                  isDisabled={!caption}
                 >
                   Original Caption
                 </Button>
                 <Button
                   leftIcon={<FaCopy />}
-                  onClick={copyAI}
+                  onClick={() => copyToClipboard(AICaption)}
                   ml={2}
                   colorScheme="teal"
                   size="sm"
-                  disabled={AICaption ? false : true}
+                  isDisabled={!AICaption}
                 >
                   AI Caption
                 </Button>
