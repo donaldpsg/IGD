@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useCallback, ChangeEvent } from "react";
+import React, { useState, useCallback, useMemo, ChangeEvent } from "react";
 import {
     FormControl,
     Input,
@@ -43,15 +43,90 @@ interface DataPemeliharaan {
     lokasi_pemeliharaan: Lokasi[];
 }
 
+// Letakkan di luar komponen
+const CHARS_PER_LINE = 50;
+const LINE_HEIGHT = 13;
+const MIN_LOKASI_H = 32;
+const HEADER_H = 24;
+const START_TOP = 125;
+const MAX_HEIGHT = 500;
+const GAP = 5;
+
+const estimateLines = (lokasi: string | string[]): number => {
+    const text = Array.isArray(lokasi) ? lokasi.join(" • ") : lokasi;
+    return Math.ceil(text.length / CHARS_PER_LINE);
+};
+
+const chunkByHeight = (arr: Lokasi[]): Lokasi[][] => {
+    const chunks: Lokasi[][] = [];
+    let currentChunk: Lokasi[] = [];
+    let currentHeight = START_TOP;
+
+    arr.forEach((item) => {
+        const lines = estimateLines(item.lokasi);
+        const itemHeight = HEADER_H + Math.max(MIN_LOKASI_H, lines * LINE_HEIGHT + 8) + GAP;
+
+        if ((currentHeight + itemHeight > MAX_HEIGHT || currentChunk.length >= 3) && currentChunk.length > 0) {
+            chunks.push(currentChunk);
+            currentChunk = [item];
+            currentHeight = START_TOP + itemHeight;
+        } else {
+            currentChunk.push(item);
+            currentHeight += itemHeight;
+        }
+    });
+
+    if (currentChunk.length > 0) chunks.push(currentChunk);
+    return chunks;
+};
+
 export default function Page() {
     const router = useRouter();
     const toast = useToast();
     const [caption, setCaption] = useState("");
     const [tanggal, setTanggal] = useState("");
-    const [data, setData] = useState<Lokasi[][]>([]);
+    const [data, setData] = useState<Lokasi[]>([]);
     const [images, setImages] = useState<string[]>([]);
     const [index, setIndex] = useState(0);
     const [username, setUsername] = useState("plndistribusibali")
+
+    // const [tanggal, setTanggal] = useState("Sabtu, 17 Mei 2025");
+
+    // const [data, setData] = useState<Lokasi[]>([
+    //     {
+    //         ulp: "ULP DENPASAR SELATAN",
+    //         waktu: "08:00 - 12:00",
+    //         lokasi: ["Jl. Teuku Umar", "Jl. Diponegoro", "Jl. Gatot Subroto", "Jl. Mahendradatta", "Monang-Maning", "Permata Hijau",
+    //         ],
+    //     },
+    //     {
+    //         ulp: "ULP DENPASAR UTARA",
+    //         waktu: "13:00 - 17:00",
+    //         lokasi: ["Jl. Nusa Kambangan No. 11"],
+    //     },
+    //     {
+    //         ulp: "ULP DENPASAR BARAT",
+    //         waktu: "09:00 - 15:00",
+    //         lokasi: ["Jl. Imam Bonjol", "Jl. Hasanudin", "Jl. Veteran"],
+    //     },
+    //     {
+    //         ulp: "ULP BADUNG",
+    //         waktu: "07:00 - 11:00",
+    //         lokasi: ["Kuta", "Legian", "Seminyak", "Jl. Sunset Road", "Jl. Dewi Sri", "Jl. By Pass Ngurah Rai II",
+    //             "Jl. Pulau Moyo", "Jl. Gringsing", "Jl. Siulan", "Jl. Gatsu Barat",
+    //             "Puri Dalem Jimbaran", "Pantai Sari Dewi", "Jl. Pura Galuh", "Jl. Raya Kuta",
+    //         ],
+    //     },
+    //     {
+    //         ulp: "ULP MENGWI",
+    //         waktu: "10:00 - 14:00",
+    //         lokasi: ["Jl. Raya Mengwi No. 45"],
+    //     },
+    // ]);
+
+    // Gunakan di render
+    const chunkedData = useMemo(() => chunkByHeight(data), [data]);
+
 
     const showToast = useCallback(
         async (title: string, iStatus: number, message: string) => {
@@ -82,13 +157,7 @@ export default function Page() {
         });
     };
 
-    function chunkArray<T>(array: T[], size: number): T[][] {
-        const result: T[][] = [];
-        for (let i = 0; i < array.length; i += size) {
-            result.push(array.slice(i, i + size));
-        }
-        return result;
-    }
+
 
     const submit = async () => {
         toast({
@@ -127,22 +196,22 @@ export default function Page() {
 
             const prompt = `Terdapat beberapa gambar yang diunggah. Tugas Anda adalah melakukan ekstraksi data yang sangat spesifik:
 
-                1. PERIKSA TANGGAL: Cari gambar yang secara eksplisit mencantumkan tanggal "${hariIni}".
-                2. FILTER KETAT: Jika sebuah gambar mencantumkan tanggal LAIN (misal: 5 Maret), BERHENTI membaca gambar tersebut. JANGAN mengambil lokasi manapun dari gambar yang tanggalnya tidak cocok.
-                3. EKSTRAKSI: Hanya dari gambar yang bertanggal "${hariIni}", ambil data:
-                - unit_pelaksana (contoh: PLN UP3 BALI TIMUR)
-                - lokasi_pemeliharaan: daftar objek { ulp, waktu, lokasi }
+                    1. PERIKSA TANGGAL: Cari gambar yang secara eksplisit mencantumkan tanggal "${hariIni}".
+                    2. FILTER KETAT: Jika sebuah gambar mencantumkan tanggal LAIN (misal: 5 Maret), BERHENTI membaca gambar tersebut. JANGAN mengambil lokasi manapun dari gambar yang tanggalnya tidak cocok.
+                    3. EKSTRAKSI: Hanya dari gambar yang bertanggal "${hariIni}", ambil data:
+                    - unit_pelaksana (contoh: PLN UP3 BALI TIMUR)
+                    - lokasi_pemeliharaan: daftar objek { ulp, waktu, lokasi }
 
-                Output harus murni JSON:
-                {
-                "tanggal_pemeliharaan": "${hariIni}",
-                "unit_pelaksana": "...",
-                "lokasi_pemeliharaan": [
-                    { "ulp": "...", "waktu": "...", "lokasi": "..." }
-                ]
-                }
+                    Output harus murni JSON:
+                    {
+                    "tanggal_pemeliharaan": "${hariIni}",
+                    "unit_pelaksana": "...",
+                    "lokasi_pemeliharaan": [
+                        { "ulp": "...", "waktu": "...", "lokasi": "..." }
+                    ]
+                    }
 
-                Urutan: Denpasar, Badung, baru kota lainnya. Jika tidak ada yang cocok dengan "${hariIni}", kembalikan {}.`;
+                    Urutan: Denpasar, Badung, baru kota lainnya. Jika tidak ada yang cocok dengan "${hariIni}", kembalikan {}.`;
 
             const responseAI = await fetch("/api/gemini/pln_stories", {
                 method: "POST",
@@ -160,44 +229,7 @@ export default function Page() {
                 }
 
                 const dataLokasi: Lokasi[] = dataJSON.flatMap(detail => detail.lokasi_pemeliharaan);
-
-                // Chunking dinamis berdasarkan estimasi tinggi per item
-                // Canvas width=340, gambar asli 1080x1350 → tinggi natural = 340*(1350/1080) = 425px
-                // PaddingTop 125px untuk header → sisa usable = 425-125-20(pb) = 280px
-                // Gunakan 240px agar ada margin aman di bawah
-                const CANVAS_USABLE_HEIGHT = 240; // px, area tersedia (konservatif)
-                const HEADER_HEIGHT = 24; // h={6} = 6*4px = 24px
-                const LOKASI_MIN_HEIGHT = 56; // minH={14} = 14*4px = 56px
-                const CHARS_PER_LINE = 42; // konservatif: lebih sedikit char/baris
-                const LINE_HEIGHT_PX = 16; // lineHeight 1.4 * fontSize 10px + padding
-
-                const chunkDynamic = (items: Lokasi[]): Lokasi[][] => {
-                    const result: Lokasi[][] = [];
-                    let current: Lokasi[] = [];
-                    let usedHeight = 0;
-
-                    for (const item of items) {
-                        const lokasiText = Array.isArray(item.lokasi) ? item.lokasi.join(" • ") : item.lokasi;
-                        const estimatedLines = Math.max(1, Math.ceil(lokasiText.length / CHARS_PER_LINE));
-                        const lokasiHeight = Math.max(LOKASI_MIN_HEIGHT, estimatedLines * LINE_HEIGHT_PX + 8);
-                        const itemHeight = HEADER_HEIGHT + lokasiHeight;
-
-                        if (current.length > 0 && usedHeight + itemHeight > CANVAS_USABLE_HEIGHT) {
-                            result.push(current);
-                            current = [];
-                            usedHeight = 0;
-                        }
-                        current.push(item);
-                        usedHeight += itemHeight;
-                    }
-                    if (current.length > 0) result.push(current);
-                    return result;
-                };
-
-                const chunk = chunkDynamic(dataLokasi);
-                console.log("Dynamic chunks:", chunk);
-
-                setData(chunk);
+                setData(dataLokasi);
 
                 if (dataJSON.length > 0) {
                     setTanggal(dataJSON[dataJSON.length - 1].tanggal_pemeliharaan)
@@ -206,14 +238,14 @@ export default function Page() {
                 if (dataJSON.length > 0) {
                     const textCaption = `⚡ PENGUMUMAN PEMADAMAN JARINGAN LISTRIK ⚡
 
-Halo, Sobat PLN! 👋
+    Halo, Sobat PLN! 👋
 
-PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
-📅 ${dataJSON[dataJSON.length - 1].tanggal_pemeliharaan}
+    PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
+    📅 ${dataJSON[dataJSON.length - 1].tanggal_pemeliharaan}
 
-Sumber : @${username}
+    Sumber : @${username}
 
-#planetdenpasar #PLNBali #InfoPemadaman`;
+    #planetdenpasar #PLNBali #InfoPemadaman`;
 
                     setCaption(textCaption)
 
@@ -317,6 +349,8 @@ Sumber : @${username}
             position: "bottom-left",
         });
     };
+
+
 
     return (
         <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
@@ -440,92 +474,100 @@ Sumber : @${username}
                                 </Button>
                             </div>
 
-                            {data.map((chunk, idx) => (
+                            {chunkedData.map((chunk, idx) => (
                                 <div key={idx} style={{ marginBottom: 40, marginTop: 40 }}>
-                                    <div
-                                        id={`canvas${idx}`}
-                                        style={{
-                                            position: "relative",
-                                            width: 340,
-                                            height: 425, // tinggi tetap = natural image ratio (1080x1350 @ width 340)
-                                            backgroundImage: "url('/images/PLN-BACKGROUND.jpg')",
-                                            backgroundSize: "100% 100%",
-                                            backgroundRepeat: "no-repeat",
-                                            overflow: "hidden", // konten tidak boleh melebihi batas canvas
-                                        }}
-                                    >
-                                        {/* Konten mengalir secara normal (flow layout) */}
-                                        <div style={{ position: "relative", zIndex: 1 }}>
-                                            {/* Header tanggal — sama seperti sebelumnya, top 92 */}
-                                            <Box
-                                                style={{
-                                                    position: "absolute",
-                                                    top: 92,
-                                                    left: 0,
-                                                    width: "100%",
-                                                    backgroundColor: "#14546d",
-                                                    padding: "1px",
-                                                    textAlign: "center",
-                                                }}
-                                            >
-                                                <Text color={"#fff"} className={poppins.className} fontSize={14}>{tanggal}</Text>
-                                            </Box>
+                                    <div id={`canvas${idx}`} style={{ position: "relative", width: 340 }}>
+                                        <Image src={"/images/PLN-BACKGROUND.jpg"} w={340} fit="cover" alt="media" />
+                                        <Box
+                                            style={{
+                                                position: "absolute",
+                                                top: 92,
+                                                left: 0,
+                                                width: "100%", // penuh selebar canvas
+                                                backgroundColor: "#14546d",
+                                                padding: "1px",
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            <Text color={"#fff"} className={poppins.className} fontSize={14} >{tanggal}</Text>
+                                        </Box>
 
-                                            {/* Spacer agar konten dimulai di bawah header tanggal */}
-                                            <div style={{ paddingTop: 125 }}>
-                                                <VStack align="flex-start" spacing={0} pb={4}>
-                                                    {chunk.map?.((dt2, index) => {
-                                                        const lokasi = Array.isArray(dt2.lokasi) ? dt2.lokasi.join(" • ") : dt2.lokasi;
-                                                        return (
-                                                            <React.Fragment key={index}>
-                                                                <Box
-                                                                    bgColor="#14546d"
-                                                                    className={poppins.className}
-                                                                    fontSize={11}
-                                                                    fontWeight={600}
-                                                                    color="white"
-                                                                    p={1}
-                                                                    w={310}
-                                                                    mx={4}
-                                                                    h={6}
-                                                                    style={{
-                                                                        borderRightWidth: 0.5,
-                                                                        borderLeftWidth: 0.5,
-                                                                        borderColor: "#0d2644",
-                                                                    }}
-                                                                >
-                                                                    <Flex justify="space-between" w="100%">
-                                                                        <Text>{dt2.ulp}</Text>
-                                                                        <Text>{dt2.waktu}</Text>
-                                                                    </Flex>
-                                                                </Box>
-                                                                <Box
-                                                                    style={{
-                                                                        borderWidth: 0.5,
-                                                                        borderColor: "#0d2644",
-                                                                    }}
-                                                                    py={0.5}
-                                                                    px={1}
-                                                                    mx={4}
-                                                                    w={310}
-                                                                    minH={14}
-                                                                    mb={1}
-                                                                    color="#0d2644"
-                                                                    justifyContent={"flex-start"}
-                                                                    className={poppins.className}
-                                                                    fontSize={9.5}
-                                                                    fontWeight={500}
-                                                                    whiteSpace="pre-line"
-                                                                    lineHeight={1.3}
-                                                                >
-                                                                    {lokasi}
-                                                                </Box>
-                                                            </React.Fragment>
-                                                        );
-                                                    })}
+                                        {chunk.map((dt, index) => {
+                                            const lokasi = Array.isArray(dt.lokasi) ? dt.lokasi.join(" • ") : dt.lokasi;
+
+                                            // Helper hitung estimasi jumlah baris teks
+                                            const estimateLines = (lokasi: string | string[]): number => {
+                                                const text = Array.isArray(lokasi) ? lokasi.join(" • ") : lokasi;
+                                                const CHARS_PER_LINE = 50; // lebar box 294px / ~6px per karakter (fontSize 10)
+                                                return Math.ceil(text.length / CHARS_PER_LINE);
+                                            };
+
+                                            const LINE_HEIGHT = 13;    // px per baris
+                                            const MIN_LOKASI_H = 32;   // minH={8} = 32px
+                                            const HEADER_H = 24;       // h={6} = 24px
+                                            const START_TOP = 125;     // posisi mulai konten
+
+                                            // Di dalam chunk.map:
+                                            const posTop = chunk.slice(0, index).reduce((acc, prev) => {
+                                                const lines = estimateLines(prev.lokasi);
+                                                const lokasiHeight = Math.max(MIN_LOKASI_H, lines * LINE_HEIGHT + 8); // +8 untuk py={1}
+                                                return acc + HEADER_H + lokasiHeight + 5;
+                                            }, START_TOP);
+
+                                            return (
+                                                <VStack
+                                                    key={index}
+                                                    style={{
+                                                        position: "absolute",
+                                                        top: posTop,
+                                                        left: 0,
+                                                        right: 0,
+                                                    }}
+                                                    align="flex-start"
+                                                    spacing={0}
+                                                    px={4}
+                                                >
+                                                    <Box
+                                                        bgColor="#14546d"
+                                                        className={poppins.className}
+                                                        fontSize={11}
+                                                        fontWeight={600}
+                                                        color="white"
+                                                        p={1}
+                                                        w={310}
+                                                        h={6}
+                                                        style={{
+                                                            borderRightWidth: 0.5,
+                                                            borderLeftWidth: 0.5,
+                                                            borderColor: "#0d2644",
+                                                        }}
+                                                    >
+                                                        <Flex justify="space-between" w="100%">
+                                                            <Text>{dt.ulp}</Text>
+                                                            <Text>{dt.waktu}</Text>
+                                                        </Flex>
+                                                    </Box>
+                                                    <Box
+                                                        style={{
+                                                            borderWidth: 0.5,
+                                                            borderColor: "#0d2644",
+                                                        }}
+                                                        textColor="#0d2644"
+                                                        py={1}
+                                                        px={1}
+                                                        w={310}
+                                                        minH={8}
+                                                        className={poppins.className}
+                                                        fontSize={10}
+                                                        fontWeight={500}
+                                                        whiteSpace="pre-wrap"
+                                                        wordBreak="break-word"
+                                                    >
+                                                        {lokasi}
+                                                    </Box>
                                                 </VStack>
-                                            </div>
-                                        </div>
+                                            );
+                                        })}
                                     </div>
                                     <Button
                                         colorScheme="teal"
