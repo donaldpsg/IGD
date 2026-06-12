@@ -26,11 +26,39 @@ import { useRouter } from "next/navigation";
 import * as htmlToImage from "html-to-image";
 import { dateMySql } from "../config";
 
+// Tambahkan interface ini di atas component
+interface Match {
+  id: number;
+  home: string;
+  away: string;
+  date: string;
+  time: string;
+  group: string | null;
+  round: string;
+  venue: string;
+  played: boolean;
+  status: string;
+  score: string | null;
+  minute: number;
+  live_data: null;
+}
+
+interface MatchDay {
+  date: string;
+  matches: Match[];
+}
+
+interface WCData {
+  data: MatchDay[];
+  match_days: number;
+  status: string;
+}
+
 export default function Page() {
   const router = useRouter();
   const toast = useToast();
 
-  const [json, setJson] = useState<any>();
+  const [json, setJson] = useState<WCData | undefined>();
   const [caption, setCaption] = useState("");
   const [tanggal, setTanggal] = useState(dateMySql(new Date()));
 
@@ -38,7 +66,7 @@ export default function Page() {
     async function fetchData() {
       try {
         const response = await fetch("/json/wc.json");
-        const result = await response.json();
+        const result: WCData = await response.json();
         setJson(result);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -50,6 +78,7 @@ export default function Page() {
 
   const onChangeTanggal = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTanggal(e.target.value);
+    setCaption("");
   };
 
   const createFileName = () => {
@@ -95,7 +124,7 @@ export default function Page() {
     });
   };
 
-  const matchesOfDay = json?.data?.find((d: any) => d.date === tanggal)?.matches ?? [];
+  const matchesOfDay: Match[] = json?.data?.find((d: MatchDay) => d.date === tanggal)?.matches ?? [];
 
   const countryCodeMap: Record<string, string> = {
     // Amerika
@@ -167,11 +196,11 @@ export default function Page() {
     return "12px"; // default sm
   }
 
-  function generateCaptionLocal(matchesOfDay: any[]): string {
+  function generateCaptionLocal(): string {
     if (matchesOfDay.length === 0) return "";
 
     const matchList = matchesOfDay
-      .map((match: any) => {
+      .map((match: Match) => {
         return `⚽ ${match.home} vs ${match.away} pukul ${match.time}`;
       })
       .join("\n");
@@ -217,7 +246,7 @@ export default function Page() {
                 <Button
                   flex={1}
                   colorScheme="blue"
-                  onClick={() => setCaption(generateCaptionLocal(matchesOfDay))}
+                  onClick={() => setCaption(generateCaptionLocal())}
                   isDisabled={matchesOfDay.length === 0}
                 >
                   Generate Caption IG ✨
@@ -265,7 +294,7 @@ export default function Page() {
                         </Text>
                       </Box>
                     ) : (
-                      matchesOfDay.map((match: any) => (
+                      matchesOfDay.map((match: Match) => (
                         <Box key={match.id} bg="#0a1128" borderRadius="md" overflow="hidden" border="1px solid #1f2a44">
                           {/* Teams row */}
                           <Flex justify="space-between" align="center" px={4} py={2}>
