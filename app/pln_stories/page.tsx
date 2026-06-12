@@ -157,8 +157,6 @@ export default function Page() {
         });
     };
 
-
-
     const submit = async () => {
         toast({
             title: "Please wait",
@@ -176,7 +174,6 @@ export default function Page() {
 
             const dataIG = await resIG.json();
             const stories = dataIG.result
-
 
             const imagesBase64: string[] = [];
             const imagesURL: string[] = [];
@@ -219,42 +216,65 @@ export default function Page() {
                 body: JSON.stringify({ imagesBase64, prompt }),
             });
 
-            if (responseAI.ok) {
-                const dataAI = await responseAI.json();
-                let dataJSON: DataPemeliharaan[] = JSON.parse(dataAI.text);
+            const dataAI = await responseAI.json();
 
-                // pastikan hasilnya array
-                if (!Array.isArray(dataJSON)) {
-                    dataJSON = [dataJSON];
-                }
-
-                const dataLokasi: Lokasi[] = dataJSON.flatMap(detail => detail.lokasi_pemeliharaan);
-                setData(dataLokasi);
-
-                if (dataJSON.length > 0) {
-                    setTanggal(dataJSON[dataJSON.length - 1].tanggal_pemeliharaan)
-                }
-
-                if (dataJSON.length > 0) {
-                    const textCaption = `⚡ PENGUMUMAN PEMADAMAN JARINGAN LISTRIK ⚡
-
-    Halo, Sobat PLN! 👋
-
-    PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
-    📅 ${dataJSON[dataJSON.length - 1].tanggal_pemeliharaan}
-
-    Sumber : @${username}
-
-    #planetdenpasar #PLNBali #InfoPemadaman`;
-
-                    setCaption(textCaption)
-
-                }
+            if (!responseAI.ok) {
                 toast.closeAll();
-            } else {
-                toast.closeAll();
-                showToast("Error", 1, "Google AI Error. Unable to generate AI caption.");
+
+                let errorMessage = dataAI.error ?? "Google AI Error. Unable to generate AI caption.";
+
+                // parse jika error masih berupa JSON string
+                if (typeof errorMessage === "string") {
+                    try {
+                        const parsed = JSON.parse(errorMessage);
+                        errorMessage = parsed.message ?? errorMessage;
+                    } catch {
+                        // biarkan errorMessage apa adanya
+                    }
+                } else if (typeof errorMessage === "object") {
+                    errorMessage = errorMessage.message ?? JSON.stringify(errorMessage);
+                }
+
+                // pesan khusus berdasarkan status code
+                if (responseAI.status === 503 || errorMessage.includes("high demand") || errorMessage.includes("UNAVAILABLE")) {
+                    errorMessage = "Server AI sedang sibuk. Silakan coba beberapa saat lagi.";
+                } else if (responseAI.status === 429) {
+                    errorMessage = "Terlalu banyak permintaan. Silakan tunggu sebentar.";
+                }
+
+                showToast("Error", 1, errorMessage);
+                return;
             }
+
+            let dataJSON: DataPemeliharaan[] = JSON.parse(dataAI.text);
+
+            if (!Array.isArray(dataJSON)) {
+                dataJSON = [dataJSON];
+            }
+
+            const dataLokasi: Lokasi[] = dataJSON.flatMap(detail => detail.lokasi_pemeliharaan);
+            setData(dataLokasi);
+            console.log(dataLokasi);
+
+            const lastEntry = dataJSON[dataJSON.length - 1];
+
+            if (lastEntry) {
+                setTanggal(lastEntry.tanggal_pemeliharaan);
+
+                const textCaption = `⚡ PENGUMUMAN PEMADAMAN JARINGAN LISTRIK ⚡
+                                Halo, Sobat PLN! 👋
+
+                                PLN UP3 Bali akan melakukan pemeliharaan jaringan listrik pada:
+                                📅 ${lastEntry.tanggal_pemeliharaan}
+
+                                Sumber : @${username}
+
+                                #planetdenpasar #PLNBali #InfoPemadaman`;
+
+                setCaption(textCaption);
+            }
+
+            toast.closeAll();
 
         } catch (e) {
             toast.closeAll();

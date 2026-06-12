@@ -216,20 +216,33 @@ export default function Page() {
           }),
         ]);
 
-        if (resTitle.ok && resCaption.ok) {
-          const [dataTitle, dataCaption] = await Promise.all([
-            resTitle.json(),
-            resCaption.json(),
-          ]);
+        const [dataTitle, dataCaption] = await Promise.all([
+          resTitle.json(),
+          resCaption.json(),
+        ]);
 
-          if (dataCaption.text) {
-            setAICaption(`${dataCaption.text} ${hashtag.join(" ")}`);
-          }
-          setTitle(dataTitle.text || "");
-        } else {
+        if (!resTitle.ok || !resCaption.ok) {
           toast.closeAll();
-          showToast("Error", 1, "Google AI Error. Unable to generate AI caption.");
+
+          const failedData = !resTitle.ok ? dataTitle : dataCaption;
+          const failedRes = !resTitle.ok ? resTitle : resCaption;
+
+          let errorMessage = failedData?.error ?? "Google AI Error. Unable to generate AI caption.";
+
+          if (failedRes.status === 503 || errorMessage.includes("UNAVAILABLE") || errorMessage.includes("high demand")) {
+            errorMessage = "Server AI sedang sibuk. Silakan coba beberapa saat lagi.";
+          } else if (failedRes.status === 429) {
+            errorMessage = "Terlalu banyak permintaan. Silakan tunggu sebentar.";
+          }
+
+          showToast("Error", 1, errorMessage);
+          return;
         }
+
+        if (dataCaption.text) {
+          setAICaption(`${dataCaption.text} ${hashtag.join(" ")}`);
+        }
+        setTitle(dataTitle.text || "");
       }
 
       setOriginalCaption(data[0].meta.title);
