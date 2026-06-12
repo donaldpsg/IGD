@@ -102,6 +102,16 @@ export default function Page() {
               X IMAGE
             </Button>
           </SimpleGrid>
+          <SimpleGrid columns={2} spacing={2} mt={2}>
+            <Button
+              colorScheme="teal"
+              onClick={() => {
+                router.push(`/wc`);
+              }}
+            >
+              World Cup
+            </Button>
+          </SimpleGrid>
           <SimpleGrid columns={1} spacing={2} mt={2}>
 
             <a href="/images/slide-pd.jpg" download="slide.jpg">
