@@ -154,21 +154,6 @@
           "venue": "Houston"
         },
         {
-          "away": "Ecuador",
-          "date": "2026-06-15",
-          "group": "Group E",
-          "home": "Ivory Coast",
-          "id": 26,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 4",
-          "score": null,
-          "status": "scheduled",
-          "time": "07:00 WITA",
-          "venue": "Philadelphia"
-        },
-        {
           "away": "Japan",
           "date": "2026-06-15",
           "group": "Group F",
@@ -182,6 +167,21 @@
           "status": "scheduled",
           "time": "04:00 WITA",
           "venue": "Dallas (Arlington)"
+        },
+        {
+          "away": "Ecuador",
+          "date": "2026-06-15",
+          "group": "Group E",
+          "home": "Ivory Coast",
+          "id": 26,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 4",
+          "score": null,
+          "status": "scheduled",
+          "time": "07:00 WITA",
+          "venue": "Philadelphia"
         },
         {
           "away": "Tunisia",
@@ -204,36 +204,6 @@
       "date": "2026-06-16",
       "matches": [
         {
-          "away": "Egypt",
-          "date": "2026-06-16",
-          "group": "Group G",
-          "home": "Belgium",
-          "id": 37,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 5",
-          "score": null,
-          "status": "scheduled",
-          "time": "03:00 WITA",
-          "venue": "Seattle"
-        },
-        {
-          "away": "New Zealand",
-          "date": "2026-06-16",
-          "group": "Group G",
-          "home": "Iran",
-          "id": 38,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 5",
-          "score": null,
-          "status": "scheduled",
-          "time": "09:00 WITA",
-          "venue": "Los Angeles (Inglewood)"
-        },
-        {
           "away": "Cape Verde",
           "date": "2026-06-16",
           "group": "Group H",
@@ -249,6 +219,21 @@
           "venue": "Atlanta"
         },
         {
+          "away": "Egypt",
+          "date": "2026-06-16",
+          "group": "Group G",
+          "home": "Belgium",
+          "id": 37,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 5",
+          "score": null,
+          "status": "scheduled",
+          "time": "03:00 WITA",
+          "venue": "Seattle"
+        },
+        {
           "away": "Uruguay",
           "date": "2026-06-16",
           "group": "Group H",
@@ -262,6 +247,21 @@
           "status": "scheduled",
           "time": "06:00 WITA",
           "venue": "Miami (Miami Gardens)"
+        },
+        {
+          "away": "New Zealand",
+          "date": "2026-06-16",
+          "group": "Group G",
+          "home": "Iran",
+          "id": 38,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 5",
+          "score": null,
+          "status": "scheduled",
+          "time": "09:00 WITA",
+          "venue": "Los Angeles (Inglewood)"
         }
       ]
     },
@@ -349,21 +349,6 @@
           "venue": "Houston"
         },
         {
-          "away": "Colombia",
-          "date": "2026-06-18",
-          "group": "Group K",
-          "home": "Uzbekistan",
-          "id": 62,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 7",
-          "score": null,
-          "status": "scheduled",
-          "time": "10:00 WITA",
-          "venue": "Mexico City"
-        },
-        {
           "away": "Croatia",
           "date": "2026-06-18",
           "group": "Group L",
@@ -392,6 +377,21 @@
           "status": "scheduled",
           "time": "07:00 WITA",
           "venue": "Toronto"
+        },
+        {
+          "away": "Colombia",
+          "date": "2026-06-18",
+          "group": "Group K",
+          "home": "Uzbekistan",
+          "id": 62,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 7",
+          "score": null,
+          "status": "scheduled",
+          "time": "10:00 WITA",
+          "venue": "Mexico City"
         }
       ]
     },
@@ -412,21 +412,6 @@
           "status": "scheduled",
           "time": "00:00 WITA",
           "venue": "Atlanta"
-        },
-        {
-          "away": "South Korea",
-          "date": "2026-06-19",
-          "group": "Group A",
-          "home": "Mexico",
-          "id": 4,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 8",
-          "score": null,
-          "status": "scheduled",
-          "time": "09:00 WITA",
-          "venue": "Guadalajara (Zapopan)"
         },
         {
           "away": "Bosnia & Herzegovina",
@@ -457,12 +442,42 @@
           "status": "scheduled",
           "time": "06:00 WITA",
           "venue": "Vancouver"
+        },
+        {
+          "away": "South Korea",
+          "date": "2026-06-19",
+          "group": "Group A",
+          "home": "Mexico",
+          "id": 4,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 8",
+          "score": null,
+          "status": "scheduled",
+          "time": "09:00 WITA",
+          "venue": "Guadalajara (Zapopan)"
         }
       ]
     },
     {
       "date": "2026-06-20",
       "matches": [
+        {
+          "away": "Australia",
+          "date": "2026-06-20",
+          "group": "Group D",
+          "home": "USA",
+          "id": 21,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 9",
+          "score": null,
+          "status": "scheduled",
+          "time": "03:00 WITA",
+          "venue": "Seattle"
+        },
         {
           "away": "Morocco",
           "date": "2026-06-20",
@@ -494,21 +509,6 @@
           "venue": "Philadelphia"
         },
         {
-          "away": "Australia",
-          "date": "2026-06-20",
-          "group": "Group D",
-          "home": "USA",
-          "id": 21,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 9",
-          "score": null,
-          "status": "scheduled",
-          "time": "03:00 WITA",
-          "venue": "Seattle"
-        },
-        {
           "away": "Paraguay",
           "date": "2026-06-20",
           "group": "Group D",
@@ -528,6 +528,21 @@
     {
       "date": "2026-06-21",
       "matches": [
+        {
+          "away": "Sweden",
+          "date": "2026-06-21",
+          "group": "Group F",
+          "home": "Netherlands",
+          "id": 33,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 10",
+          "score": null,
+          "status": "scheduled",
+          "time": "01:00 WITA",
+          "venue": "Houston"
+        },
         {
           "away": "Ivory Coast",
           "date": "2026-06-21",
@@ -559,21 +574,6 @@
           "venue": "Kansas City"
         },
         {
-          "away": "Sweden",
-          "date": "2026-06-21",
-          "group": "Group F",
-          "home": "Netherlands",
-          "id": 33,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 10",
-          "score": null,
-          "status": "scheduled",
-          "time": "01:00 WITA",
-          "venue": "Houston"
-        },
-        {
           "away": "Japan",
           "date": "2026-06-21",
           "group": "Group F",
@@ -594,36 +594,6 @@
       "date": "2026-06-22",
       "matches": [
         {
-          "away": "Iran",
-          "date": "2026-06-22",
-          "group": "Group G",
-          "home": "Belgium",
-          "id": 39,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 11",
-          "score": null,
-          "status": "scheduled",
-          "time": "03:00 WITA",
-          "venue": "Los Angeles (Inglewood)"
-        },
-        {
-          "away": "Egypt",
-          "date": "2026-06-22",
-          "group": "Group G",
-          "home": "New Zealand",
-          "id": 40,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 11",
-          "score": null,
-          "status": "scheduled",
-          "time": "09:00 WITA",
-          "venue": "Vancouver"
-        },
-        {
           "away": "Saudi Arabia",
           "date": "2026-06-22",
           "group": "Group H",
@@ -639,6 +609,21 @@
           "venue": "Atlanta"
         },
         {
+          "away": "Iran",
+          "date": "2026-06-22",
+          "group": "Group G",
+          "home": "Belgium",
+          "id": 39,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 11",
+          "score": null,
+          "status": "scheduled",
+          "time": "03:00 WITA",
+          "venue": "Los Angeles (Inglewood)"
+        },
+        {
           "away": "Cape Verde",
           "date": "2026-06-22",
           "group": "Group H",
@@ -652,12 +637,42 @@
           "status": "scheduled",
           "time": "06:00 WITA",
           "venue": "Miami (Miami Gardens)"
+        },
+        {
+          "away": "Egypt",
+          "date": "2026-06-22",
+          "group": "Group G",
+          "home": "New Zealand",
+          "id": 40,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 11",
+          "score": null,
+          "status": "scheduled",
+          "time": "09:00 WITA",
+          "venue": "Vancouver"
         }
       ]
     },
     {
       "date": "2026-06-23",
       "matches": [
+        {
+          "away": "Austria",
+          "date": "2026-06-23",
+          "group": "Group J",
+          "home": "Argentina",
+          "id": 57,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 12",
+          "score": null,
+          "status": "scheduled",
+          "time": "01:00 WITA",
+          "venue": "Dallas (Arlington)"
+        },
         {
           "away": "Iraq",
           "date": "2026-06-23",
@@ -687,21 +702,6 @@
           "status": "scheduled",
           "time": "08:00 WITA",
           "venue": "New York/New Jersey (East Rutherford)"
-        },
-        {
-          "away": "Austria",
-          "date": "2026-06-23",
-          "group": "Group J",
-          "home": "Argentina",
-          "id": 57,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 12",
-          "score": null,
-          "status": "scheduled",
-          "time": "01:00 WITA",
-          "venue": "Dallas (Arlington)"
         },
         {
           "away": "Algeria",
@@ -739,21 +739,6 @@
           "venue": "Houston"
         },
         {
-          "away": "DR Congo",
-          "date": "2026-06-24",
-          "group": "Group K",
-          "home": "Colombia",
-          "id": 64,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 13",
-          "score": null,
-          "status": "scheduled",
-          "time": "10:00 WITA",
-          "venue": "Guadalajara (Zapopan)"
-        },
-        {
           "away": "Ghana",
           "date": "2026-06-24",
           "group": "Group L",
@@ -782,42 +767,27 @@
           "status": "scheduled",
           "time": "07:00 WITA",
           "venue": "Toronto"
+        },
+        {
+          "away": "DR Congo",
+          "date": "2026-06-24",
+          "group": "Group K",
+          "home": "Colombia",
+          "id": 64,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 13",
+          "score": null,
+          "status": "scheduled",
+          "time": "10:00 WITA",
+          "venue": "Guadalajara (Zapopan)"
         }
       ]
     },
     {
       "date": "2026-06-25",
       "matches": [
-        {
-          "away": "Mexico",
-          "date": "2026-06-25",
-          "group": "Group A",
-          "home": "Czech Republic",
-          "id": 5,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 14",
-          "score": null,
-          "status": "scheduled",
-          "time": "09:00 WITA",
-          "venue": "Mexico City"
-        },
-        {
-          "away": "South Korea",
-          "date": "2026-06-25",
-          "group": "Group A",
-          "home": "South Africa",
-          "id": 6,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 14",
-          "score": null,
-          "status": "scheduled",
-          "time": "09:00 WITA",
-          "venue": "Monterrey (Guadalupe)"
-        },
         {
           "away": "Canada",
           "date": "2026-06-25",
@@ -877,42 +847,42 @@
           "status": "scheduled",
           "time": "06:00 WITA",
           "venue": "Atlanta"
+        },
+        {
+          "away": "Mexico",
+          "date": "2026-06-25",
+          "group": "Group A",
+          "home": "Czech Republic",
+          "id": 5,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 14",
+          "score": null,
+          "status": "scheduled",
+          "time": "09:00 WITA",
+          "venue": "Mexico City"
+        },
+        {
+          "away": "South Korea",
+          "date": "2026-06-25",
+          "group": "Group A",
+          "home": "South Africa",
+          "id": 6,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 14",
+          "score": null,
+          "status": "scheduled",
+          "time": "09:00 WITA",
+          "venue": "Monterrey (Guadalupe)"
         }
       ]
     },
     {
       "date": "2026-06-26",
       "matches": [
-        {
-          "away": "USA",
-          "date": "2026-06-26",
-          "group": "Group D",
-          "home": "Turkey",
-          "id": 23,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 15",
-          "score": null,
-          "status": "scheduled",
-          "time": "10:00 WITA",
-          "venue": "Los Angeles (Inglewood)"
-        },
-        {
-          "away": "Australia",
-          "date": "2026-06-26",
-          "group": "Group D",
-          "home": "Paraguay",
-          "id": 24,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Matchday 15",
-          "score": null,
-          "status": "scheduled",
-          "time": "10:00 WITA",
-          "venue": "San Francisco Bay Area (Santa Clara)"
-        },
         {
           "away": "Ivory Coast",
           "date": "2026-06-26",
@@ -972,6 +942,36 @@
           "status": "scheduled",
           "time": "07:00 WITA",
           "venue": "Kansas City"
+        },
+        {
+          "away": "USA",
+          "date": "2026-06-26",
+          "group": "Group D",
+          "home": "Turkey",
+          "id": 23,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 15",
+          "score": null,
+          "status": "scheduled",
+          "time": "10:00 WITA",
+          "venue": "Los Angeles (Inglewood)"
+        },
+        {
+          "away": "Australia",
+          "date": "2026-06-26",
+          "group": "Group D",
+          "home": "Paraguay",
+          "id": 24,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Matchday 15",
+          "score": null,
+          "status": "scheduled",
+          "time": "10:00 WITA",
+          "venue": "San Francisco Bay Area (Santa Clara)"
         }
       ]
     },
@@ -979,34 +979,34 @@
       "date": "2026-06-27",
       "matches": [
         {
-          "away": "Iran",
+          "away": "France",
           "date": "2026-06-27",
-          "group": "Group G",
-          "home": "Egypt",
-          "id": 41,
+          "group": "Group I",
+          "home": "Norway",
+          "id": 53,
           "live_data": null,
           "minute": 0,
           "played": false,
           "round": "Matchday 16",
           "score": null,
           "status": "scheduled",
-          "time": "11:00 WITA",
-          "venue": "Seattle"
+          "time": "03:00 WITA",
+          "venue": "Boston (Foxborough)"
         },
         {
-          "away": "Belgium",
+          "away": "Iraq",
           "date": "2026-06-27",
-          "group": "Group G",
-          "home": "New Zealand",
-          "id": 42,
+          "group": "Group I",
+          "home": "Senegal",
+          "id": 54,
           "live_data": null,
           "minute": 0,
           "played": false,
           "round": "Matchday 16",
           "score": null,
           "status": "scheduled",
-          "time": "11:00 WITA",
-          "venue": "Vancouver"
+          "time": "03:00 WITA",
+          "venue": "Toronto"
         },
         {
           "away": "Saudi Arabia",
@@ -1039,34 +1039,34 @@
           "venue": "Guadalajara (Zapopan)"
         },
         {
-          "away": "France",
+          "away": "Iran",
           "date": "2026-06-27",
-          "group": "Group I",
-          "home": "Norway",
-          "id": 53,
+          "group": "Group G",
+          "home": "Egypt",
+          "id": 41,
           "live_data": null,
           "minute": 0,
           "played": false,
           "round": "Matchday 16",
           "score": null,
           "status": "scheduled",
-          "time": "03:00 WITA",
-          "venue": "Boston (Foxborough)"
+          "time": "11:00 WITA",
+          "venue": "Seattle"
         },
         {
-          "away": "Iraq",
+          "away": "Belgium",
           "date": "2026-06-27",
-          "group": "Group I",
-          "home": "Senegal",
-          "id": 54,
+          "group": "Group G",
+          "home": "New Zealand",
+          "id": 42,
           "live_data": null,
           "minute": 0,
           "played": false,
           "round": "Matchday 16",
           "score": null,
           "status": "scheduled",
-          "time": "03:00 WITA",
-          "venue": "Toronto"
+          "time": "11:00 WITA",
+          "venue": "Vancouver"
         }
       ]
     },
@@ -1074,34 +1074,34 @@
       "date": "2026-06-28",
       "matches": [
         {
-          "away": "Austria",
+          "away": "England",
           "date": "2026-06-28",
-          "group": "Group J",
-          "home": "Algeria",
-          "id": 59,
+          "group": "Group L",
+          "home": "Panama",
+          "id": 71,
           "live_data": null,
           "minute": 0,
           "played": false,
           "round": "Matchday 17",
           "score": null,
           "status": "scheduled",
-          "time": "10:00 WITA",
-          "venue": "Kansas City"
+          "time": "05:00 WITA",
+          "venue": "New York/New Jersey (East Rutherford)"
         },
         {
-          "away": "Argentina",
+          "away": "Ghana",
           "date": "2026-06-28",
-          "group": "Group J",
-          "home": "Jordan",
-          "id": 60,
+          "group": "Group L",
+          "home": "Croatia",
+          "id": 72,
           "live_data": null,
           "minute": 0,
           "played": false,
           "round": "Matchday 17",
           "score": null,
           "status": "scheduled",
-          "time": "10:00 WITA",
-          "venue": "Dallas (Arlington)"
+          "time": "05:00 WITA",
+          "venue": "Philadelphia"
         },
         {
           "away": "Portugal",
@@ -1134,34 +1134,34 @@
           "venue": "Atlanta"
         },
         {
-          "away": "England",
+          "away": "Austria",
           "date": "2026-06-28",
-          "group": "Group L",
-          "home": "Panama",
-          "id": 71,
+          "group": "Group J",
+          "home": "Algeria",
+          "id": 59,
           "live_data": null,
           "minute": 0,
           "played": false,
           "round": "Matchday 17",
           "score": null,
           "status": "scheduled",
-          "time": "05:00 WITA",
-          "venue": "New York/New Jersey (East Rutherford)"
+          "time": "10:00 WITA",
+          "venue": "Kansas City"
         },
         {
-          "away": "Ghana",
+          "away": "Argentina",
           "date": "2026-06-28",
-          "group": "Group L",
-          "home": "Croatia",
-          "id": 72,
+          "group": "Group J",
+          "home": "Jordan",
+          "id": 60,
           "live_data": null,
           "minute": 0,
           "played": false,
           "round": "Matchday 17",
           "score": null,
           "status": "scheduled",
-          "time": "05:00 WITA",
-          "venue": "Philadelphia"
+          "time": "10:00 WITA",
+          "venue": "Dallas (Arlington)"
         }
       ]
     },
@@ -1188,6 +1188,21 @@
     {
       "date": "2026-06-30",
       "matches": [
+        {
+          "away": "2F",
+          "date": "2026-06-30",
+          "group": null,
+          "home": "1C",
+          "id": 76,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Round of 32",
+          "score": null,
+          "status": "scheduled",
+          "time": "01:00 WITA",
+          "venue": "Houston"
+        },
         {
           "away": "3A/B/C/D/F",
           "date": "2026-06-30",
@@ -1217,42 +1232,12 @@
           "status": "scheduled",
           "time": "09:00 WITA",
           "venue": "Monterrey (Guadalupe)"
-        },
-        {
-          "away": "2F",
-          "date": "2026-06-30",
-          "group": null,
-          "home": "1C",
-          "id": 76,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Round of 32",
-          "score": null,
-          "status": "scheduled",
-          "time": "01:00 WITA",
-          "venue": "Houston"
         }
       ]
     },
     {
       "date": "2026-07-01",
       "matches": [
-        {
-          "away": "3C/D/F/G/H",
-          "date": "2026-07-01",
-          "group": null,
-          "home": "1I",
-          "id": 77,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Round of 32",
-          "score": null,
-          "status": "scheduled",
-          "time": "05:00 WITA",
-          "venue": "New York/New Jersey (East Rutherford)"
-        },
         {
           "away": "2I",
           "date": "2026-07-01",
@@ -1267,6 +1252,21 @@
           "status": "scheduled",
           "time": "01:00 WITA",
           "venue": "Dallas (Arlington)"
+        },
+        {
+          "away": "3C/D/F/G/H",
+          "date": "2026-07-01",
+          "group": null,
+          "home": "1I",
+          "id": 77,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Round of 32",
+          "score": null,
+          "status": "scheduled",
+          "time": "05:00 WITA",
+          "venue": "New York/New Jersey (East Rutherford)"
         },
         {
           "away": "3C/E/F/H/I",
@@ -1304,21 +1304,6 @@
           "venue": "Atlanta"
         },
         {
-          "away": "3B/E/F/I/J",
-          "date": "2026-07-02",
-          "group": null,
-          "home": "1D",
-          "id": 81,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Round of 32",
-          "score": null,
-          "status": "scheduled",
-          "time": "08:00 WITA",
-          "venue": "San Francisco Bay Area (Santa Clara)"
-        },
-        {
           "away": "3A/E/H/I/J",
           "date": "2026-07-02",
           "group": null,
@@ -1332,27 +1317,27 @@
           "status": "scheduled",
           "time": "04:00 WITA",
           "venue": "Seattle"
-        }
-      ]
-    },
-    {
-      "date": "2026-07-03",
-      "matches": [
+        },
         {
-          "away": "2L",
-          "date": "2026-07-03",
+          "away": "3B/E/F/I/J",
+          "date": "2026-07-02",
           "group": null,
-          "home": "2K",
-          "id": 83,
+          "home": "1D",
+          "id": 81,
           "live_data": null,
           "minute": 0,
           "played": false,
           "round": "Round of 32",
           "score": null,
           "status": "scheduled",
-          "time": "07:00 WITA",
-          "venue": "Toronto"
-        },
+          "time": "08:00 WITA",
+          "venue": "San Francisco Bay Area (Santa Clara)"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-03",
+      "matches": [
         {
           "away": "2J",
           "date": "2026-07-03",
@@ -1367,6 +1352,21 @@
           "status": "scheduled",
           "time": "03:00 WITA",
           "venue": "Los Angeles (Inglewood)"
+        },
+        {
+          "away": "2L",
+          "date": "2026-07-03",
+          "group": null,
+          "home": "2K",
+          "id": 83,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Round of 32",
+          "score": null,
+          "status": "scheduled",
+          "time": "07:00 WITA",
+          "venue": "Toronto"
         },
         {
           "away": "3E/F/G/I/J",
@@ -1388,6 +1388,21 @@
     {
       "date": "2026-07-04",
       "matches": [
+        {
+          "away": "2G",
+          "date": "2026-07-04",
+          "group": null,
+          "home": "2D",
+          "id": 88,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Round of 32",
+          "score": null,
+          "status": "scheduled",
+          "time": "02:00 WITA",
+          "venue": "Dallas (Arlington)"
+        },
         {
           "away": "2H",
           "date": "2026-07-04",
@@ -1417,42 +1432,12 @@
           "status": "scheduled",
           "time": "09:30 WITA",
           "venue": "Kansas City"
-        },
-        {
-          "away": "2G",
-          "date": "2026-07-04",
-          "group": null,
-          "home": "2D",
-          "id": 88,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Round of 32",
-          "score": null,
-          "status": "scheduled",
-          "time": "02:00 WITA",
-          "venue": "Dallas (Arlington)"
         }
       ]
     },
     {
       "date": "2026-07-05",
       "matches": [
-        {
-          "away": "W77",
-          "date": "2026-07-05",
-          "group": null,
-          "home": "W74",
-          "id": 89,
-          "live_data": null,
-          "minute": 0,
-          "played": false,
-          "round": "Round of 16",
-          "score": null,
-          "status": "scheduled",
-          "time": "05:00 WITA",
-          "venue": "Philadelphia"
-        },
         {
           "away": "W75",
           "date": "2026-07-05",
@@ -1467,6 +1452,21 @@
           "status": "scheduled",
           "time": "01:00 WITA",
           "venue": "Houston"
+        },
+        {
+          "away": "W77",
+          "date": "2026-07-05",
+          "group": null,
+          "home": "W74",
+          "id": 89,
+          "live_data": null,
+          "minute": 0,
+          "played": false,
+          "round": "Round of 16",
+          "score": null,
+          "status": "scheduled",
+          "time": "05:00 WITA",
+          "venue": "Philadelphia"
         }
       ]
     },
