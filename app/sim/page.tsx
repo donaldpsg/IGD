@@ -256,7 +256,7 @@ Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan 
                 <div key={idx} style={{ marginTop: 40 }}>
                   <div id={`canvas${idx}`} style={{ position: "relative", width: 340 }} >
                     <Image src={"/images/SIM-BACKGROUND.jpg"} w={340} fit="cover" alt="media" />
-                    <Text style={{ position: "absolute", top: 92, right: 110 }} className={poppins.className} fontSize={12} fontWeight={600} color={"#d9812c"}>{tgl.toUpperCase()}</Text>
+                    <Text style={{ position: "absolute", top: 92, right: 110 }} className={poppins.className} fontSize={11} fontWeight={600} color={"#d9812c"}>{tgl.toUpperCase()}</Text>
 
                     {chunk.map?.((dt, index) => {
                       const lokasi = Array.isArray(dt.lokasi) ? dt.lokasi.join("\n") : dt.lokasi;

@@ -208,7 +208,12 @@ export default function Page() {
                     ]
                     }
 
-                    Urutan: Denpasar, Badung, baru kota lainnya. Jika tidak ada yang cocok dengan "${hariIni}", kembalikan {}.`;
+                    Urutan lokasi_pemeliharaan: Urutkan berdasarkan ULP dengan prioritas berikut:
+                    1. ULP Denpasar (mencakup area: Denpasar Kota, Sanur, Renon, Sesetan, Kerobokan, Ubung, Pemogan, Tonja, dan area Denpasar lainnya) — tampilkan paling awal
+                    2. ULP Badung (mencakup area: Kuta, Legian, Seminyak, Nusa Dua, Jimbaran, Mengwi, Tuban, Kedonganan, dan area Badung lainnya) — setelah Denpasar
+                    3. ULP kota/kabupaten lainnya (Gianyar, Tabanan, dll) — tampilkan paling akhir
+
+                    Jika ragu suatu lokasi masuk ke ULP mana, lihat field "ulp" pada data, bukan nama lokasinya. Jika tidak ada yang cocok dengan "${hariIni}", kembalikan {}.`;
 
             const responseAI = await fetch("/api/gemini/pln_stories", {
                 method: "POST",
