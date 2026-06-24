@@ -214,6 +214,15 @@ export default function Page() {
     return `🏆 Jadwal FIFA World Cup 2026 - ${dateLabel}!\n\nJangan sampai ketinggalan pertandingan seru! 🔥\n\n${matchList}\n\nNonton bareng yuk! 📺🎉\n\n#planetdenpasar #fifaworldcup2026 #worldcup2026`;
   }
 
+  // Helper function - taruh di luar component
+  function chunkArray<T>(array: T[], size: number): T[][] {
+    const chunks: T[][] = [];
+    for (let i = 0; i < array.length; i += size) {
+      chunks.push(array.slice(i, i + size));
+    }
+    return chunks;
+  }
+
   return (
     <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
       <Box>
@@ -269,32 +278,25 @@ export default function Page() {
                 }}
               />
 
-              <div style={{ marginTop: 40 }}>
-                <div id="canvas" style={{ position: "relative", width: 340 }}>
-                  <Image src={"/images/wc.jpg"} w={340} fit="cover" alt="media" />
+              {chunkArray(matchesOfDay, 4).map((chunk, index) => (
+                <div key={index} style={{ marginTop: 40 }}>
+                  <div id={`canvas_${index}`} style={{ position: "relative", width: 340 }}>
+                    <Image src={"/images/wc.jpg"} w={340} fit="cover" alt="media" />
 
-                  {/* Match schedule cards - dinamis berdasarkan tanggal */}
-                  <Box
-                    position="absolute"
-                    top="100px"
-                    bottom={matchesOfDay.length <= 2 ? "120px" : undefined}
-                    left={0}
-                    right={0}
-                    mx="auto"
-                    maxW="320px"
-                    display="flex"
-                    flexDirection="column"
-                    justifyContent={matchesOfDay.length <= 2 ? "center" : "flex-start"}
-                    gap={2}
-                  >
-                    {matchesOfDay.length === 0 ? (
-                      <Box bg="#0a1128" borderRadius="md" px={4} py={3} border="1px solid #1f2a44">
-                        <Text color="gray.400" fontSize="sm" textAlign="center">
-                          Tidak ada pertandingan pada tanggal ini
-                        </Text>
-                      </Box>
-                    ) : (
-                      matchesOfDay.map((match: Match) => (
+                    <Box
+                      position="absolute"
+                      top="100px"
+                      bottom={chunk.length <= 2 ? "120px" : undefined}
+                      left={0}
+                      right={0}
+                      mx="auto"
+                      maxW="320px"
+                      display="flex"
+                      flexDirection="column"
+                      justifyContent={chunk.length <= 2 ? "center" : "flex-start"}
+                      gap={2}
+                    >
+                      {chunk.map((match: Match) => (
                         <Box key={match.id} bg="#0a1128" borderRadius="md" overflow="hidden" border="1px solid #1f2a44">
                           {/* Teams row */}
                           <Flex justify="space-between" align="center" px={4} py={2}>
@@ -302,7 +304,7 @@ export default function Page() {
                               <Image src={getFlagUrl(match.home)} alt={match.home} boxSize="20px" borderRadius="full" />
                               <Text
                                 color="white"
-                                fontWeight="bold"
+                                fontFamily="var(--font-fwc2026), sans-serif"
                                 fontSize={getTeamFontSize(match.home)}
                                 whiteSpace="nowrap"
                               >
@@ -317,7 +319,7 @@ export default function Page() {
                             <Flex align="center" gap={2}>
                               <Text
                                 color="white"
-                                fontWeight="bold"
+                                fontFamily="var(--font-fwc2026), sans-serif"
                                 fontSize={getTeamFontSize(match.away)}
                                 whiteSpace="nowrap"
                               >
@@ -328,7 +330,12 @@ export default function Page() {
                           </Flex>
 
                           <Box bg="white" py={1}>
-                            <Text textAlign="center" fontWeight="bold" fontSize="sm" color="black">
+                            <Text
+                              textAlign="center"
+                              fontFamily="var(--font-fwc2026), sans-serif"
+                              fontSize="12"
+                              color="black"
+                            >
                               {(() => {
                                 const [year, month, day] = match.date.split("-").map(Number);
                                 const dateLabel = new Date(year, month - 1, day)
@@ -339,14 +346,20 @@ export default function Page() {
                             </Text>
                           </Box>
                         </Box>
-                      ))
-                    )}
-                  </Box>
+                      ))}
+                    </Box>
+                  </div>
+
+                  <Button
+                    colorScheme="teal"
+                    onClick={() => download(`canvas_${index}`, `${createFileName()}_part${index + 1}`)}
+                    size="sm"
+                    mt={4}
+                  >
+                    Download
+                  </Button>
                 </div>
-              </div>
-              <Button colorScheme="teal" onClick={() => download(`canvas`, createFileName())} size="sm" mt={4}>
-                Download
-              </Button>
+              ))}
             </CardBody>
           </Card>
         </SimpleGrid>
