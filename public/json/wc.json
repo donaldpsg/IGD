@@ -139,7 +139,7 @@
       "date": "2026-06-15",
       "matches": [
         {
-          "away": "Curaçao",
+          "away": "Cura\u00e7ao",
           "date": "2026-06-15",
           "group": "Group E",
           "home": "Germany",
@@ -559,7 +559,7 @@
           "venue": "Toronto"
         },
         {
-          "away": "Curaçao",
+          "away": "Cura\u00e7ao",
           "date": "2026-06-21",
           "group": "Group E",
           "home": "Ecuador",
@@ -887,7 +887,7 @@
           "away": "Ivory Coast",
           "date": "2026-06-26",
           "group": "Group E",
-          "home": "Curaçao",
+          "home": "Cura\u00e7ao",
           "id": 29,
           "live_data": null,
           "minute": 0,
@@ -1169,10 +1169,10 @@
       "date": "2026-06-29",
       "matches": [
         {
-          "away": "2B",
+          "away": "Canada",
           "date": "2026-06-29",
           "group": null,
-          "home": "2A",
+          "home": "South Africa",
           "id": 73,
           "live_data": null,
           "minute": 0,
@@ -1189,10 +1189,10 @@
       "date": "2026-06-30",
       "matches": [
         {
-          "away": "2F",
+          "away": "Japan",
           "date": "2026-06-30",
           "group": null,
-          "home": "1C",
+          "home": "Brazil",
           "id": 76,
           "live_data": null,
           "minute": 0,
@@ -1204,10 +1204,10 @@
           "venue": "Houston"
         },
         {
-          "away": "3A/B/C/D/F",
+          "away": "Paraguay",
           "date": "2026-06-30",
           "group": null,
-          "home": "1E",
+          "home": "Germany",
           "id": 74,
           "live_data": null,
           "minute": 0,
@@ -1219,10 +1219,10 @@
           "venue": "Boston (Foxborough)"
         },
         {
-          "away": "2C",
+          "away": "Morocco",
           "date": "2026-06-30",
           "group": null,
-          "home": "1F",
+          "home": "Netherlands",
           "id": 75,
           "live_data": null,
           "minute": 0,
@@ -1239,10 +1239,10 @@
       "date": "2026-07-01",
       "matches": [
         {
-          "away": "2I",
+          "away": "Norway",
           "date": "2026-07-01",
           "group": null,
-          "home": "2E",
+          "home": "Ivory Coast",
           "id": 78,
           "live_data": null,
           "minute": 0,
@@ -1254,10 +1254,10 @@
           "venue": "Dallas (Arlington)"
         },
         {
-          "away": "3C/D/F/G/H",
+          "away": "Sweden",
           "date": "2026-07-01",
           "group": null,
-          "home": "1I",
+          "home": "France",
           "id": 77,
           "live_data": null,
           "minute": 0,
@@ -1269,10 +1269,10 @@
           "venue": "New York/New Jersey (East Rutherford)"
         },
         {
-          "away": "3C/E/F/H/I",
+          "away": "Ecuador",
           "date": "2026-07-01",
           "group": null,
-          "home": "1A",
+          "home": "Mexico",
           "id": 79,
           "live_data": null,
           "minute": 0,
@@ -1289,10 +1289,10 @@
       "date": "2026-07-02",
       "matches": [
         {
-          "away": "3E/H/I/J/K",
+          "away": "DR Congo",
           "date": "2026-07-02",
           "group": null,
-          "home": "1L",
+          "home": "England",
           "id": 80,
           "live_data": null,
           "minute": 0,
@@ -1304,10 +1304,10 @@
           "venue": "Atlanta"
         },
         {
-          "away": "3A/E/H/I/J",
+          "away": "Senegal",
           "date": "2026-07-02",
           "group": null,
-          "home": "1G",
+          "home": "Belgium",
           "id": 82,
           "live_data": null,
           "minute": 0,
@@ -1319,10 +1319,10 @@
           "venue": "Seattle"
         },
         {
-          "away": "3B/E/F/I/J",
+          "away": "Bosnia & Herzegovina",
           "date": "2026-07-02",
           "group": null,
-          "home": "1D",
+          "home": "USA",
           "id": 81,
           "live_data": null,
           "minute": 0,
@@ -1339,10 +1339,10 @@
       "date": "2026-07-03",
       "matches": [
         {
-          "away": "2J",
+          "away": "Austria",
           "date": "2026-07-03",
           "group": null,
-          "home": "1H",
+          "home": "Spain",
           "id": 84,
           "live_data": null,
           "minute": 0,
@@ -1354,10 +1354,10 @@
           "venue": "Los Angeles (Inglewood)"
         },
         {
-          "away": "2L",
+          "away": "Croatia",
           "date": "2026-07-03",
           "group": null,
-          "home": "2K",
+          "home": "Portugal",
           "id": 83,
           "live_data": null,
           "minute": 0,
@@ -1369,10 +1369,10 @@
           "venue": "Toronto"
         },
         {
-          "away": "3E/F/G/I/J",
+          "away": "Algeria",
           "date": "2026-07-03",
           "group": null,
-          "home": "1B",
+          "home": "Switzerland",
           "id": 85,
           "live_data": null,
           "minute": 0,
@@ -1389,10 +1389,10 @@
       "date": "2026-07-04",
       "matches": [
         {
-          "away": "2G",
+          "away": "Egypt",
           "date": "2026-07-04",
           "group": null,
-          "home": "2D",
+          "home": "Australia",
           "id": 88,
           "live_data": null,
           "minute": 0,
@@ -1404,10 +1404,10 @@
           "venue": "Dallas (Arlington)"
         },
         {
-          "away": "2H",
+          "away": "Cape Verde",
           "date": "2026-07-04",
           "group": null,
-          "home": "1J",
+          "home": "Argentina",
           "id": 86,
           "live_data": null,
           "minute": 0,
@@ -1419,10 +1419,10 @@
           "venue": "Miami (Miami Gardens)"
         },
         {
-          "away": "3D/E/I/J/L",
+          "away": "Ghana",
           "date": "2026-07-04",
           "group": null,
-          "home": "1K",
+          "home": "Colombia",
           "id": 87,
           "live_data": null,
           "minute": 0,

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   FormControl,
   Input,
@@ -17,12 +17,14 @@ import {
   FormLabel,
   Text,
   Flex,
-
   Textarea,
   CardHeader,
+  InputGroup,
+  InputRightElement,
+  Icon,
 } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
-import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowLeft, FaPaste } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import * as htmlToImage from "html-to-image";
 import { dateMySql } from "../config";
@@ -32,7 +34,6 @@ const poppins = Poppins({
   subsets: ["latin"], // sesuaikan subset yang diperlukan
   weight: ["400", "500", "600", "700"], // pilih weight yang kamu mau
 });
-
 
 interface iDetail {
   tanggal: "string";
@@ -45,6 +46,10 @@ interface iSIM {
   polres_badung: Array<iDetail>;
 }
 
+interface DataSIMDenpasar {
+  lokasi: string[];
+  waktu: string;
+}
 
 type DataJadwal = {
   polres: string;
@@ -60,6 +65,8 @@ export default function Page() {
   const [jadwal, setJadwal] = useState<DataJadwal[][]>([]);
   const [caption, setCaption] = useState("");
   const [tanggal, setTanggal] = useState(dateMySql(new Date()));
+  const [urlDenpasar, setUrlDenpasar] = useState("");
+  const [dataDenpasar, setDataDenpasar] = useState<DataSIMDenpasar | null>(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -75,6 +82,79 @@ export default function Page() {
 
     fetchData(); // Panggil fungsi untuk memuat data
   }, []);
+
+  const showToast = useCallback(
+    async (title: string, iStatus: number, message: string) => {
+      const listStatus = ["success", "error", "warning", "info", "loading"] as const;
+
+      toast({
+        title: title,
+        description: message,
+        status: listStatus[iStatus],
+        duration: 9000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    },
+    [toast],
+  );
+
+  const pasteDenpasar = async () => {
+    try {
+      if (navigator.clipboard && typeof navigator.clipboard.readText === "function") {
+        const text = await navigator.clipboard.readText();
+        setUrlDenpasar(text);
+      } else {
+        showToast("Error", 1, "Clipboard API is not supported in this browser.");
+      }
+    } catch (e) {
+      showToast("Error", 1, (e as Error).message);
+    }
+  };
+
+  const submitDenpasar = async () => {
+    toast({
+      title: "Please wait",
+      description: "Getting data...",
+      status: "loading",
+      duration: null,
+    });
+
+    try {
+      const resIG = await fetch("/api/instagram", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: urlDenpasar }),
+      });
+
+      const dataIG = await resIG.json();
+      const imageUrl = `/api/proxy?url=${encodeURIComponent(dataIG[0].pictureUrl)}`;
+
+      const resImage = await fetch(imageUrl);
+      const base64ImageData = Buffer.from(await resImage.arrayBuffer()).toString("base64");
+
+      const prompt = `Deteksi jadwal SIM Keliling Polresta Denpasar pada gambar. Sajikan output hanya dalam format JSON tanpa kata pengantar dan penutup. Key pada object terdiri dari lokasi dan waktu. Format lokasi adalah array string berisi daftar lokasi. Format waktu adalah string.`;
+
+      const responseAI = await fetch("/api/gemini/pln", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ base64ImageData, prompt }),
+      });
+
+      if (responseAI.ok) {
+        const dataAI = await responseAI.json();
+        const dataJSON: DataSIMDenpasar = JSON.parse(dataAI.text);
+        setDataDenpasar(dataJSON);
+        toast.closeAll();
+      } else {
+        toast.closeAll();
+        showToast("Error", 1, "Google AI Error.");
+      }
+    } catch (e) {
+      toast.closeAll();
+      showToast("Error", 1, (e as Error).message);
+    }
+  };
 
   function formatDate(dateStr: string): string {
     const date = new Date(dateStr); // Mengonversi string ke objek Date
@@ -113,39 +193,33 @@ export default function Page() {
     const data: Array<DataJadwal> = [];
     const dtFormat = formatDate(tanggal);
 
+    // Data dari JSON (polres selain Denpasar)
     for (const key in json) {
       const array = json[key as keyof iSIM];
+      const filtered = array.filter((item) => item.tanggal === dtFormat);
 
-
-      const filter = array.filter((array) => array.tanggal === dtFormat);
-
-      if (filter.length > 0) {
-        const arrLokasi: string[] = Array.isArray(filter[0].lokasi) ? filter[0].lokasi : [filter[0].lokasi];
-        const dt = {
+      if (filtered.length > 0) {
+        const arrLokasi: string[] = Array.isArray(filtered[0].lokasi) ? filtered[0].lokasi : [filtered[0].lokasi];
+        data.push({
           polres: formatString(key),
           lokasi: arrLokasi,
-          waktu: filter[0].waktu,
-        };
-
-        data.push(dt);
+          waktu: filtered[0].waktu,
+        });
       }
     }
 
+    // Tambahkan data Polresta Denpasar dari AI jika ada
+    if (dataDenpasar) {
+      data.unshift({
+        polres: "POLRESTA DENPASAR",
+        lokasi: dataDenpasar.lokasi,
+        waktu: dataDenpasar.waktu,
+      });
+    }
 
     const chunks = chunkArray(data, 4);
 
-    const text = `📢 Layanan SIM Keliling Polda Bali – ${dtFormat}
-
-Perpanjang SIM A & C dengan mudah melalui layanan SIM Keliling Polda Bali.
-
-Syarat yang harus dibawa:
-✅ E‑KTP asli + 2 lembar fotokopi
-✅ SIM asli yang masih berlaku + 2 lembar fotokopi
-✅ Surat keterangan sehat jasmani & rohani (psikologi)
-
-Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan cepat dan lancar. 🚗🏍️
-
-#planetdenpasar #infonetizenbali #simkelilingbali`;
+    const text = `📢 Layanan SIM Keliling Polda Bali – ${dtFormat}\n\nPerpanjang SIM A & C dengan mudah melalui layanan SIM Keliling Polda Bali.\n\nSyarat yang harus dibawa:\n✅ E‑KTP asli + 2 lembar fotokopi\n✅ SIM asli yang masih berlaku + 2 lembar fotokopi\n✅ Surat keterangan sehat jasmani & rohani (psikologi)\n\nPastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan cepat dan lancar. 🚗🏍️\n\n#planetdenpasar #infonetizenbali #simkelilingbali`;
 
     setCaption(text);
     setJadwal(chunks);
@@ -203,8 +277,8 @@ Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan 
   const tgl = new Intl.DateTimeFormat("id-ID", {
     day: "2-digit",
     month: "long",
-    year: "numeric"
-  }).format(new Date(tanggal))
+    year: "numeric",
+  }).format(new Date(tanggal));
 
   return (
     <VStack divider={<StackDivider borderColor="gray.200" />} align="stretch">
@@ -230,6 +304,34 @@ Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan 
                 <FormLabel>Date</FormLabel>
                 <Input type="date" value={tanggal} onChange={(e) => onChangeTanggal(e)} />
               </FormControl>
+              <FormControl mt={4}>
+                <FormLabel>URL Post SIM Polresta Denpasar</FormLabel>
+                <InputGroup>
+                  <Input
+                    type="text"
+                    value={urlDenpasar}
+                    onChange={(e) => setUrlDenpasar(e.target.value)}
+                    placeholder="Paste URL Instagram Post"
+                  />
+                  <InputRightElement>
+                    <Button onClick={pasteDenpasar}>
+                      <Icon as={FaPaste} color="#493628" />
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+                <Button onClick={submitDenpasar} colorScheme="blue" size="sm" mt={2} isDisabled={!urlDenpasar}>
+                  Get Data Denpasar 🔍
+                </Button>
+                {dataDenpasar && (
+                  <Box mt={2} p={2} bg="green.50" borderRadius="md" fontSize="sm">
+                    <Text fontWeight={600} color="green.700">
+                      ✅ Data Denpasar berhasil diambil
+                    </Text>
+                    <Text>{dataDenpasar.lokasi.join(", ")}</Text>
+                    <Text>{dataDenpasar.waktu}</Text>
+                  </Box>
+                )}
+              </FormControl>
               <Button onClick={filter} colorScheme="teal" size="sm" mt={4} ml={1}>
                 Get Data
               </Button>
@@ -254,13 +356,21 @@ Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan 
               />
               {jadwal.map((chunk, idx) => (
                 <div key={idx} style={{ marginTop: 40 }}>
-                  <div id={`canvas${idx}`} style={{ position: "relative", width: 340 }} >
+                  <div id={`canvas${idx}`} style={{ position: "relative", width: 340 }}>
                     <Image src={"/images/SIM-BACKGROUND.jpg"} w={340} fit="cover" alt="media" />
-                    <Text style={{ position: "absolute", top: 92, right: 110 }} className={poppins.className} fontSize={11} fontWeight={600} color={"#d9812c"}>{tgl.toUpperCase()}</Text>
+                    <Text
+                      style={{ position: "absolute", top: 92, right: 110 }}
+                      className={poppins.className}
+                      fontSize={11}
+                      fontWeight={600}
+                      color={"#d9812c"}
+                    >
+                      {tgl.toUpperCase()}
+                    </Text>
 
                     {chunk.map?.((dt, index) => {
                       const lokasi = Array.isArray(dt.lokasi) ? dt.lokasi.join("\n") : dt.lokasi;
-                      const posTop = (index * 50) + 140;
+                      const posTop = index * 50 + 140;
                       return (
                         <Flex key={index}>
                           <Box
@@ -270,7 +380,7 @@ Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan 
                               top: posTop,
                               borderWidth: 0.5,
                               borderRadius: 5,
-                              borderColor: "#0d2644"
+                              borderColor: "#0d2644",
                             }}
                             p={1}
                             w={85}
@@ -278,7 +388,16 @@ Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan 
                             bgGradient="linear(0deg, #0c2442, #4f7492)"
                             alignContent={"center"}
                           >
-                            <Text fontSize={10.5} color={"white"} fontWeight={600} textAlign={"center"} lineHeight={1.3} className={poppins.className}>{dt.polres}</Text>
+                            <Text
+                              fontSize={10.5}
+                              color={"white"}
+                              fontWeight={600}
+                              textAlign={"center"}
+                              lineHeight={1.3}
+                              className={poppins.className}
+                            >
+                              {dt.polres}
+                            </Text>
                           </Box>
                           <Box
                             style={{
@@ -303,11 +422,15 @@ Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan 
                             <Text fontWeight={700}>{dt.waktu}</Text> {/* 👈 tambahkan marginTop */}
                           </Box>
                         </Flex>
-
-                      )
+                      );
                     })}
                   </div>
-                  <Button colorScheme="teal" onClick={() => download(`canvas${idx}`, createFileName())} size="sm" mt={4}>
+                  <Button
+                    colorScheme="teal"
+                    onClick={() => download(`canvas${idx}`, createFileName())}
+                    size="sm"
+                    mt={4}
+                  >
                     Download
                   </Button>
                 </div>
