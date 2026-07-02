@@ -127,8 +127,6 @@ export default function Page() {
       }
     }
 
-    console.log(data);
-
     const chunks = chunkArray(data, 4);
 
     const text = `📢 Layanan SIM Keliling Polda Bali – ${dtFormat}
@@ -256,7 +254,7 @@ Pastikan semua dokumen lengkap sebelum datang agar proses perpanjangan berjalan 
                     <Text
                       style={{ position: "absolute", top: 92, right: 110 }}
                       className={poppins.className}
-                      fontSize={12}
+                      fontSize={10}
                       fontWeight={600}
                       color={"#d9812c"}
                     >
