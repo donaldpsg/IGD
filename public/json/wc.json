@@ -1439,10 +1439,10 @@
       "date": "2026-07-05",
       "matches": [
         {
-          "away": "W75",
+          "away": "Morocco",
           "date": "2026-07-05",
           "group": null,
-          "home": "W73",
+          "home": "Canada",
           "id": 90,
           "live_data": null,
           "minute": 0,
@@ -1454,10 +1454,10 @@
           "venue": "Houston"
         },
         {
-          "away": "W77",
+          "away": "France",
           "date": "2026-07-05",
           "group": null,
-          "home": "W74",
+          "home": "Paraguay",
           "id": 89,
           "live_data": null,
           "minute": 0,
@@ -1474,10 +1474,10 @@
       "date": "2026-07-06",
       "matches": [
         {
-          "away": "W78",
+          "away": "Norway",
           "date": "2026-07-06",
           "group": null,
-          "home": "W76",
+          "home": "Brazil",
           "id": 91,
           "live_data": null,
           "minute": 0,
@@ -1489,10 +1489,10 @@
           "venue": "New York/New Jersey (East Rutherford)"
         },
         {
-          "away": "W80",
+          "away": "England",
           "date": "2026-07-06",
           "group": null,
-          "home": "W79",
+          "home": "Mexico",
           "id": 92,
           "live_data": null,
           "minute": 0,
@@ -1524,10 +1524,10 @@
           "venue": "Dallas (Arlington)"
         },
         {
-          "away": "W82",
+          "away": "Belgium",
           "date": "2026-07-07",
           "group": null,
-          "home": "W81",
+          "home": "USA",
           "id": 94,
           "live_data": null,
           "minute": 0,
