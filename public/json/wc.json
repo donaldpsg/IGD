@@ -1509,10 +1509,10 @@
       "date": "2026-07-07",
       "matches": [
         {
-          "away": "W84",
+          "away": "Spain",
           "date": "2026-07-07",
           "group": null,
-          "home": "W83",
+          "home": "Portugal",
           "id": 93,
           "live_data": null,
           "minute": 0,
@@ -1544,10 +1544,10 @@
       "date": "2026-07-08",
       "matches": [
         {
-          "away": "W88",
+          "away": "Egypt",
           "date": "2026-07-08",
           "group": null,
-          "home": "W86",
+          "home": "Argentina",
           "id": 95,
           "live_data": null,
           "minute": 0,
@@ -1559,10 +1559,10 @@
           "venue": "Atlanta"
         },
         {
-          "away": "W87",
+          "away": "Colombia",
           "date": "2026-07-08",
           "group": null,
-          "home": "W85",
+          "home": "Switzerland",
           "id": 96,
           "live_data": null,
           "minute": 0,
@@ -1579,10 +1579,10 @@
       "date": "2026-07-10",
       "matches": [
         {
-          "away": "W90",
+          "away": "Morocco",
           "date": "2026-07-10",
           "group": null,
-          "home": "W89",
+          "home": "France",
           "id": 97,
           "live_data": null,
           "minute": 0,
@@ -1619,10 +1619,10 @@
       "date": "2026-07-12",
       "matches": [
         {
-          "away": "W92",
+          "away": "England",
           "date": "2026-07-12",
           "group": null,
-          "home": "W91",
+          "home": "Norway",
           "id": 99,
           "live_data": null,
           "minute": 0,
