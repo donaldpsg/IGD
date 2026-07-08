@@ -1599,10 +1599,10 @@
       "date": "2026-07-11",
       "matches": [
         {
-          "away": "W94",
+          "away": "Belgium",
           "date": "2026-07-11",
           "group": null,
-          "home": "W93",
+          "home": "Spain",
           "id": 98,
           "live_data": null,
           "minute": 0,
@@ -1634,10 +1634,10 @@
           "venue": "Miami (Miami Gardens)"
         },
         {
-          "away": "W96",
+          "away": "Switzerland",
           "date": "2026-07-12",
           "group": null,
-          "home": "W95",
+          "home": "Argentina",
           "id": 100,
           "live_data": null,
           "minute": 0,

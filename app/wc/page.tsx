@@ -298,6 +298,13 @@ export default function Page() {
                     >
                       {chunk.map((match: Match) => (
                         <Box key={match.id} bg="#0a1128" borderRadius="md" overflow="hidden" border="1px solid #1f2a44">
+                          {/* Round label */}
+                          <Box bg="#1f2a44" px={4} py={1}>
+                            <Text color="gray.400" fontSize="9px" textAlign="center" fontFamily="var(--font-fwc2026), sans-serif" letterSpacing="wider">
+                              {match.round.toUpperCase()}
+                            </Text>
+                          </Box>
+
                           {/* Teams row */}
                           <Flex justify="space-between" align="center" px={4} py={2}>
                             <Flex align="center" gap={2}>
