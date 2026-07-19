@@ -1694,10 +1694,10 @@
       "date": "2026-07-19",
       "matches": [
         {
-          "away": "L102",
+          "away": "England",
           "date": "2026-07-19",
           "group": null,
-          "home": "L101",
+          "home": "France",
           "id": 103,
           "live_data": null,
           "minute": 0,
@@ -1714,10 +1714,10 @@
       "date": "2026-07-20",
       "matches": [
         {
-          "away": "W102",
+          "away": "Argentina",
           "date": "2026-07-20",
           "group": null,
-          "home": "W101",
+          "home": "Spain",
           "id": 104,
           "live_data": null,
           "minute": 0,
