@@ -189,7 +189,7 @@ export default function Page() {
                 if (dataJSON.tanggal === dataJSON.estimasi_pengerjaan) {
                     dataJSON.estimasi_pengerjaan = "";
                 }
-                const loc = chunkArray(dataJSON.area_terdampak, 10);
+                const loc = chunkArray(dataJSON.area_terdampak, 5);
 
                 const text = `📢 Informasi Gangguan AIR PDAM ${dataJSON.tanggal}
 
@@ -408,32 +408,30 @@ Sumber : ${username}
                                                         </Text>
                                                     </Box>
 
-                                                    {chunk.map?.((dt2, idx) => {
-                                                        const posTop = idx * 20 + 140;
-                                                        return (
-                                                            <VStack
+                                                    <Box
+                                                        style={{
+                                                            position: "absolute",
+                                                            top: 140,
+                                                            left: 10,
+                                                            width: "90%",
+                                                        }}
+                                                    >
+                                                        {chunk.map?.((dt2, idx) => (
+                                                            <Box
                                                                 key={idx}
-                                                                style={{
-                                                                    position: "absolute",
-                                                                    top: posTop,
-                                                                }}
-                                                                align="flex-start"
-                                                                left={10}
+                                                                className={poppins.className}
+                                                                fontSize={11}
+                                                                fontWeight={600}
+                                                                mx={4}
+                                                                mb={1}
+                                                                style={{ width: "85%", lineHeight: "1.4" }}
                                                             >
-                                                                <Box
-                                                                    className={poppins.className}
-                                                                    fontSize={11}
-                                                                    fontWeight={600}
-                                                                    mx={4}
-                                                                    style={{ width: "85%" }}
-                                                                >
-                                                                    <ul>
-                                                                        <li>{dt2}</li>
-                                                                    </ul>
-                                                                </Box>
-                                                            </VStack>
-                                                        );
-                                                    })}
+                                                                <ul style={{ margin: 0, paddingLeft: 16 }}>
+                                                                    <li>{dt2}</li>
+                                                                </ul>
+                                                            </Box>
+                                                        ))}
+                                                    </Box>
                                                 </div>
                                                 <Button
                                                     colorScheme="teal"
