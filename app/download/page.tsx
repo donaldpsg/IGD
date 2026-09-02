@@ -379,15 +379,16 @@ export default function Page() {
                 <Box mt={4} p={4} display={{ md: "flex" }}>
                   <VStack ml={{ md: 4 }}>
                     {media.map((item, index) => (
-                      <Button
+                      <a
                         key={index}
-                        size="sm"
-                        colorScheme="teal"
-                        width="100%"
-                        onClick={() => router.push(item.url)}
+                        href={`/api/download-proxy?url=${encodeURIComponent(item.url)}&filename=slide-${index + 1}.jpg`}
+                        download
+                        style={{ width: "100%" }}
                       >
-                        {item.title}
-                      </Button>
+                        <Button size="sm" colorScheme="teal" width="100%" leftIcon={<DownloadIcon />}>
+                          {item.title}
+                        </Button>
+                      </a>
                     ))}
 
                     <a href="/images/slide-pd.jpg" download="slide.jpg">
